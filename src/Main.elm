@@ -6,14 +6,15 @@ import Html exposing (..)
 import Url exposing (Protocol(..), Url, fromString, toString)
 
 
-application =
-    { init = init
-    , view = view
-    , update = update
-    , subscriptions = subscriptions
-    , onUrlRequest = loadUrlFromUrlRequest
-    , onUrlChange = loadUrl
-    }
+main =
+    Browser.application
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        , onUrlRequest = loadUrlFromUrlRequest
+        , onUrlChange = loadUrl
+        }
 
 
 
@@ -24,7 +25,7 @@ type alias Model =
     String
 
 
-init : flags -> Url -> key -> ( Model, Cmd msg )
+init : Flags -> Url -> key -> ( Model, Cmd msg )
 init _ _ _ =
     ( "Hello World!", Cmd.none )
 

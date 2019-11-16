@@ -1,7 +1,6 @@
 module MainTests exposing (..)
 
 import Expect exposing (Expectation)
-import Fuzz exposing (Fuzzer, int, list, string)
 import Html exposing (..)
 import Main exposing (Flags, Model, Msg, init, loadUrl, loadUrlFromUrlRequest, subscriptions, update, view)
 import ProgramTest exposing (ProgramTest, clickButton, expectViewHas, start)

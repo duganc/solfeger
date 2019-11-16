@@ -3,7 +3,7 @@
 ## Todo
 [ ] User Stories
 	[ ] v0 - Chromatic keyboard
-		[ ] Hit page
+		[x] Hit page
 		[ ] View keyboard (12 keys)
 		[ ] Click on keys
 			[ ] Shows solfege

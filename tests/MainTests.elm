@@ -8,7 +8,9 @@ import Json.Encode as Encode exposing (Value)
 import KeyboardKey exposing (..)
 import List exposing (range)
 import Main exposing (Flags, Model, Msg(..), init, loadUrlFromUrlRequest, pressKeyOnModel, releaseKeyOnModel, renderKey, renderKeys, showText, subscriptions, update, view)
-import ProgramTest exposing (ProgramTest, clickButton, ensureViewHas, expectViewHas, simulateDomEvent, start)
+import ProgramTest exposing (ProgramTest, SimulatedSub, clickButton, ensureViewHas, expectViewHas, simulateDomEvent, start)
+import SimulatedEffect.Ports
+import SimulatedEffect.Sub
 import Solfege exposing (..)
 import String exposing (fromInt)
 import Test exposing (..)
@@ -29,6 +31,7 @@ startProgramForTesting initialUrl flags =
         , onUrlChange = ChangeUrl
         }
         |> ProgramTest.withBaseUrl initialUrl
+        |> ProgramTest.withSimulatedSubscriptions simulateSubscriptions
         |> ProgramTest.start flags
 
 
@@ -56,10 +59,18 @@ testKeyboardKeyPressDisplaysSolfege =
     test "keyboardKeyPressDisplaysSolfege" <|
         \() ->
             startProgramForTesting "http://www.mysolfegeapp.com" ()
-                |> keyboardKeyDown (CharacterKey "5")
+                |> ProgramTest.simulateIncomingPort
+                    "keydown"
+                    (keyboardKeyObject (CharacterKey "5"))
                 |> ensureViewHas [ Selector.id "key-5", Selector.text "Fa" ]
-                |> keyboardKeyUp (CharacterKey "5")
-                |> expectViewHas [ Selector.id "key-5", Selector.text "" ]
+                |> ProgramTest.simulateIncomingPort
+                    "keyup"
+                    (keyboardKeyObject (CharacterKey "5"))
+                |> ensureViewHas [ Selector.id "key-5", Selector.text "" ]
+                |> ProgramTest.simulateIncomingPort
+                    "keyup"
+                    (keyboardKeyObject (CharacterKey "6"))
+                |> expectViewHas [ Selector.id "key-6", Selector.text "" ]
 
 
 testRenderKeysRendersTheCorrectNumberOfKeys =
@@ -112,6 +123,20 @@ testShowTextShowsAlternateTextWhenFalse =
 stubInitModel : ( Model, Cmd Msg )
 stubInitModel =
     init () (Url Http "mystubbedtestsolfegeapp.com" Nothing "" Nothing Nothing) ()
+
+
+simulateSubscriptions : Model -> SimulatedSub Msg
+simulateSubscriptions _ =
+    SimulatedEffect.Sub.batch
+        [ SimulatedEffect.Ports.subscribe
+            "keydown"
+            keyDecoder
+            KeyDownOn
+        , SimulatedEffect.Ports.subscribe
+            "keyup"
+            keyDecoder
+            KeyUpOn
+        ]
 
 
 mouseDown : (Query.Single msg -> Query.Single msg) -> ProgramTest model msg effect -> ProgramTest model msg effect

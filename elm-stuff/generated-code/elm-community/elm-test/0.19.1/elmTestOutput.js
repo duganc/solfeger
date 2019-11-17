@@ -11892,6 +11892,39 @@ var $author$project$Main$urlRequestToUrl = function (request) {
 	}
 };
 var $author$project$Main$loadUrlFromUrlRequest = A2($elm$core$Basics$composeR, $author$project$Main$urlRequestToUrl, $author$project$Main$ChangeUrl);
+var $author$project$Main$KeyDownOn = function (a) {
+	return {$: 'KeyDownOn', a: a};
+};
+var $author$project$Main$KeyUpOn = function (a) {
+	return {$: 'KeyUpOn', a: a};
+};
+var $avh4$elm_program_test$SimulatedEffect$BatchSub = function (a) {
+	return {$: 'BatchSub', a: a};
+};
+var $avh4$elm_program_test$SimulatedEffect$Sub$batch = $avh4$elm_program_test$SimulatedEffect$BatchSub;
+var $author$project$KeyboardKey$keyDecoder = A2(
+	$elm$json$Json$Decode$map,
+	$author$project$KeyboardKey$CharacterKey,
+	A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
+var $avh4$elm_program_test$SimulatedEffect$PortSub = F2(
+	function (a, b) {
+		return {$: 'PortSub', a: a, b: b};
+	});
+var $avh4$elm_program_test$SimulatedEffect$Ports$subscribe = F3(
+	function (portName, decoder, toMsg) {
+		return A2(
+			$avh4$elm_program_test$SimulatedEffect$PortSub,
+			portName,
+			A2($elm$json$Json$Decode$map, toMsg, decoder));
+	});
+var $author$project$MainTests$simulateSubscriptions = function (_v0) {
+	return $avh4$elm_program_test$SimulatedEffect$Sub$batch(
+		_List_fromArray(
+			[
+				A3($avh4$elm_program_test$SimulatedEffect$Ports$subscribe, 'keydown', $author$project$KeyboardKey$keyDecoder, $author$project$Main$KeyDownOn),
+				A3($avh4$elm_program_test$SimulatedEffect$Ports$subscribe, 'keyup', $author$project$KeyboardKey$keyDecoder, $author$project$Main$KeyUpOn)
+			]));
+};
 var $avh4$elm_program_test$ProgramTest$start = F2(
 	function (flags, _v0) {
 		var options = _v0.a;
@@ -12195,16 +12228,32 @@ var $avh4$elm_program_test$ProgramTest$withBaseUrl = F2(
 				program);
 		}
 	});
+var $avh4$elm_program_test$ProgramTest$withSimulatedSubscriptions = F2(
+	function (fn, _v0) {
+		var options = _v0.a;
+		var program = _v0.b;
+		return A2(
+			$avh4$elm_program_test$ProgramTest$ProgramDefinition,
+			_Utils_update(
+				options,
+				{
+					subscriptions: $elm$core$Maybe$Just(fn)
+				}),
+			program);
+	});
 var $author$project$MainTests$startProgramForTesting = F2(
 	function (initialUrl, flags) {
 		return A2(
 			$avh4$elm_program_test$ProgramTest$start,
 			flags,
 			A2(
-				$avh4$elm_program_test$ProgramTest$withBaseUrl,
-				initialUrl,
-				$avh4$elm_program_test$ProgramTest$createApplication(
-					{init: $author$project$Main$init, onUrlChange: $author$project$Main$ChangeUrl, onUrlRequest: $author$project$Main$loadUrlFromUrlRequest, update: $author$project$Main$update, view: $author$project$Main$view})));
+				$avh4$elm_program_test$ProgramTest$withSimulatedSubscriptions,
+				$author$project$MainTests$simulateSubscriptions,
+				A2(
+					$avh4$elm_program_test$ProgramTest$withBaseUrl,
+					initialUrl,
+					$avh4$elm_program_test$ProgramTest$createApplication(
+						{init: $author$project$Main$init, onUrlChange: $author$project$Main$ChangeUrl, onUrlRequest: $author$project$Main$loadUrlFromUrlRequest, update: $author$project$Main$update, view: $author$project$Main$view}))));
 	});
 var $elm_explorations$test$Test$Html$Selector$Internal$Text = function (a) {
 	return {$: 'Text', a: a};
@@ -12260,7 +12309,6 @@ var $author$project$MainTests$testKeyRenders = A2(
 					$author$project$Main$Model($elm$core$Dict$empty),
 					57)));
 	});
-var $elm_explorations$test$Test$Html$Event$custom = $elm$core$Tuple$pair;
 var $author$project$KeyboardKey$toString = function (key) {
 	var s = key.a;
 	return s;
@@ -12275,24 +12323,70 @@ var $author$project$MainTests$keyboardKeyObject = function (key) {
 					$author$project$KeyboardKey$toString(key)))
 			]));
 };
-var $author$project$MainTests$keyboardKeyDown = function (key) {
-	return A2(
-		$avh4$elm_program_test$ProgramTest$simulateDomEvent,
-		$elm$core$Basics$identity,
-		A2(
-			$elm_explorations$test$Test$Html$Event$custom,
-			'keydown',
-			$author$project$MainTests$keyboardKeyObject(key)));
+var $avh4$elm_program_test$ProgramTest$CustomFailure = F2(
+	function (a, b) {
+		return {$: 'CustomFailure', a: a, b: b};
+	});
+var $avh4$elm_program_test$ProgramTest$fail = F3(
+	function (assertionName, failureMessage, programTest) {
+		if (programTest.$ === 'Finished') {
+			var err = programTest.a;
+			return $avh4$elm_program_test$ProgramTest$Finished(err);
+		} else {
+			return $avh4$elm_program_test$ProgramTest$Finished(
+				A2($avh4$elm_program_test$ProgramTest$CustomFailure, assertionName, failureMessage));
+		}
+	});
+var $elm$core$List$singleton = function (value) {
+	return _List_fromArray(
+		[value]);
 };
-var $author$project$MainTests$keyboardKeyUp = function (key) {
-	return A2(
-		$avh4$elm_program_test$ProgramTest$simulateDomEvent,
-		$elm$core$Basics$identity,
-		A2(
-			$elm_explorations$test$Test$Html$Event$custom,
-			'keyup',
-			$author$project$MainTests$keyboardKeyObject(key)));
-};
+var $avh4$elm_program_test$ProgramTest$simulateIncomingPort = F3(
+	function (portName, value, programTest) {
+		var fail_ = $avh4$elm_program_test$ProgramTest$fail('simulateIncomingPort \"' + (portName + '\"'));
+		if (programTest.$ === 'Finished') {
+			var err = programTest.a;
+			return $avh4$elm_program_test$ProgramTest$Finished(err);
+		} else {
+			var state = programTest.a;
+			var _v1 = state.program.subscriptions;
+			if (_v1.$ === 'Nothing') {
+				return A2(fail_, 'you MUST use ProgramTest.withSimulatedSubscriptions to be able to use simulateIncomingPort', programTest);
+			} else {
+				var fn = _v1.a;
+				var step = F2(
+					function (r, tc) {
+						if (r.$ === 'Err') {
+							var message = r.a;
+							return A2(fail_, 'the value provided does not match the type that the port is expecting:\n' + message, tc);
+						} else {
+							var msg = r.a;
+							return A2($avh4$elm_program_test$ProgramTest$update, msg, tc);
+						}
+					});
+				var match = function (sub) {
+					switch (sub.$) {
+						case 'NoneSub':
+							return _List_Nil;
+						case 'BatchSub':
+							var subs_ = sub.a;
+							return A2($elm$core$List$concatMap, match, subs_);
+						default:
+							var pname = sub.a;
+							var decoder = sub.b;
+							return _Utils_eq(pname, portName) ? $elm$core$List$singleton(
+								A2(
+									$elm$core$Result$mapError,
+									$elm$json$Json$Decode$errorToString,
+									A2($elm$json$Json$Decode$decodeValue, decoder, value))) : _List_Nil;
+					}
+				};
+				var matches = match(
+					fn(state.currentModel));
+				return _Utils_eq(matches, _List_Nil) ? A2(fail_, 'the program is not currently subscribed to the port', programTest) : A3($elm$core$List$foldl, step, programTest, matches);
+			}
+		}
+	});
 var $author$project$MainTests$testKeyboardKeyPressDisplaysSolfege = A2(
 	$elm_explorations$test$Test$test,
 	'keyboardKeyPressDisplaysSolfege',
@@ -12301,23 +12395,39 @@ var $author$project$MainTests$testKeyboardKeyPressDisplaysSolfege = A2(
 			$avh4$elm_program_test$ProgramTest$expectViewHas,
 			_List_fromArray(
 				[
-					$elm_explorations$test$Test$Html$Selector$id('key-5'),
+					$elm_explorations$test$Test$Html$Selector$id('key-6'),
 					$elm_explorations$test$Test$Html$Selector$text('')
 				]),
-			A2(
-				$author$project$MainTests$keyboardKeyUp,
-				$author$project$KeyboardKey$CharacterKey('5'),
+			A3(
+				$avh4$elm_program_test$ProgramTest$simulateIncomingPort,
+				'keyup',
+				$author$project$MainTests$keyboardKeyObject(
+					$author$project$KeyboardKey$CharacterKey('6')),
 				A2(
 					$avh4$elm_program_test$ProgramTest$ensureViewHas,
 					_List_fromArray(
 						[
 							$elm_explorations$test$Test$Html$Selector$id('key-5'),
-							$elm_explorations$test$Test$Html$Selector$text('Fa')
+							$elm_explorations$test$Test$Html$Selector$text('')
 						]),
-					A2(
-						$author$project$MainTests$keyboardKeyDown,
-						$author$project$KeyboardKey$CharacterKey('5'),
-						A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0)))));
+					A3(
+						$avh4$elm_program_test$ProgramTest$simulateIncomingPort,
+						'keyup',
+						$author$project$MainTests$keyboardKeyObject(
+							$author$project$KeyboardKey$CharacterKey('5')),
+						A2(
+							$avh4$elm_program_test$ProgramTest$ensureViewHas,
+							_List_fromArray(
+								[
+									$elm_explorations$test$Test$Html$Selector$id('key-5'),
+									$elm_explorations$test$Test$Html$Selector$text('Fa')
+								]),
+							A3(
+								$avh4$elm_program_test$ProgramTest$simulateIncomingPort,
+								'keydown',
+								$author$project$MainTests$keyboardKeyObject(
+									$author$project$KeyboardKey$CharacterKey('5')),
+								A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0)))))));
 	});
 var $author$project$MainTests$getKeySelector = function (i) {
 	return $elm_explorations$test$Test$Html$Selector$id(
@@ -12466,7 +12576,7 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$getSolfegeName),
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Test$Generated$Main4020376027$main = A2(
+var $author$project$Test$Generated$Main2653412799$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -12474,7 +12584,7 @@ var $author$project$Test$Generated$Main4020376027$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 133872650682946
+		seed: 333976924745620
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -12495,10 +12605,10 @@ var $author$project$Test$Generated$Main4020376027$main = A2(
 				_List_fromArray(
 					[$author$project$KeyboardKeyTests$stub]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main4020376027':{'init':$author$project$Test$Generated$Main4020376027$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main2653412799':{'init':$author$project$Test$Generated$Main2653412799$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-84983.sock";
+var pipeFilename = "/tmp/elm_test-85516.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

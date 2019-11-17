@@ -8340,334 +8340,130 @@ var $author$project$Test$Runner$Node$run = F2(
 				update: $author$project$Test$Runner$Node$update
 			});
 	});
-var $elm$core$String$concat = function (strings) {
-	return A2($elm$core$String$join, '', strings);
+var $elm_explorations$test$Test$Html$Query$Internal$InternalError = function (a) {
+	return {$: 'InternalError', a: a};
 };
-var $avh4$elm_program_test$ProgramTest$escapeString = function (s) {
-	return '\"' + (s + '\"');
+var $elm_explorations$test$Test$Html$Query$Internal$Query = F2(
+	function (a, b) {
+		return {$: 'Query', a: a, b: b};
+	});
+var $elm_explorations$test$Test$Html$Query$Internal$Single = F2(
+	function (a, b) {
+		return {$: 'Single', a: a, b: b};
+	});
+var $elm_explorations$test$Test$Html$Internal$Inert$Node = function (a) {
+	return {$: 'Node', a: a};
 };
-var $elm_explorations$test$Test$Runner$Failure$toStringLists = $elm$core$String$join(', ');
-var $elm_explorations$test$Test$Runner$Failure$verticalBar = F3(
-	function (comparison, expected, actual) {
-		return A2(
-			$elm$core$String$join,
-			'\n',
-			_List_fromArray(
-				[actual, '╵', '│ ' + comparison, '╷', expected]));
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$HtmlContext = F2(
+	function (a, b) {
+		return {$: 'HtmlContext', a: a, b: b};
 	});
-var $elm_explorations$test$Test$Runner$Failure$listDiffToString = F4(
-	function (index, description, _v0, originals) {
-		listDiffToString:
-		while (true) {
-			var expected = _v0.expected;
-			var actual = _v0.actual;
-			var _v1 = _Utils_Tuple2(expected, actual);
-			if (!_v1.a.b) {
-				if (!_v1.b.b) {
-					return A2(
-						$elm$core$String$join,
-						'',
-						_List_fromArray(
-							[
-								'Two lists were unequal previously, yet ended up equal later.',
-								'This should never happen!',
-								'Please report this bug to https://github.com/elm-community/elm-test/issues - and include these lists: ',
-								'\n',
-								$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
-								'\n',
-								$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual)
-							]));
-				} else {
-					var _v3 = _v1.b;
-					var first = _v3.a;
-					return A3(
-						$elm_explorations$test$Test$Runner$Failure$verticalBar,
-						description + ' was longer than',
-						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
-						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual));
-				}
-			} else {
-				if (!_v1.b.b) {
-					var _v2 = _v1.a;
-					var first = _v2.a;
-					return A3(
-						$elm_explorations$test$Test$Runner$Failure$verticalBar,
-						description + ' was shorter than',
-						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
-						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual));
-				} else {
-					var _v4 = _v1.a;
-					var firstExpected = _v4.a;
-					var restExpected = _v4.b;
-					var _v5 = _v1.b;
-					var firstActual = _v5.a;
-					var restActual = _v5.b;
-					if (_Utils_eq(firstExpected, firstActual)) {
-						var $temp$index = index + 1,
-							$temp$description = description,
-							$temp$_v0 = {actual: restActual, expected: restExpected},
-							$temp$originals = originals;
-						index = $temp$index;
-						description = $temp$description;
-						_v0 = $temp$_v0;
-						originals = $temp$originals;
-						continue listDiffToString;
-					} else {
-						return A2(
-							$elm$core$String$join,
-							'',
-							_List_fromArray(
-								[
-									A3(
-									$elm_explorations$test$Test$Runner$Failure$verticalBar,
-									description,
-									$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
-									$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual)),
-									'\n\nThe first diff is at index ',
-									$elm$core$String$fromInt(index),
-									': it was `',
-									firstActual,
-									'`, but `',
-									firstExpected,
-									'` was expected.'
-								]));
-					}
-				}
-			}
-		}
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$NodeEntry = function (a) {
+	return {$: 'NodeEntry', a: a};
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$NodeRecord = F4(
+	function (tag, children, facts, descendantsCount) {
+		return {children: children, descendantsCount: descendantsCount, facts: facts, tag: tag};
 	});
-var $elm_explorations$test$Test$Runner$Failure$format = F2(
-	function (description, reason) {
-		switch (reason.$) {
-			case 'Custom':
-				return description;
-			case 'Equality':
-				var e = reason.a;
-				var a = reason.b;
-				return A3($elm_explorations$test$Test$Runner$Failure$verticalBar, description, e, a);
-			case 'Comparison':
-				var e = reason.a;
-				var a = reason.b;
-				return A3($elm_explorations$test$Test$Runner$Failure$verticalBar, description, e, a);
-			case 'TODO':
-				return description;
-			case 'Invalid':
-				if (reason.a.$ === 'BadDescription') {
-					var _v1 = reason.a;
-					return (description === '') ? 'The empty string is not a valid test description.' : ('This is an invalid test description: ' + description);
-				} else {
-					return description;
-				}
-			case 'ListDiff':
-				var expected = reason.a;
-				var actual = reason.b;
-				return A4(
-					$elm_explorations$test$Test$Runner$Failure$listDiffToString,
-					0,
-					description,
-					{actual: actual, expected: expected},
-					{originalActual: actual, originalExpected: expected});
-			default:
-				var expected = reason.a.expected;
-				var actual = reason.a.actual;
-				var extra = reason.a.extra;
-				var missing = reason.a.missing;
-				var missingStr = $elm$core$List$isEmpty(missing) ? '' : ('\nThese keys are missing: ' + function (d) {
-					return '[ ' + (d + ' ]');
-				}(
-					A2($elm$core$String$join, ', ', missing)));
-				var extraStr = $elm$core$List$isEmpty(extra) ? '' : ('\nThese keys are extra: ' + function (d) {
-					return '[ ' + (d + ' ]');
-				}(
-					A2($elm$core$String$join, ', ', extra)));
-				return A2(
-					$elm$core$String$join,
-					'',
-					_List_fromArray(
-						[
-							A3($elm_explorations$test$Test$Runner$Failure$verticalBar, description, expected, actual),
-							'\n',
-							extraStr,
-							missingStr
-						]));
-		}
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$TextTag = function (a) {
+	return {$: 'TextTag', a: a};
+};
+var $elm$json$Json$Decode$at = F2(
+	function (fields, decoder) {
+		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
 	});
-var $elm_explorations$test$Test$Expectation$Pass = {$: 'Pass'};
-var $elm_explorations$test$Expect$pass = $elm_explorations$test$Test$Expectation$Pass;
-var $elm$url$Url$addPort = F2(
-	function (maybePort, starter) {
-		if (maybePort.$ === 'Nothing') {
-			return starter;
-		} else {
-			var port_ = maybePort.a;
-			return starter + (':' + $elm$core$String$fromInt(port_));
-		}
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$CustomNode = function (a) {
+	return {$: 'CustomNode', a: a};
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$MarkdownNode = function (a) {
+	return {$: 'MarkdownNode', a: a};
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$CustomNodeRecord = F2(
+	function (facts, model) {
+		return {facts: facts, model: model};
 	});
-var $elm$url$Url$addPrefixed = F3(
-	function (prefix, maybeSegment, starter) {
-		if (maybeSegment.$ === 'Nothing') {
-			return starter;
-		} else {
-			var segment = maybeSegment.a;
-			return _Utils_ap(
-				starter,
-				_Utils_ap(prefix, segment));
-		}
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$Facts = F5(
+	function (styles, events, attributeNamespace, stringAttributes, boolAttributes) {
+		return {attributeNamespace: attributeNamespace, boolAttributes: boolAttributes, events: events, stringAttributes: stringAttributes, styles: styles};
 	});
-var $elm$url$Url$toString = function (url) {
-	var http = function () {
-		var _v0 = url.protocol;
-		if (_v0.$ === 'Http') {
-			return 'http://';
-		} else {
-			return 'https://';
-		}
-	}();
-	return A3(
-		$elm$url$Url$addPrefixed,
-		'#',
-		url.fragment,
-		A3(
-			$elm$url$Url$addPrefixed,
-			'?',
-			url.query,
-			_Utils_ap(
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$attributeNamespaceKey = 'a4';
+var $elm$json$Json$Decode$bool = _Json_decodeBool;
+var $elm$json$Json$Decode$keyValuePairs = _Json_decodeKeyValuePairs;
+var $elm$json$Json$Decode$dict = function (decoder) {
+	return A2(
+		$elm$json$Json$Decode$map,
+		$elm$core$Dict$fromList,
+		$elm$json$Json$Decode$keyValuePairs(decoder));
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$eventKey = 'a0';
+var $elm$json$Json$Decode$oneOf = _Json_oneOf;
+var $elm$json$Json$Decode$succeed = _Json_succeed;
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeEvents = function (taggedEventDecoder) {
+	return $elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
 				A2(
-					$elm$url$Url$addPort,
-					url.port_,
-					_Utils_ap(http, url.host)),
-				url.path)));
+				$elm$json$Json$Decode$field,
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$eventKey,
+				$elm$json$Json$Decode$dict(
+					A2($elm$json$Json$Decode$map, taggedEventDecoder, $elm$json$Json$Decode$value))),
+				$elm$json$Json$Decode$succeed($elm$core$Dict$empty)
+			]));
 };
-var $avh4$elm_program_test$ProgramTest$done = function (programTest) {
-	if (programTest.$ === 'Active') {
-		return $elm_explorations$test$Expect$pass;
-	} else {
-		switch (programTest.a.$) {
-			case 'ChangedPage':
-				var _v1 = programTest.a;
-				var cause = _v1.a;
-				var finalLocation = _v1.b;
-				return $elm_explorations$test$Expect$fail(
-					cause + (' caused the program to end by navigating to ' + ($avh4$elm_program_test$ProgramTest$escapeString(
-						$elm$url$Url$toString(finalLocation)) + '.  NOTE: If this is what you intended, use ProgramTest.expectPageChange to end your test.')));
-			case 'ExpectFailed':
-				var _v2 = programTest.a;
-				var expectationName = _v2.a;
-				var description = _v2.b;
-				var reason = _v2.c;
-				return $elm_explorations$test$Expect$fail(
-					expectationName + (':\n' + A2($elm_explorations$test$Test$Runner$Failure$format, description, reason)));
-			case 'SimulateFailed':
-				var _v3 = programTest.a;
-				var functionName = _v3.a;
-				var message = _v3.b;
-				return $elm_explorations$test$Expect$fail(functionName + (':\n' + message));
-			case 'SimulateFailedToFindTarget':
-				var _v4 = programTest.a;
-				var functionName = _v4.a;
-				var message = _v4.b;
-				return $elm_explorations$test$Expect$fail(functionName + (':\n' + message));
-			case 'SimulateLastEffectFailed':
-				var message = programTest.a.a;
-				return $elm_explorations$test$Expect$fail('simulateLastEffect failed: ' + message);
-			case 'InvalidLocationUrl':
-				var _v5 = programTest.a;
-				var functionName = _v5.a;
-				var invalidUrl = _v5.b;
-				return $elm_explorations$test$Expect$fail(
-					functionName + (': ' + ('Not a valid absolute URL:\n' + $avh4$elm_program_test$ProgramTest$escapeString(invalidUrl))));
-			case 'InvalidFlags':
-				var _v6 = programTest.a;
-				var functionName = _v6.a;
-				var message = _v6.b;
-				return $elm_explorations$test$Expect$fail(functionName + (':\n' + message));
-			case 'ProgramDoesNotSupportNavigation':
-				var functionName = programTest.a.a;
-				return $elm_explorations$test$Expect$fail(functionName + ': Program does not support navigation.  Use ProgramTest.createApplication to create a ProgramTest that supports navigation.');
-			case 'NoBaseUrl':
-				var _v7 = programTest.a;
-				var functionName = _v7.a;
-				var relativeUrl = _v7.b;
-				return $elm_explorations$test$Expect$fail(
-					functionName + (': The ProgramTest does not have a base URL and cannot resolve the relative URL ' + ($avh4$elm_program_test$ProgramTest$escapeString(relativeUrl) + '.  Use ProgramTest.withBaseUrl before calling ProgramTest.start to create a ProgramTest that can resolve relative URLs.')));
-			case 'NoMatchingHttpRequest':
-				var _v8 = programTest.a;
-				var functionName = _v8.a;
-				var request = _v8.b;
-				var pendingRequests = _v8.c;
-				return $elm_explorations$test$Expect$fail(
-					$elm$core$String$concat(
-						_List_fromArray(
-							[
-								functionName,
-								': ',
-								'Expected HTTP request (',
-								request.method,
-								' ',
-								request.url,
-								') to have been made, but it was not.\n',
-								function () {
-								if (!pendingRequests.b) {
-									return '    No requests were made.';
-								} else {
-									return $elm$core$String$concat(
-										_List_fromArray(
-											[
-												'    The following requests were made:\n',
-												A2(
-												$elm$core$String$join,
-												'\n',
-												A2(
-													$elm$core$List$map,
-													function (_v10) {
-														var method = _v10.a;
-														var url = _v10.b;
-														return '      - ' + (method + (' ' + url));
-													},
-													pendingRequests))
-											]));
-								}
-							}()
-							])));
-			case 'EffectSimulationNotConfigured':
-				var functionName = programTest.a.a;
-				return $elm_explorations$test$Expect$fail('TEST SETUP ERROR: In order to use ' + (functionName + ', you MUST use ProgramTest.withSimulatedEffects before calling ProgramTest.start'));
-			default:
-				var _v11 = programTest.a;
-				var assertionName = _v11.a;
-				var message = _v11.b;
-				return $elm_explorations$test$Expect$fail(assertionName + (': ' + message));
-		}
-	}
-};
-var $avh4$elm_program_test$ProgramTest$ExpectFailed = F3(
-	function (a, b, c) {
-		return {$: 'ExpectFailed', a: a, b: b, c: c};
-	});
-var $avh4$elm_program_test$ProgramTest$Finished = function (a) {
-	return {$: 'Finished', a: a};
-};
-var $avh4$elm_program_test$ProgramTest$expectViewHelper = F3(
-	function (functionName, assertion, programTest) {
-		if (programTest.$ === 'Finished') {
-			var err = programTest.a;
-			return $avh4$elm_program_test$ProgramTest$Finished(err);
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$attributeKey = 'a3';
+var $elm$core$List$maybeCons = F3(
+	function (f, mx, xs) {
+		var _v0 = f(mx);
+		if (_v0.$ === 'Just') {
+			var x = _v0.a;
+			return A2($elm$core$List$cons, x, xs);
 		} else {
-			var state = programTest.a;
-			var _v1 = $elm_explorations$test$Test$Runner$getFailureReason(
-				assertion(
-					state.program.view(state.currentModel)));
-			if (_v1.$ === 'Nothing') {
-				return programTest;
-			} else {
-				var reason = _v1.a;
-				return $avh4$elm_program_test$ProgramTest$Finished(
-					A3($avh4$elm_program_test$ProgramTest$ExpectFailed, functionName, reason.description, reason.reason));
-			}
+			return xs;
 		}
 	});
-var $elm_explorations$test$Test$Html$Query$Internal$baseIndentation = '    ';
-var $elm_explorations$test$Test$Html$Query$Internal$prefixOutputLine = $elm$core$Basics$append('▼ ');
+var $elm$core$List$filterMap = F2(
+	function (f, xs) {
+		return A3(
+			$elm$core$List$foldr,
+			$elm$core$List$maybeCons(f),
+			_List_Nil,
+			xs);
+	});
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeDictFilterMap = function (decoder) {
+	return A2(
+		$elm$json$Json$Decode$map,
+		A2(
+			$elm$core$Basics$composeR,
+			$elm$core$Dict$toList,
+			A2(
+				$elm$core$Basics$composeR,
+				$elm$core$List$filterMap(
+					function (_v0) {
+						var key = _v0.a;
+						var value = _v0.b;
+						var _v1 = A2($elm$json$Json$Decode$decodeValue, decoder, value);
+						if (_v1.$ === 'Err') {
+							return $elm$core$Maybe$Nothing;
+						} else {
+							var v = _v1.a;
+							return $elm$core$Maybe$Just(
+								_Utils_Tuple2(key, v));
+						}
+					}),
+				$elm$core$Dict$fromList)),
+		$elm$json$Json$Decode$dict($elm$json$Json$Decode$value));
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeAttributes = function (decoder) {
+	return $elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
+				A2(
+				$elm$json$Json$Decode$field,
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$attributeKey,
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeDictFilterMap(decoder)),
+				$elm$json$Json$Decode$succeed($elm$core$Dict$empty)
+			]));
+};
 var $elm$core$Dict$foldl = F3(
 	function (func, acc, dict) {
 		foldl:
@@ -8704,24 +8500,341 @@ var $elm$core$Dict$filter = F2(
 			$elm$core$Dict$empty,
 			dict);
 	});
-var $elm$core$List$maybeCons = F3(
-	function (f, mx, xs) {
-		var _v0 = f(mx);
-		if (_v0.$ === 'Just') {
-			var x = _v0.a;
-			return A2($elm$core$List$cons, x, xs);
-		} else {
-			return xs;
-		}
-	});
-var $elm$core$List$filterMap = F2(
-	function (f, xs) {
-		return A3(
-			$elm$core$List$foldr,
-			$elm$core$List$maybeCons(f),
-			_List_Nil,
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$styleKey = 'a1';
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$knownKeys = _List_fromArray(
+	[$elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$styleKey, $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$eventKey, $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$attributeKey, $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$attributeNamespaceKey]);
+var $elm$core$List$member = F2(
+	function (x, xs) {
+		return A2(
+			$elm$core$List$any,
+			function (a) {
+				return _Utils_eq(a, x);
+			},
 			xs);
 	});
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$Helpers$filterKnownKeys = $elm$core$Dict$filter(
+	F2(
+		function (key, _v0) {
+			return !A2($elm$core$List$member, key, $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$knownKeys);
+		}));
+var $elm$core$Dict$union = F2(
+	function (t1, t2) {
+		return A3($elm$core$Dict$foldl, $elm$core$Dict$insert, t2, t1);
+	});
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeOthers = function (otherDecoder) {
+	return A2(
+		$elm$json$Json$Decode$andThen,
+		function (attributes) {
+			return A2(
+				$elm$json$Json$Decode$map,
+				A2(
+					$elm$core$Basics$composeR,
+					$elm_explorations$test$Test$Html$Internal$ElmHtml$Helpers$filterKnownKeys,
+					$elm$core$Dict$union(attributes)),
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeDictFilterMap(otherDecoder));
+		},
+		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeAttributes(otherDecoder));
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeStyles = $elm$json$Json$Decode$oneOf(
+	_List_fromArray(
+		[
+			A2(
+			$elm$json$Json$Decode$field,
+			$elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$styleKey,
+			$elm$json$Json$Decode$dict($elm$json$Json$Decode$string)),
+			$elm$json$Json$Decode$succeed($elm$core$Dict$empty)
+		]));
+var $elm$json$Json$Decode$map5 = _Json_map5;
+var $elm$json$Json$Decode$maybe = function (decoder) {
+	return $elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
+				A2($elm$json$Json$Decode$map, $elm$core$Maybe$Just, decoder),
+				$elm$json$Json$Decode$succeed($elm$core$Maybe$Nothing)
+			]));
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeFacts = function (_v0) {
+	var taggers = _v0.a;
+	var eventDecoder = _v0.b;
+	return A6(
+		$elm$json$Json$Decode$map5,
+		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$Facts,
+		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeStyles,
+		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeEvents(
+			eventDecoder(taggers)),
+		$elm$json$Json$Decode$maybe(
+			A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$attributeNamespaceKey, $elm$json$Json$Decode$value)),
+		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeOthers($elm$json$Json$Decode$string),
+		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeOthers($elm$json$Json$Decode$bool));
+};
+var $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants = {
+	markdown: {markdown: 'b', options: 'a'},
+	virtualDom: {descendantsCount: 'b', facts: 'd', kids: 'e', model: 'g', node: 'k', nodeType: '$', nodeTypeCustom: 3, nodeTypeKeyedNode: 2, nodeTypeNode: 1, nodeTypeTagger: 4, nodeTypeText: 0, nodeTypeThunk: 5, refs: 'l', tag: 'c', tagger: 'j', text: 'a'}
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeCustomNodeRecord = function (context) {
+	return A3(
+		$elm$json$Json$Decode$map2,
+		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$CustomNodeRecord,
+		A2(
+			$elm$json$Json$Decode$field,
+			$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.facts,
+			$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeFacts(context)),
+		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.model, $elm$json$Json$Decode$value));
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$MarkdownNodeRecord = F2(
+	function (facts, model) {
+		return {facts: facts, model: model};
+	});
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$Markdown$MarkdownModel = F2(
+	function (options, markdown) {
+		return {markdown: markdown, options: options};
+	});
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$Markdown$baseMarkdownModel = {
+	markdown: '',
+	options: {
+		defaultHighlighting: $elm$core$Maybe$Nothing,
+		githubFlavored: $elm$core$Maybe$Just(
+			{breaks: false, tables: false}),
+		sanitize: false,
+		smartypants: false
+	}
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$Markdown$decodeMarkdownModel = A2(
+	$elm$json$Json$Decode$map,
+	$elm_explorations$test$Test$Html$Internal$ElmHtml$Markdown$MarkdownModel($elm_explorations$test$Test$Html$Internal$ElmHtml$Markdown$baseMarkdownModel.options),
+	A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.markdown.markdown, $elm$json$Json$Decode$string));
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeMarkdownNodeRecord = function (context) {
+	return A3(
+		$elm$json$Json$Decode$map2,
+		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$MarkdownNodeRecord,
+		A2(
+			$elm$json$Json$Decode$field,
+			$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.facts,
+			$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeFacts(context)),
+		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.model, $elm_explorations$test$Test$Html$Internal$ElmHtml$Markdown$decodeMarkdownModel));
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeCustomNode = function (context) {
+	return $elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
+				A2(
+				$elm$json$Json$Decode$map,
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$MarkdownNode,
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeMarkdownNodeRecord(context)),
+				A2(
+				$elm$json$Json$Decode$map,
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$CustomNode,
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeCustomNodeRecord(context))
+			]));
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeTextTag = A2(
+	$elm$json$Json$Decode$field,
+	$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.text,
+	A2(
+		$elm$json$Json$Decode$andThen,
+		function (text) {
+			return $elm$json$Json$Decode$succeed(
+				{text: text});
+		},
+		$elm$json$Json$Decode$string));
+var $elm$json$Json$Decode$map4 = _Json_map4;
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$contextDecodeElmHtml = function (context) {
+	return A2(
+		$elm$json$Json$Decode$andThen,
+		function (nodeType) {
+			return _Utils_eq(nodeType, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeTypeText) ? A2($elm$json$Json$Decode$map, $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$TextTag, $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeTextTag) : (_Utils_eq(nodeType, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeTypeKeyedNode) ? A2(
+				$elm$json$Json$Decode$map,
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$NodeEntry,
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeKeyedNode(context)) : (_Utils_eq(nodeType, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeTypeNode) ? A2(
+				$elm$json$Json$Decode$map,
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$NodeEntry,
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeNode(context)) : (_Utils_eq(nodeType, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeTypeCustom) ? $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeCustomNode(context) : (_Utils_eq(nodeType, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeTypeTagger) ? $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeTagger(context) : (_Utils_eq(nodeType, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeTypeThunk) ? A2(
+				$elm$json$Json$Decode$field,
+				$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.node,
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$contextDecodeElmHtml(context)) : $elm$json$Json$Decode$fail(
+				'No such type as ' + $elm$core$String$fromInt(nodeType)))))));
+		},
+		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeType, $elm$json$Json$Decode$int));
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeKeyedNode = function (context) {
+	var decodeSecondNode = A2(
+		$elm$json$Json$Decode$field,
+		'b',
+		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$contextDecodeElmHtml(context));
+	return A5(
+		$elm$json$Json$Decode$map4,
+		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$NodeRecord,
+		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.tag, $elm$json$Json$Decode$string),
+		A2(
+			$elm$json$Json$Decode$field,
+			$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.kids,
+			$elm$json$Json$Decode$list(decodeSecondNode)),
+		A2(
+			$elm$json$Json$Decode$field,
+			$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.facts,
+			$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeFacts(context)),
+		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.descendantsCount, $elm$json$Json$Decode$int));
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeNode = function (context) {
+	return A5(
+		$elm$json$Json$Decode$map4,
+		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$NodeRecord,
+		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.tag, $elm$json$Json$Decode$string),
+		A2(
+			$elm$json$Json$Decode$field,
+			$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.kids,
+			$elm$json$Json$Decode$list(
+				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$contextDecodeElmHtml(context))),
+		A2(
+			$elm$json$Json$Decode$field,
+			$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.facts,
+			$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeFacts(context)),
+		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.descendantsCount, $elm$json$Json$Decode$int));
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeTagger = function (_v0) {
+	var taggers = _v0.a;
+	var eventDecoder = _v0.b;
+	return A2(
+		$elm$json$Json$Decode$andThen,
+		function (tagger) {
+			var nodeDecoder = $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$contextDecodeElmHtml(
+				A2(
+					$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$HtmlContext,
+					_Utils_ap(
+						taggers,
+						_List_fromArray(
+							[tagger])),
+					eventDecoder));
+			return A2(
+				$elm$json$Json$Decode$at,
+				_List_fromArray(
+					[$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.node]),
+				nodeDecoder);
+		},
+		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.tagger, $elm$json$Json$Decode$value));
+};
+var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeElmHtml = function (eventDecoder) {
+	return $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$contextDecodeElmHtml(
+		A2($elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$HtmlContext, _List_Nil, eventDecoder));
+};
+var $elm_explorations$test$Test$Html$Internal$Inert$eventDecoder = function (eventHandler) {
+	return _HtmlAsJson_eventHandler(eventHandler);
+};
+var $elm$virtual_dom$VirtualDom$Custom = function (a) {
+	return {$: 'Custom', a: a};
+};
+var $elm$virtual_dom$VirtualDom$MayPreventDefault = function (a) {
+	return {$: 'MayPreventDefault', a: a};
+};
+var $elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
+	return {$: 'MayStopPropagation', a: a};
+};
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
+var $elm$core$Tuple$mapFirst = F2(
+	function (func, _v0) {
+		var x = _v0.a;
+		var y = _v0.b;
+		return _Utils_Tuple2(
+			func(x),
+			y);
+	});
+var $elm_explorations$test$Test$Html$Internal$Inert$mapHandler = F2(
+	function (f, handler) {
+		switch (handler.$) {
+			case 'Normal':
+				var decoder = handler.a;
+				return $elm$virtual_dom$VirtualDom$Normal(
+					A2($elm$json$Json$Decode$map, f, decoder));
+			case 'MayStopPropagation':
+				var decoder = handler.a;
+				return $elm$virtual_dom$VirtualDom$MayStopPropagation(
+					A2(
+						$elm$json$Json$Decode$map,
+						$elm$core$Tuple$mapFirst(f),
+						decoder));
+			case 'MayPreventDefault':
+				var decoder = handler.a;
+				return $elm$virtual_dom$VirtualDom$MayPreventDefault(
+					A2(
+						$elm$json$Json$Decode$map,
+						$elm$core$Tuple$mapFirst(f),
+						decoder));
+			default:
+				var decoder = handler.a;
+				return $elm$virtual_dom$VirtualDom$Custom(
+					A2(
+						$elm$json$Json$Decode$map,
+						function (value) {
+							return {
+								message: f(value.message),
+								preventDefault: value.preventDefault,
+								stopPropagation: value.stopPropagation
+							};
+						},
+						decoder));
+		}
+	});
+var $elm_explorations$test$Test$Html$Internal$Inert$taggerFunction = function (tagger) {
+	return _HtmlAsJson_taggerFunction(tagger);
+};
+var $elm_explorations$test$Test$Html$Internal$Inert$taggedEventDecoder = F2(
+	function (taggers, eventHandler) {
+		if (!taggers.b) {
+			return $elm_explorations$test$Test$Html$Internal$Inert$eventDecoder(eventHandler);
+		} else {
+			if (!taggers.b.b) {
+				var tagger = taggers.a;
+				return A2(
+					$elm_explorations$test$Test$Html$Internal$Inert$mapHandler,
+					$elm_explorations$test$Test$Html$Internal$Inert$taggerFunction(tagger),
+					$elm_explorations$test$Test$Html$Internal$Inert$eventDecoder(eventHandler));
+			} else {
+				var tagger = taggers.a;
+				var rest = taggers.b;
+				return A2(
+					$elm_explorations$test$Test$Html$Internal$Inert$mapHandler,
+					$elm_explorations$test$Test$Html$Internal$Inert$taggerFunction(tagger),
+					A2($elm_explorations$test$Test$Html$Internal$Inert$taggedEventDecoder, rest, eventHandler));
+			}
+		}
+	});
+var $elm_explorations$test$Test$Html$Internal$Inert$toJson = function (node) {
+	return _HtmlAsJson_toJson(node);
+};
+var $elm_explorations$test$Test$Html$Internal$Inert$fromHtml = function (html) {
+	var _v0 = A2(
+		$elm$json$Json$Decode$decodeValue,
+		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeElmHtml($elm_explorations$test$Test$Html$Internal$Inert$taggedEventDecoder),
+		$elm_explorations$test$Test$Html$Internal$Inert$toJson(html));
+	if (_v0.$ === 'Ok') {
+		var elmHtml = _v0.a;
+		return $elm$core$Result$Ok(
+			$elm_explorations$test$Test$Html$Internal$Inert$Node(elmHtml));
+	} else {
+		var jsonError = _v0.a;
+		return $elm$core$Result$Err(
+			$elm$json$Json$Decode$errorToString(jsonError));
+	}
+};
+var $elm_explorations$test$Test$Html$Query$fromHtml = function (html) {
+	return A2(
+		$elm_explorations$test$Test$Html$Query$Internal$Single,
+		true,
+		function () {
+			var _v0 = $elm_explorations$test$Test$Html$Internal$Inert$fromHtml(html);
+			if (_v0.$ === 'Ok') {
+				var node = _v0.a;
+				return A2($elm_explorations$test$Test$Html$Query$Internal$Query, node, _List_Nil);
+			} else {
+				var message = _v0.a;
+				return $elm_explorations$test$Test$Html$Query$Internal$InternalError(message);
+			}
+		}());
+};
+var $elm_explorations$test$Test$Html$Query$Internal$baseIndentation = '    ';
+var $elm_explorations$test$Test$Html$Query$Internal$prefixOutputLine = $elm$core$Basics$append('▼ ');
 var $elm$core$Bitwise$shiftRightBy = _Bitwise_shiftRightBy;
 var $elm$core$String$repeatHelp = F3(
 	function (n, chunk, result) {
@@ -8741,15 +8854,6 @@ var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$RawTextEleme
 var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$VoidElements = {$: 'VoidElements'};
 var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$escapableRawTextElements = _List_fromArray(
 	['textarea', 'title']);
-var $elm$core$List$member = F2(
-	function (x, xs) {
-		return A2(
-			$elm$core$List$any,
-			function (a) {
-				return _Utils_eq(a, x);
-			},
-			xs);
-	});
 var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$rawTextElements = _List_fromArray(
 	['script', 'style']);
 var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$voidElements = _List_fromArray(
@@ -9072,12 +9176,6 @@ var $elm_explorations$test$Test$Html$Query$Internal$joinAsList = F2(
 			A2($elm$core$List$map, toStr, list)) + ' ]'));
 	});
 var $elm$core$String$contains = _String_contains;
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$MarkdownNode = function (a) {
-	return {$: 'MarkdownNode', a: a};
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$NodeEntry = function (a) {
-	return {$: 'NodeEntry', a: a};
-};
 var $elm$core$List$all = F2(
 	function (isOkay, list) {
 		return !A2(
@@ -9752,6 +9850,8 @@ var $elm_explorations$test$Test$Html$Selector$Internal$hasAll = F2(
 			}
 		}
 	});
+var $elm_explorations$test$Test$Expectation$Pass = {$: 'Pass'};
+var $elm_explorations$test$Expect$pass = $elm_explorations$test$Test$Expectation$Pass;
 var $elm_explorations$test$Test$Html$Query$Internal$queryErrorToString = F2(
 	function (query, error) {
 		switch (error.$) {
@@ -9939,6 +10039,410 @@ var $elm_explorations$test$Test$Html$Query$has = F2(
 			query,
 			A2($elm_explorations$test$Test$Html$Query$Internal$has, selectors, query));
 	});
+var $elm_explorations$test$Test$Html$Selector$Internal$Attribute = function (a) {
+	return {$: 'Attribute', a: a};
+};
+var $elm_explorations$test$Test$Html$Selector$Internal$namedAttr = F2(
+	function (name, value) {
+		return $elm_explorations$test$Test$Html$Selector$Internal$Attribute(
+			{name: name, value: value});
+	});
+var $elm_explorations$test$Test$Html$Selector$id = $elm_explorations$test$Test$Html$Selector$Internal$namedAttr('id');
+var $elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
+	switch (handler.$) {
+		case 'Normal':
+			return 0;
+		case 'MayStopPropagation':
+			return 1;
+		case 'MayPreventDefault':
+			return 2;
+		default:
+			return 3;
+	}
+};
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $author$project$Main$renderKey = function (n) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('key'),
+				$elm$html$Html$Attributes$id(
+				'key-' + $elm$core$String$fromInt(n))
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text(
+				'key-' + $elm$core$String$fromInt(n))
+			]));
+};
+var $elm_explorations$test$Test$Internal$blankDescriptionFailure = $elm_explorations$test$Test$Internal$failNow(
+	{
+		description: 'This test has a blank description. Let\'s give it a useful one!',
+		reason: $elm_explorations$test$Test$Runner$Failure$Invalid($elm_explorations$test$Test$Runner$Failure$BadDescription)
+	});
+var $elm_explorations$test$Test$test = F2(
+	function (untrimmedDesc, thunk) {
+		var desc = $elm$core$String$trim(untrimmedDesc);
+		return $elm$core$String$isEmpty(desc) ? $elm_explorations$test$Test$Internal$blankDescriptionFailure : A2(
+			$elm_explorations$test$Test$Internal$Labeled,
+			desc,
+			$elm_explorations$test$Test$Internal$UnitTest(
+				function (_v0) {
+					return _List_fromArray(
+						[
+							thunk(_Utils_Tuple0)
+						]);
+				}));
+	});
+var $author$project$MainTests$testKeyRenders = A2(
+	$elm_explorations$test$Test$test,
+	'keyRenders',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Test$Html$Query$has,
+			_List_fromArray(
+				[
+					$elm_explorations$test$Test$Html$Selector$id('key-57')
+				]),
+			$elm_explorations$test$Test$Html$Query$fromHtml(
+				$author$project$Main$renderKey(57)));
+	});
+var $elm$core$String$concat = function (strings) {
+	return A2($elm$core$String$join, '', strings);
+};
+var $avh4$elm_program_test$ProgramTest$escapeString = function (s) {
+	return '\"' + (s + '\"');
+};
+var $elm_explorations$test$Test$Runner$Failure$toStringLists = $elm$core$String$join(', ');
+var $elm_explorations$test$Test$Runner$Failure$verticalBar = F3(
+	function (comparison, expected, actual) {
+		return A2(
+			$elm$core$String$join,
+			'\n',
+			_List_fromArray(
+				[actual, '╵', '│ ' + comparison, '╷', expected]));
+	});
+var $elm_explorations$test$Test$Runner$Failure$listDiffToString = F4(
+	function (index, description, _v0, originals) {
+		listDiffToString:
+		while (true) {
+			var expected = _v0.expected;
+			var actual = _v0.actual;
+			var _v1 = _Utils_Tuple2(expected, actual);
+			if (!_v1.a.b) {
+				if (!_v1.b.b) {
+					return A2(
+						$elm$core$String$join,
+						'',
+						_List_fromArray(
+							[
+								'Two lists were unequal previously, yet ended up equal later.',
+								'This should never happen!',
+								'Please report this bug to https://github.com/elm-community/elm-test/issues - and include these lists: ',
+								'\n',
+								$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
+								'\n',
+								$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual)
+							]));
+				} else {
+					var _v3 = _v1.b;
+					var first = _v3.a;
+					return A3(
+						$elm_explorations$test$Test$Runner$Failure$verticalBar,
+						description + ' was longer than',
+						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
+						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual));
+				}
+			} else {
+				if (!_v1.b.b) {
+					var _v2 = _v1.a;
+					var first = _v2.a;
+					return A3(
+						$elm_explorations$test$Test$Runner$Failure$verticalBar,
+						description + ' was shorter than',
+						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
+						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual));
+				} else {
+					var _v4 = _v1.a;
+					var firstExpected = _v4.a;
+					var restExpected = _v4.b;
+					var _v5 = _v1.b;
+					var firstActual = _v5.a;
+					var restActual = _v5.b;
+					if (_Utils_eq(firstExpected, firstActual)) {
+						var $temp$index = index + 1,
+							$temp$description = description,
+							$temp$_v0 = {actual: restActual, expected: restExpected},
+							$temp$originals = originals;
+						index = $temp$index;
+						description = $temp$description;
+						_v0 = $temp$_v0;
+						originals = $temp$originals;
+						continue listDiffToString;
+					} else {
+						return A2(
+							$elm$core$String$join,
+							'',
+							_List_fromArray(
+								[
+									A3(
+									$elm_explorations$test$Test$Runner$Failure$verticalBar,
+									description,
+									$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
+									$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual)),
+									'\n\nThe first diff is at index ',
+									$elm$core$String$fromInt(index),
+									': it was `',
+									firstActual,
+									'`, but `',
+									firstExpected,
+									'` was expected.'
+								]));
+					}
+				}
+			}
+		}
+	});
+var $elm_explorations$test$Test$Runner$Failure$format = F2(
+	function (description, reason) {
+		switch (reason.$) {
+			case 'Custom':
+				return description;
+			case 'Equality':
+				var e = reason.a;
+				var a = reason.b;
+				return A3($elm_explorations$test$Test$Runner$Failure$verticalBar, description, e, a);
+			case 'Comparison':
+				var e = reason.a;
+				var a = reason.b;
+				return A3($elm_explorations$test$Test$Runner$Failure$verticalBar, description, e, a);
+			case 'TODO':
+				return description;
+			case 'Invalid':
+				if (reason.a.$ === 'BadDescription') {
+					var _v1 = reason.a;
+					return (description === '') ? 'The empty string is not a valid test description.' : ('This is an invalid test description: ' + description);
+				} else {
+					return description;
+				}
+			case 'ListDiff':
+				var expected = reason.a;
+				var actual = reason.b;
+				return A4(
+					$elm_explorations$test$Test$Runner$Failure$listDiffToString,
+					0,
+					description,
+					{actual: actual, expected: expected},
+					{originalActual: actual, originalExpected: expected});
+			default:
+				var expected = reason.a.expected;
+				var actual = reason.a.actual;
+				var extra = reason.a.extra;
+				var missing = reason.a.missing;
+				var missingStr = $elm$core$List$isEmpty(missing) ? '' : ('\nThese keys are missing: ' + function (d) {
+					return '[ ' + (d + ' ]');
+				}(
+					A2($elm$core$String$join, ', ', missing)));
+				var extraStr = $elm$core$List$isEmpty(extra) ? '' : ('\nThese keys are extra: ' + function (d) {
+					return '[ ' + (d + ' ]');
+				}(
+					A2($elm$core$String$join, ', ', extra)));
+				return A2(
+					$elm$core$String$join,
+					'',
+					_List_fromArray(
+						[
+							A3($elm_explorations$test$Test$Runner$Failure$verticalBar, description, expected, actual),
+							'\n',
+							extraStr,
+							missingStr
+						]));
+		}
+	});
+var $elm$url$Url$addPort = F2(
+	function (maybePort, starter) {
+		if (maybePort.$ === 'Nothing') {
+			return starter;
+		} else {
+			var port_ = maybePort.a;
+			return starter + (':' + $elm$core$String$fromInt(port_));
+		}
+	});
+var $elm$url$Url$addPrefixed = F3(
+	function (prefix, maybeSegment, starter) {
+		if (maybeSegment.$ === 'Nothing') {
+			return starter;
+		} else {
+			var segment = maybeSegment.a;
+			return _Utils_ap(
+				starter,
+				_Utils_ap(prefix, segment));
+		}
+	});
+var $elm$url$Url$toString = function (url) {
+	var http = function () {
+		var _v0 = url.protocol;
+		if (_v0.$ === 'Http') {
+			return 'http://';
+		} else {
+			return 'https://';
+		}
+	}();
+	return A3(
+		$elm$url$Url$addPrefixed,
+		'#',
+		url.fragment,
+		A3(
+			$elm$url$Url$addPrefixed,
+			'?',
+			url.query,
+			_Utils_ap(
+				A2(
+					$elm$url$Url$addPort,
+					url.port_,
+					_Utils_ap(http, url.host)),
+				url.path)));
+};
+var $avh4$elm_program_test$ProgramTest$done = function (programTest) {
+	if (programTest.$ === 'Active') {
+		return $elm_explorations$test$Expect$pass;
+	} else {
+		switch (programTest.a.$) {
+			case 'ChangedPage':
+				var _v1 = programTest.a;
+				var cause = _v1.a;
+				var finalLocation = _v1.b;
+				return $elm_explorations$test$Expect$fail(
+					cause + (' caused the program to end by navigating to ' + ($avh4$elm_program_test$ProgramTest$escapeString(
+						$elm$url$Url$toString(finalLocation)) + '.  NOTE: If this is what you intended, use ProgramTest.expectPageChange to end your test.')));
+			case 'ExpectFailed':
+				var _v2 = programTest.a;
+				var expectationName = _v2.a;
+				var description = _v2.b;
+				var reason = _v2.c;
+				return $elm_explorations$test$Expect$fail(
+					expectationName + (':\n' + A2($elm_explorations$test$Test$Runner$Failure$format, description, reason)));
+			case 'SimulateFailed':
+				var _v3 = programTest.a;
+				var functionName = _v3.a;
+				var message = _v3.b;
+				return $elm_explorations$test$Expect$fail(functionName + (':\n' + message));
+			case 'SimulateFailedToFindTarget':
+				var _v4 = programTest.a;
+				var functionName = _v4.a;
+				var message = _v4.b;
+				return $elm_explorations$test$Expect$fail(functionName + (':\n' + message));
+			case 'SimulateLastEffectFailed':
+				var message = programTest.a.a;
+				return $elm_explorations$test$Expect$fail('simulateLastEffect failed: ' + message);
+			case 'InvalidLocationUrl':
+				var _v5 = programTest.a;
+				var functionName = _v5.a;
+				var invalidUrl = _v5.b;
+				return $elm_explorations$test$Expect$fail(
+					functionName + (': ' + ('Not a valid absolute URL:\n' + $avh4$elm_program_test$ProgramTest$escapeString(invalidUrl))));
+			case 'InvalidFlags':
+				var _v6 = programTest.a;
+				var functionName = _v6.a;
+				var message = _v6.b;
+				return $elm_explorations$test$Expect$fail(functionName + (':\n' + message));
+			case 'ProgramDoesNotSupportNavigation':
+				var functionName = programTest.a.a;
+				return $elm_explorations$test$Expect$fail(functionName + ': Program does not support navigation.  Use ProgramTest.createApplication to create a ProgramTest that supports navigation.');
+			case 'NoBaseUrl':
+				var _v7 = programTest.a;
+				var functionName = _v7.a;
+				var relativeUrl = _v7.b;
+				return $elm_explorations$test$Expect$fail(
+					functionName + (': The ProgramTest does not have a base URL and cannot resolve the relative URL ' + ($avh4$elm_program_test$ProgramTest$escapeString(relativeUrl) + '.  Use ProgramTest.withBaseUrl before calling ProgramTest.start to create a ProgramTest that can resolve relative URLs.')));
+			case 'NoMatchingHttpRequest':
+				var _v8 = programTest.a;
+				var functionName = _v8.a;
+				var request = _v8.b;
+				var pendingRequests = _v8.c;
+				return $elm_explorations$test$Expect$fail(
+					$elm$core$String$concat(
+						_List_fromArray(
+							[
+								functionName,
+								': ',
+								'Expected HTTP request (',
+								request.method,
+								' ',
+								request.url,
+								') to have been made, but it was not.\n',
+								function () {
+								if (!pendingRequests.b) {
+									return '    No requests were made.';
+								} else {
+									return $elm$core$String$concat(
+										_List_fromArray(
+											[
+												'    The following requests were made:\n',
+												A2(
+												$elm$core$String$join,
+												'\n',
+												A2(
+													$elm$core$List$map,
+													function (_v10) {
+														var method = _v10.a;
+														var url = _v10.b;
+														return '      - ' + (method + (' ' + url));
+													},
+													pendingRequests))
+											]));
+								}
+							}()
+							])));
+			case 'EffectSimulationNotConfigured':
+				var functionName = programTest.a.a;
+				return $elm_explorations$test$Expect$fail('TEST SETUP ERROR: In order to use ' + (functionName + ', you MUST use ProgramTest.withSimulatedEffects before calling ProgramTest.start'));
+			default:
+				var _v11 = programTest.a;
+				var assertionName = _v11.a;
+				var message = _v11.b;
+				return $elm_explorations$test$Expect$fail(assertionName + (': ' + message));
+		}
+	}
+};
+var $avh4$elm_program_test$ProgramTest$ExpectFailed = F3(
+	function (a, b, c) {
+		return {$: 'ExpectFailed', a: a, b: b, c: c};
+	});
+var $avh4$elm_program_test$ProgramTest$Finished = function (a) {
+	return {$: 'Finished', a: a};
+};
+var $avh4$elm_program_test$ProgramTest$expectViewHelper = F3(
+	function (functionName, assertion, programTest) {
+		if (programTest.$ === 'Finished') {
+			var err = programTest.a;
+			return $avh4$elm_program_test$ProgramTest$Finished(err);
+		} else {
+			var state = programTest.a;
+			var _v1 = $elm_explorations$test$Test$Runner$getFailureReason(
+				assertion(
+					state.program.view(state.currentModel)));
+			if (_v1.$ === 'Nothing') {
+				return programTest;
+			} else {
+				var reason = _v1.a;
+				return $avh4$elm_program_test$ProgramTest$Finished(
+					A3($avh4$elm_program_test$ProgramTest$ExpectFailed, functionName, reason.description, reason.reason));
+			}
+		}
+	});
 var $avh4$elm_program_test$ProgramTest$expectViewHas = F2(
 	function (selector, programTest) {
 		return $avh4$elm_program_test$ProgramTest$done(
@@ -9948,6 +10452,10 @@ var $avh4$elm_program_test$ProgramTest$expectViewHas = F2(
 				$elm_explorations$test$Test$Html$Query$has(selector),
 				programTest));
 	});
+var $author$project$MainTests$getKeySelector = function (i) {
+	return $elm_explorations$test$Test$Html$Selector$id(
+		'key-' + $elm$core$String$fromInt(i));
+};
 var $avh4$elm_program_test$ProgramTest$NoBaseUrl = F2(
 	function (a, b) {
 		return {$: 'NoBaseUrl', a: a, b: b};
@@ -10967,430 +11475,6 @@ try {
 	};
 } catch ($) {
 	throw 'Some top-level definitions from `ProgramTest` are causing infinite recursion:\n\n  ┌─────┐\n  │    advanceTime\n  │     ↓\n  │    advanceTo\n  │     ↓\n  │    drain\n  │     ↓\n  │    drainWorkQueue\n  │     ↓\n  │    queueEffect\n  │     ↓\n  │    queueSimulatedEffect\n  │     ↓\n  │    routeChange\n  │     ↓\n  │    update\n  └─────┘\n\nThese errors are very tricky, so read https://elm-lang.org/0.19.1/bad-recursion to learn how to fix it!';}
-var $elm_explorations$test$Test$Html$Query$Internal$InternalError = function (a) {
-	return {$: 'InternalError', a: a};
-};
-var $elm_explorations$test$Test$Html$Query$Internal$Query = F2(
-	function (a, b) {
-		return {$: 'Query', a: a, b: b};
-	});
-var $elm_explorations$test$Test$Html$Query$Internal$Single = F2(
-	function (a, b) {
-		return {$: 'Single', a: a, b: b};
-	});
-var $elm_explorations$test$Test$Html$Internal$Inert$Node = function (a) {
-	return {$: 'Node', a: a};
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$HtmlContext = F2(
-	function (a, b) {
-		return {$: 'HtmlContext', a: a, b: b};
-	});
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$NodeRecord = F4(
-	function (tag, children, facts, descendantsCount) {
-		return {children: children, descendantsCount: descendantsCount, facts: facts, tag: tag};
-	});
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$TextTag = function (a) {
-	return {$: 'TextTag', a: a};
-};
-var $elm$json$Json$Decode$at = F2(
-	function (fields, decoder) {
-		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
-	});
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$CustomNode = function (a) {
-	return {$: 'CustomNode', a: a};
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$CustomNodeRecord = F2(
-	function (facts, model) {
-		return {facts: facts, model: model};
-	});
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$Facts = F5(
-	function (styles, events, attributeNamespace, stringAttributes, boolAttributes) {
-		return {attributeNamespace: attributeNamespace, boolAttributes: boolAttributes, events: events, stringAttributes: stringAttributes, styles: styles};
-	});
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$attributeNamespaceKey = 'a4';
-var $elm$json$Json$Decode$bool = _Json_decodeBool;
-var $elm$json$Json$Decode$keyValuePairs = _Json_decodeKeyValuePairs;
-var $elm$json$Json$Decode$dict = function (decoder) {
-	return A2(
-		$elm$json$Json$Decode$map,
-		$elm$core$Dict$fromList,
-		$elm$json$Json$Decode$keyValuePairs(decoder));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$eventKey = 'a0';
-var $elm$json$Json$Decode$oneOf = _Json_oneOf;
-var $elm$json$Json$Decode$succeed = _Json_succeed;
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeEvents = function (taggedEventDecoder) {
-	return $elm$json$Json$Decode$oneOf(
-		_List_fromArray(
-			[
-				A2(
-				$elm$json$Json$Decode$field,
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$eventKey,
-				$elm$json$Json$Decode$dict(
-					A2($elm$json$Json$Decode$map, taggedEventDecoder, $elm$json$Json$Decode$value))),
-				$elm$json$Json$Decode$succeed($elm$core$Dict$empty)
-			]));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$attributeKey = 'a3';
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeDictFilterMap = function (decoder) {
-	return A2(
-		$elm$json$Json$Decode$map,
-		A2(
-			$elm$core$Basics$composeR,
-			$elm$core$Dict$toList,
-			A2(
-				$elm$core$Basics$composeR,
-				$elm$core$List$filterMap(
-					function (_v0) {
-						var key = _v0.a;
-						var value = _v0.b;
-						var _v1 = A2($elm$json$Json$Decode$decodeValue, decoder, value);
-						if (_v1.$ === 'Err') {
-							return $elm$core$Maybe$Nothing;
-						} else {
-							var v = _v1.a;
-							return $elm$core$Maybe$Just(
-								_Utils_Tuple2(key, v));
-						}
-					}),
-				$elm$core$Dict$fromList)),
-		$elm$json$Json$Decode$dict($elm$json$Json$Decode$value));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeAttributes = function (decoder) {
-	return $elm$json$Json$Decode$oneOf(
-		_List_fromArray(
-			[
-				A2(
-				$elm$json$Json$Decode$field,
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$attributeKey,
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeDictFilterMap(decoder)),
-				$elm$json$Json$Decode$succeed($elm$core$Dict$empty)
-			]));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$styleKey = 'a1';
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$knownKeys = _List_fromArray(
-	[$elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$styleKey, $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$eventKey, $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$attributeKey, $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$attributeNamespaceKey]);
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$Helpers$filterKnownKeys = $elm$core$Dict$filter(
-	F2(
-		function (key, _v0) {
-			return !A2($elm$core$List$member, key, $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$knownKeys);
-		}));
-var $elm$core$Dict$union = F2(
-	function (t1, t2) {
-		return A3($elm$core$Dict$foldl, $elm$core$Dict$insert, t2, t1);
-	});
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeOthers = function (otherDecoder) {
-	return A2(
-		$elm$json$Json$Decode$andThen,
-		function (attributes) {
-			return A2(
-				$elm$json$Json$Decode$map,
-				A2(
-					$elm$core$Basics$composeR,
-					$elm_explorations$test$Test$Html$Internal$ElmHtml$Helpers$filterKnownKeys,
-					$elm$core$Dict$union(attributes)),
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeDictFilterMap(otherDecoder));
-		},
-		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeAttributes(otherDecoder));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeStyles = $elm$json$Json$Decode$oneOf(
-	_List_fromArray(
-		[
-			A2(
-			$elm$json$Json$Decode$field,
-			$elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$styleKey,
-			$elm$json$Json$Decode$dict($elm$json$Json$Decode$string)),
-			$elm$json$Json$Decode$succeed($elm$core$Dict$empty)
-		]));
-var $elm$json$Json$Decode$map5 = _Json_map5;
-var $elm$json$Json$Decode$maybe = function (decoder) {
-	return $elm$json$Json$Decode$oneOf(
-		_List_fromArray(
-			[
-				A2($elm$json$Json$Decode$map, $elm$core$Maybe$Just, decoder),
-				$elm$json$Json$Decode$succeed($elm$core$Maybe$Nothing)
-			]));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeFacts = function (_v0) {
-	var taggers = _v0.a;
-	var eventDecoder = _v0.b;
-	return A6(
-		$elm$json$Json$Decode$map5,
-		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$Facts,
-		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeStyles,
-		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeEvents(
-			eventDecoder(taggers)),
-		$elm$json$Json$Decode$maybe(
-			A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Html$Internal$ElmHtml$Constants$attributeNamespaceKey, $elm$json$Json$Decode$value)),
-		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeOthers($elm$json$Json$Decode$string),
-		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeOthers($elm$json$Json$Decode$bool));
-};
-var $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants = {
-	markdown: {markdown: 'b', options: 'a'},
-	virtualDom: {descendantsCount: 'b', facts: 'd', kids: 'e', model: 'g', node: 'k', nodeType: '$', nodeTypeCustom: 3, nodeTypeKeyedNode: 2, nodeTypeNode: 1, nodeTypeTagger: 4, nodeTypeText: 0, nodeTypeThunk: 5, refs: 'l', tag: 'c', tagger: 'j', text: 'a'}
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeCustomNodeRecord = function (context) {
-	return A3(
-		$elm$json$Json$Decode$map2,
-		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$CustomNodeRecord,
-		A2(
-			$elm$json$Json$Decode$field,
-			$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.facts,
-			$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeFacts(context)),
-		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.model, $elm$json$Json$Decode$value));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$MarkdownNodeRecord = F2(
-	function (facts, model) {
-		return {facts: facts, model: model};
-	});
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$Markdown$MarkdownModel = F2(
-	function (options, markdown) {
-		return {markdown: markdown, options: options};
-	});
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$Markdown$baseMarkdownModel = {
-	markdown: '',
-	options: {
-		defaultHighlighting: $elm$core$Maybe$Nothing,
-		githubFlavored: $elm$core$Maybe$Just(
-			{breaks: false, tables: false}),
-		sanitize: false,
-		smartypants: false
-	}
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$Markdown$decodeMarkdownModel = A2(
-	$elm$json$Json$Decode$map,
-	$elm_explorations$test$Test$Html$Internal$ElmHtml$Markdown$MarkdownModel($elm_explorations$test$Test$Html$Internal$ElmHtml$Markdown$baseMarkdownModel.options),
-	A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.markdown.markdown, $elm$json$Json$Decode$string));
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeMarkdownNodeRecord = function (context) {
-	return A3(
-		$elm$json$Json$Decode$map2,
-		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$MarkdownNodeRecord,
-		A2(
-			$elm$json$Json$Decode$field,
-			$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.facts,
-			$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeFacts(context)),
-		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.model, $elm_explorations$test$Test$Html$Internal$ElmHtml$Markdown$decodeMarkdownModel));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeCustomNode = function (context) {
-	return $elm$json$Json$Decode$oneOf(
-		_List_fromArray(
-			[
-				A2(
-				$elm$json$Json$Decode$map,
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$MarkdownNode,
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeMarkdownNodeRecord(context)),
-				A2(
-				$elm$json$Json$Decode$map,
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$CustomNode,
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeCustomNodeRecord(context))
-			]));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeTextTag = A2(
-	$elm$json$Json$Decode$field,
-	$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.text,
-	A2(
-		$elm$json$Json$Decode$andThen,
-		function (text) {
-			return $elm$json$Json$Decode$succeed(
-				{text: text});
-		},
-		$elm$json$Json$Decode$string));
-var $elm$json$Json$Decode$map4 = _Json_map4;
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$contextDecodeElmHtml = function (context) {
-	return A2(
-		$elm$json$Json$Decode$andThen,
-		function (nodeType) {
-			return _Utils_eq(nodeType, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeTypeText) ? A2($elm$json$Json$Decode$map, $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$TextTag, $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeTextTag) : (_Utils_eq(nodeType, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeTypeKeyedNode) ? A2(
-				$elm$json$Json$Decode$map,
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$NodeEntry,
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeKeyedNode(context)) : (_Utils_eq(nodeType, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeTypeNode) ? A2(
-				$elm$json$Json$Decode$map,
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$NodeEntry,
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeNode(context)) : (_Utils_eq(nodeType, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeTypeCustom) ? $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeCustomNode(context) : (_Utils_eq(nodeType, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeTypeTagger) ? $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeTagger(context) : (_Utils_eq(nodeType, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeTypeThunk) ? A2(
-				$elm$json$Json$Decode$field,
-				$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.node,
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$contextDecodeElmHtml(context)) : $elm$json$Json$Decode$fail(
-				'No such type as ' + $elm$core$String$fromInt(nodeType)))))));
-		},
-		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.nodeType, $elm$json$Json$Decode$int));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeKeyedNode = function (context) {
-	var decodeSecondNode = A2(
-		$elm$json$Json$Decode$field,
-		'b',
-		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$contextDecodeElmHtml(context));
-	return A5(
-		$elm$json$Json$Decode$map4,
-		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$NodeRecord,
-		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.tag, $elm$json$Json$Decode$string),
-		A2(
-			$elm$json$Json$Decode$field,
-			$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.kids,
-			$elm$json$Json$Decode$list(decodeSecondNode)),
-		A2(
-			$elm$json$Json$Decode$field,
-			$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.facts,
-			$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeFacts(context)),
-		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.descendantsCount, $elm$json$Json$Decode$int));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeNode = function (context) {
-	return A5(
-		$elm$json$Json$Decode$map4,
-		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$NodeRecord,
-		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.tag, $elm$json$Json$Decode$string),
-		A2(
-			$elm$json$Json$Decode$field,
-			$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.kids,
-			$elm$json$Json$Decode$list(
-				$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$contextDecodeElmHtml(context))),
-		A2(
-			$elm$json$Json$Decode$field,
-			$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.facts,
-			$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeFacts(context)),
-		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.descendantsCount, $elm$json$Json$Decode$int));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeTagger = function (_v0) {
-	var taggers = _v0.a;
-	var eventDecoder = _v0.b;
-	return A2(
-		$elm$json$Json$Decode$andThen,
-		function (tagger) {
-			var nodeDecoder = $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$contextDecodeElmHtml(
-				A2(
-					$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$HtmlContext,
-					_Utils_ap(
-						taggers,
-						_List_fromArray(
-							[tagger])),
-					eventDecoder));
-			return A2(
-				$elm$json$Json$Decode$at,
-				_List_fromArray(
-					[$elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.node]),
-				nodeDecoder);
-		},
-		A2($elm$json$Json$Decode$field, $elm_explorations$test$Test$Internal$KernelConstants$kernelConstants.virtualDom.tagger, $elm$json$Json$Decode$value));
-};
-var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeElmHtml = function (eventDecoder) {
-	return $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$contextDecodeElmHtml(
-		A2($elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$HtmlContext, _List_Nil, eventDecoder));
-};
-var $elm_explorations$test$Test$Html$Internal$Inert$eventDecoder = function (eventHandler) {
-	return _HtmlAsJson_eventHandler(eventHandler);
-};
-var $elm$virtual_dom$VirtualDom$Custom = function (a) {
-	return {$: 'Custom', a: a};
-};
-var $elm$virtual_dom$VirtualDom$MayPreventDefault = function (a) {
-	return {$: 'MayPreventDefault', a: a};
-};
-var $elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
-	return {$: 'MayStopPropagation', a: a};
-};
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var $elm$core$Tuple$mapFirst = F2(
-	function (func, _v0) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return _Utils_Tuple2(
-			func(x),
-			y);
-	});
-var $elm_explorations$test$Test$Html$Internal$Inert$mapHandler = F2(
-	function (f, handler) {
-		switch (handler.$) {
-			case 'Normal':
-				var decoder = handler.a;
-				return $elm$virtual_dom$VirtualDom$Normal(
-					A2($elm$json$Json$Decode$map, f, decoder));
-			case 'MayStopPropagation':
-				var decoder = handler.a;
-				return $elm$virtual_dom$VirtualDom$MayStopPropagation(
-					A2(
-						$elm$json$Json$Decode$map,
-						$elm$core$Tuple$mapFirst(f),
-						decoder));
-			case 'MayPreventDefault':
-				var decoder = handler.a;
-				return $elm$virtual_dom$VirtualDom$MayPreventDefault(
-					A2(
-						$elm$json$Json$Decode$map,
-						$elm$core$Tuple$mapFirst(f),
-						decoder));
-			default:
-				var decoder = handler.a;
-				return $elm$virtual_dom$VirtualDom$Custom(
-					A2(
-						$elm$json$Json$Decode$map,
-						function (value) {
-							return {
-								message: f(value.message),
-								preventDefault: value.preventDefault,
-								stopPropagation: value.stopPropagation
-							};
-						},
-						decoder));
-		}
-	});
-var $elm_explorations$test$Test$Html$Internal$Inert$taggerFunction = function (tagger) {
-	return _HtmlAsJson_taggerFunction(tagger);
-};
-var $elm_explorations$test$Test$Html$Internal$Inert$taggedEventDecoder = F2(
-	function (taggers, eventHandler) {
-		if (!taggers.b) {
-			return $elm_explorations$test$Test$Html$Internal$Inert$eventDecoder(eventHandler);
-		} else {
-			if (!taggers.b.b) {
-				var tagger = taggers.a;
-				return A2(
-					$elm_explorations$test$Test$Html$Internal$Inert$mapHandler,
-					$elm_explorations$test$Test$Html$Internal$Inert$taggerFunction(tagger),
-					$elm_explorations$test$Test$Html$Internal$Inert$eventDecoder(eventHandler));
-			} else {
-				var tagger = taggers.a;
-				var rest = taggers.b;
-				return A2(
-					$elm_explorations$test$Test$Html$Internal$Inert$mapHandler,
-					$elm_explorations$test$Test$Html$Internal$Inert$taggerFunction(tagger),
-					A2($elm_explorations$test$Test$Html$Internal$Inert$taggedEventDecoder, rest, eventHandler));
-			}
-		}
-	});
-var $elm_explorations$test$Test$Html$Internal$Inert$toJson = function (node) {
-	return _HtmlAsJson_toJson(node);
-};
-var $elm_explorations$test$Test$Html$Internal$Inert$fromHtml = function (html) {
-	var _v0 = A2(
-		$elm$json$Json$Decode$decodeValue,
-		$elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$decodeElmHtml($elm_explorations$test$Test$Html$Internal$Inert$taggedEventDecoder),
-		$elm_explorations$test$Test$Html$Internal$Inert$toJson(html));
-	if (_v0.$ === 'Ok') {
-		var elmHtml = _v0.a;
-		return $elm$core$Result$Ok(
-			$elm_explorations$test$Test$Html$Internal$Inert$Node(elmHtml));
-	} else {
-		var jsonError = _v0.a;
-		return $elm$core$Result$Err(
-			$elm$json$Json$Decode$errorToString(jsonError));
-	}
-};
-var $elm_explorations$test$Test$Html$Query$fromHtml = function (html) {
-	return A2(
-		$elm_explorations$test$Test$Html$Query$Internal$Single,
-		true,
-		function () {
-			var _v0 = $elm_explorations$test$Test$Html$Internal$Inert$fromHtml(html);
-			if (_v0.$ === 'Ok') {
-				var node = _v0.a;
-				return A2($elm_explorations$test$Test$Html$Query$Internal$Query, node, _List_Nil);
-			} else {
-				var message = _v0.a;
-				return $elm_explorations$test$Test$Html$Query$Internal$InternalError(message);
-			}
-		}());
-};
 var $avh4$elm_program_test$PairingHeap$empty = $avh4$elm_program_test$PairingHeap$Empty;
 var $avh4$elm_program_test$ProgramTest$EffectSimulation$emptySimulationState = {futureTasks: $avh4$elm_program_test$PairingHeap$empty, http: $elm$core$Dict$empty, nowMs: 0};
 var $avh4$elm_program_test$ProgramTest$EffectSimulation$init = function (f) {
@@ -11421,18 +11505,6 @@ var $avh4$elm_program_test$ProgramTest$createHelper = F2(
 					})));
 	});
 var $avh4$elm_program_test$ProgramTest$emptyOptions = {baseUrl: $elm$core$Maybe$Nothing, deconstructEffect: $elm$core$Maybe$Nothing, subscriptions: $elm$core$Maybe$Nothing};
-var $elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
-	switch (handler.$) {
-		case 'Normal':
-			return 0;
-		case 'MayStopPropagation':
-			return 1;
-		case 'MayPreventDefault':
-			return 2;
-		default:
-			return 3;
-	}
-};
 var $elm$virtual_dom$VirtualDom$node = function (tag) {
 	return _VirtualDom_node(
 		_VirtualDom_noScript(tag));
@@ -11469,7 +11541,7 @@ var $avh4$elm_program_test$ProgramTest$createApplication = function (program) {
 };
 var $author$project$Main$init = F3(
 	function (_v0, _v1, _v2) {
-		return _Utils_Tuple2('Hello World!', $elm$core$Platform$Cmd$none);
+		return _Utils_Tuple2('Testing!', $elm$core$Platform$Cmd$none);
 	});
 var $elm$browser$Browser$External = function (a) {
 	return {$: 'External', a: a};
@@ -11524,9 +11596,15 @@ var $elm$browser$Browser$Document = F2(
 	function (title, body) {
 		return {body: body, title: title};
 	});
-var $elm$html$Html$div = _VirtualDom_node('div');
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $author$project$Main$renderKeys = function (n) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		A2(
+			$elm$core$List$map,
+			$author$project$Main$renderKey,
+			A2($elm$core$List$range, 0, n - 1)));
+};
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$browser$Browser$Document,
@@ -11538,7 +11616,7 @@ var $author$project$Main$view = function (model) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text(model)
+						$author$project$Main$renderKeys(12)
 					]))
 			]));
 };
@@ -11572,7 +11650,7 @@ var $avh4$elm_program_test$ProgramTest$withBaseUrl = F2(
 				program);
 		}
 	});
-var $author$project$MainTests$startProgramTest = F2(
+var $author$project$MainTests$startProgramForTesting = F2(
 	function (initialUrl, flags) {
 		return A2(
 			$avh4$elm_program_test$ProgramTest$start,
@@ -11583,42 +11661,137 @@ var $author$project$MainTests$startProgramTest = F2(
 				$avh4$elm_program_test$ProgramTest$createApplication(
 					{init: $author$project$Main$init, onUrlChange: $author$project$Main$loadUrl, onUrlRequest: $author$project$Main$loadUrlFromUrlRequest, update: $author$project$Main$update, view: $author$project$Main$view})));
 	});
-var $elm_explorations$test$Test$Internal$blankDescriptionFailure = $elm_explorations$test$Test$Internal$failNow(
-	{
-		description: 'This test has a blank description. Let\'s give it a useful one!',
-		reason: $elm_explorations$test$Test$Runner$Failure$Invalid($elm_explorations$test$Test$Runner$Failure$BadDescription)
-	});
-var $elm_explorations$test$Test$test = F2(
-	function (untrimmedDesc, thunk) {
-		var desc = $elm$core$String$trim(untrimmedDesc);
-		return $elm$core$String$isEmpty(desc) ? $elm_explorations$test$Test$Internal$blankDescriptionFailure : A2(
-			$elm_explorations$test$Test$Internal$Labeled,
-			desc,
-			$elm_explorations$test$Test$Internal$UnitTest(
-				function (_v0) {
-					return _List_fromArray(
-						[
-							thunk(_Utils_Tuple0)
-						]);
-				}));
-	});
-var $elm_explorations$test$Test$Html$Selector$Internal$Text = function (a) {
-	return {$: 'Text', a: a};
-};
-var $elm_explorations$test$Test$Html$Selector$text = $elm_explorations$test$Test$Html$Selector$Internal$Text;
-var $author$project$MainTests$suite = A2(
+var $author$project$MainTests$testPageHasTwelveKeys = A2(
 	$elm_explorations$test$Test$test,
-	'initsToHelloWorld',
+	'pageHasTwelveKeys',
 	function (_v0) {
 		return A2(
 			$avh4$elm_program_test$ProgramTest$expectViewHas,
-			_List_fromArray(
-				[
-					$elm_explorations$test$Test$Html$Selector$text('Hello World!')
-				]),
-			A2($author$project$MainTests$startProgramTest, 'http://www.google.com', _Utils_Tuple0));
+			A2(
+				$elm$core$List$map,
+				$author$project$MainTests$getKeySelector,
+				A2($elm$core$List$range, 0, 11)),
+			A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0));
 	});
-var $author$project$Test$Generated$Main4158183251$main = A2(
+var $elm_explorations$test$Test$Html$Selector$Internal$Class = function (a) {
+	return {$: 'Class', a: a};
+};
+var $elm_explorations$test$Test$Html$Selector$class = $elm_explorations$test$Test$Html$Selector$Internal$Class;
+var $elm_explorations$test$Test$Html$Query$Internal$multipleToExpectation = F2(
+	function (_v0, check) {
+		var query = _v0.b;
+		var _v1 = $elm_explorations$test$Test$Html$Query$Internal$traverse(query);
+		if (_v1.$ === 'Ok') {
+			var list = _v1.a;
+			return check(list);
+		} else {
+			var error = _v1.a;
+			return $elm_explorations$test$Expect$fail(
+				A2($elm_explorations$test$Test$Html$Query$Internal$queryErrorToString, query, error));
+		}
+	});
+var $elm_explorations$test$Test$Html$Query$count = F2(
+	function (expect, multiple) {
+		var showTrace = multiple.a;
+		var query = multiple.b;
+		return A2(
+			$elm_explorations$test$Test$Html$Query$Internal$multipleToExpectation,
+			multiple,
+			A2(
+				$elm$core$Basics$composeR,
+				$elm$core$List$length,
+				A2(
+					$elm$core$Basics$composeR,
+					expect,
+					A3($elm_explorations$test$Test$Html$Query$Internal$failWithQuery, showTrace, 'Query.count', query))));
+	});
+var $elm_explorations$test$Test$Runner$Failure$Equality = F2(
+	function (a, b) {
+		return {$: 'Equality', a: a, b: b};
+	});
+var $elm_explorations$test$Test$Internal$toString = _Debug_toString;
+var $elm_explorations$test$Expect$testWith = F5(
+	function (makeReason, label, runTest, expected, actual) {
+		return A2(runTest, actual, expected) ? $elm_explorations$test$Expect$pass : $elm_explorations$test$Test$Expectation$fail(
+			{
+				description: label,
+				reason: A2(
+					makeReason,
+					$elm_explorations$test$Test$Internal$toString(expected),
+					$elm_explorations$test$Test$Internal$toString(actual))
+			});
+	});
+var $elm_explorations$test$Expect$equateWith = F4(
+	function (reason, comparison, b, a) {
+		var isJust = function (x) {
+			if (x.$ === 'Just') {
+				return true;
+			} else {
+				return false;
+			}
+		};
+		var isFloat = function (x) {
+			return isJust(
+				$elm$core$String$toFloat(x)) && (!isJust(
+				$elm$core$String$toInt(x)));
+		};
+		var usesFloats = isFloat(
+			$elm_explorations$test$Test$Internal$toString(a)) || isFloat(
+			$elm_explorations$test$Test$Internal$toString(b));
+		var floatError = A2($elm$core$String$contains, reason, 'not') ? 'Do not use Expect.notEqual with floats. Use Float.notWithin instead.' : 'Do not use Expect.equal with floats. Use Float.within instead.';
+		return usesFloats ? $elm_explorations$test$Expect$fail(floatError) : A5($elm_explorations$test$Expect$testWith, $elm_explorations$test$Test$Runner$Failure$Equality, reason, comparison, b, a);
+	});
+var $elm_explorations$test$Expect$equal = A2($elm_explorations$test$Expect$equateWith, 'Expect.equal', $elm$core$Basics$eq);
+var $elm_explorations$test$Test$Html$Query$Internal$FindAll = function (a) {
+	return {$: 'FindAll', a: a};
+};
+var $elm_explorations$test$Test$Html$Query$Internal$Multiple = F2(
+	function (a, b) {
+		return {$: 'Multiple', a: a, b: b};
+	});
+var $elm_explorations$test$Test$Html$Query$Internal$prependSelector = F2(
+	function (query, selector) {
+		if (query.$ === 'Query') {
+			var node = query.a;
+			var selectors = query.b;
+			return A2(
+				$elm_explorations$test$Test$Html$Query$Internal$Query,
+				node,
+				A2($elm$core$List$cons, selector, selectors));
+		} else {
+			var message = query.a;
+			return $elm_explorations$test$Test$Html$Query$Internal$InternalError(message);
+		}
+	});
+var $elm_explorations$test$Test$Html$Query$findAll = F2(
+	function (selectors, _v0) {
+		var showTrace = _v0.a;
+		var query = _v0.b;
+		return A2(
+			$elm_explorations$test$Test$Html$Query$Internal$Multiple,
+			showTrace,
+			A2(
+				$elm_explorations$test$Test$Html$Query$Internal$prependSelector,
+				query,
+				$elm_explorations$test$Test$Html$Query$Internal$FindAll(selectors)));
+	});
+var $author$project$MainTests$testRenderKeysRendersTheCorrectNumberOfKeys = A2(
+	$elm_explorations$test$Test$test,
+	'renderKeysRendersTheCorrectNumberOfKeys',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Test$Html$Query$count,
+			$elm_explorations$test$Expect$equal(3),
+			A2(
+				$elm_explorations$test$Test$Html$Query$findAll,
+				_List_fromArray(
+					[
+						$elm_explorations$test$Test$Html$Selector$class('key')
+					]),
+				$elm_explorations$test$Test$Html$Query$fromHtml(
+					$author$project$Main$renderKeys(3))));
+	});
+var $author$project$Test$Generated$Main1728916777$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -11626,7 +11799,7 @@ var $author$project$Test$Generated$Main4158183251$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 342646735420194
+		seed: 154941210017647
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -11635,12 +11808,12 @@ var $author$project$Test$Generated$Main4158183251$main = A2(
 				$elm_explorations$test$Test$describe,
 				'MainTests',
 				_List_fromArray(
-					[$author$project$MainTests$suite]))
+					[$author$project$MainTests$testPageHasTwelveKeys, $author$project$MainTests$testRenderKeysRendersTheCorrectNumberOfKeys, $author$project$MainTests$testKeyRenders]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main4158183251':{'init':$author$project$Test$Generated$Main4158183251$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main1728916777':{'init':$author$project$Test$Generated$Main1728916777$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-74651.sock";
+var pipeFilename = "/tmp/elm_test-75584.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

@@ -3,6 +3,9 @@ module Main exposing (..)
 import Browser exposing (Document, UrlRequest(..), application)
 import Browser.Navigation exposing (Key, load, pushUrl)
 import Html exposing (..)
+import Html.Attributes exposing (..)
+import List exposing (range)
+import String exposing (fromInt)
 import Url exposing (Protocol(..), Url, fromString, toString)
 
 
@@ -27,7 +30,7 @@ type alias Model =
 
 init : Flags -> Url -> key -> ( Model, Cmd msg )
 init _ _ _ =
-    ( "Hello World!", Cmd.none )
+    ( "Testing!", Cmd.none )
 
 
 type alias Flags =
@@ -87,4 +90,14 @@ type alias Msg =
 
 view : Model -> Document msg
 view model =
-    Document "Solfeger" [ div [] [ text model ] ]
+    Document "Solfeger" [ div [ class "table" ] [ renderKeys 12 ] ]
+
+
+renderKeys : Int -> Html msg
+renderKeys n =
+    range 0 (n - 1) |> List.map renderKey |> div []
+
+
+renderKey : Int -> Html msg
+renderKey n =
+    div [ class "key", id ("key-" ++ fromInt n) ] [ text ("key-" ++ fromInt n) ]

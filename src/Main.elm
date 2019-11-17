@@ -4,6 +4,7 @@ import Browser exposing (Document, UrlRequest(..), application)
 import Browser.Navigation exposing (Key, load, pushUrl)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import List exposing (range)
 import String exposing (fromInt)
 import Url exposing (Protocol(..), Url, fromString, toString)
@@ -16,7 +17,7 @@ main =
         , update = update
         , subscriptions = subscriptions
         , onUrlRequest = loadUrlFromUrlRequest
-        , onUrlChange = loadUrl
+        , onUrlChange = ChangeUrl
         }
 
 
@@ -28,7 +29,7 @@ type alias Model =
     String
 
 
-init : Flags -> Url -> key -> ( Model, Cmd msg )
+init : Flags -> Url -> key -> ( Model, Cmd Msg )
 init _ _ _ =
     ( "Testing!", Cmd.none )
 
@@ -41,14 +42,17 @@ type alias Flags =
 -- UPDATE
 
 
-update : msg -> Model -> ( Model, Cmd msg )
-update _ model =
-    ( model, Cmd.none )
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        ChangeUrl url ->
+            ( model, toString url |> load )
 
+        MouseDownOn key ->
+            ( model, Cmd.none )
 
-loadUrl : Url -> Cmd msg
-loadUrl url =
-    load <| toString url
+        MouseUpOn key ->
+            ( model, Cmd.none )
 
 
 urlRequestToUrl : UrlRequest -> Url
@@ -66,16 +70,16 @@ urlRequestToUrl request =
             url
 
 
-loadUrlFromUrlRequest : UrlRequest -> Cmd msg
+loadUrlFromUrlRequest : UrlRequest -> Msg
 loadUrlFromUrlRequest =
-    urlRequestToUrl >> loadUrl
+    urlRequestToUrl >> ChangeUrl
 
 
 
 -- SUBSCRIPTIONS
 
 
-subscriptions : model -> Sub msg
+subscriptions : model -> Sub Msg
 subscriptions model =
     Sub.none
 
@@ -84,20 +88,27 @@ subscriptions model =
 -- VIEW
 
 
-type alias Msg =
-    String
+type Msg
+    = ChangeUrl Url
+    | MouseDownOn String
+    | MouseUpOn String
 
 
-view : Model -> Document msg
+view : Model -> Document Msg
 view model =
     Document "Solfeger" [ div [ class "table" ] [ renderKeys 12 ] ]
 
 
-renderKeys : Int -> Html msg
+renderKeys : Int -> Html Msg
 renderKeys n =
     range 0 (n - 1) |> List.map renderKey |> div []
 
 
-renderKey : Int -> Html msg
+renderKey : Int -> Html Msg
 renderKey n =
-    div [ class "key", id ("key-" ++ fromInt n) ] [ text ("key-" ++ fromInt n) ]
+    div [ class "key", id (getKeyName n), onMouseDown (MouseDownOn (getKeyName n)) ] [ text (getKeyName n) ]
+
+
+getKeyName : Int -> String
+getKeyName n =
+    "key-" ++ fromInt n

@@ -8340,306 +8340,194 @@ var $author$project$Test$Runner$Node$run = F2(
 				update: $author$project$Test$Runner$Node$update
 			});
 	});
-var $elm$core$String$concat = function (strings) {
-	return A2($elm$core$String$join, '', strings);
-};
-var $avh4$elm_program_test$ProgramTest$escapeString = function (s) {
-	return '\"' + (s + '\"');
-};
-var $elm_explorations$test$Test$Runner$Failure$toStringLists = $elm$core$String$join(', ');
-var $elm_explorations$test$Test$Runner$Failure$verticalBar = F3(
-	function (comparison, expected, actual) {
-		return A2(
-			$elm$core$String$join,
-			'\n',
-			_List_fromArray(
-				[actual, '╵', '│ ' + comparison, '╷', expected]));
+var $elm_explorations$test$Test$Runner$Failure$Equality = F2(
+	function (a, b) {
+		return {$: 'Equality', a: a, b: b};
 	});
-var $elm_explorations$test$Test$Runner$Failure$listDiffToString = F4(
-	function (index, description, _v0, originals) {
-		listDiffToString:
-		while (true) {
-			var expected = _v0.expected;
-			var actual = _v0.actual;
-			var _v1 = _Utils_Tuple2(expected, actual);
-			if (!_v1.a.b) {
-				if (!_v1.b.b) {
-					return A2(
-						$elm$core$String$join,
-						'',
-						_List_fromArray(
-							[
-								'Two lists were unequal previously, yet ended up equal later.',
-								'This should never happen!',
-								'Please report this bug to https://github.com/elm-community/elm-test/issues - and include these lists: ',
-								'\n',
-								$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
-								'\n',
-								$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual)
-							]));
-				} else {
-					var _v3 = _v1.b;
-					var first = _v3.a;
-					return A3(
-						$elm_explorations$test$Test$Runner$Failure$verticalBar,
-						description + ' was longer than',
-						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
-						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual));
-				}
-			} else {
-				if (!_v1.b.b) {
-					var _v2 = _v1.a;
-					var first = _v2.a;
-					return A3(
-						$elm_explorations$test$Test$Runner$Failure$verticalBar,
-						description + ' was shorter than',
-						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
-						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual));
-				} else {
-					var _v4 = _v1.a;
-					var firstExpected = _v4.a;
-					var restExpected = _v4.b;
-					var _v5 = _v1.b;
-					var firstActual = _v5.a;
-					var restActual = _v5.b;
-					if (_Utils_eq(firstExpected, firstActual)) {
-						var $temp$index = index + 1,
-							$temp$description = description,
-							$temp$_v0 = {actual: restActual, expected: restExpected},
-							$temp$originals = originals;
-						index = $temp$index;
-						description = $temp$description;
-						_v0 = $temp$_v0;
-						originals = $temp$originals;
-						continue listDiffToString;
-					} else {
-						return A2(
-							$elm$core$String$join,
-							'',
-							_List_fromArray(
-								[
-									A3(
-									$elm_explorations$test$Test$Runner$Failure$verticalBar,
-									description,
-									$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
-									$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual)),
-									'\n\nThe first diff is at index ',
-									$elm$core$String$fromInt(index),
-									': it was `',
-									firstActual,
-									'`, but `',
-									firstExpected,
-									'` was expected.'
-								]));
-					}
-				}
-			}
-		}
-	});
-var $elm_explorations$test$Test$Runner$Failure$format = F2(
-	function (description, reason) {
-		switch (reason.$) {
-			case 'Custom':
-				return description;
-			case 'Equality':
-				var e = reason.a;
-				var a = reason.b;
-				return A3($elm_explorations$test$Test$Runner$Failure$verticalBar, description, e, a);
-			case 'Comparison':
-				var e = reason.a;
-				var a = reason.b;
-				return A3($elm_explorations$test$Test$Runner$Failure$verticalBar, description, e, a);
-			case 'TODO':
-				return description;
-			case 'Invalid':
-				if (reason.a.$ === 'BadDescription') {
-					var _v1 = reason.a;
-					return (description === '') ? 'The empty string is not a valid test description.' : ('This is an invalid test description: ' + description);
-				} else {
-					return description;
-				}
-			case 'ListDiff':
-				var expected = reason.a;
-				var actual = reason.b;
-				return A4(
-					$elm_explorations$test$Test$Runner$Failure$listDiffToString,
-					0,
-					description,
-					{actual: actual, expected: expected},
-					{originalActual: actual, originalExpected: expected});
-			default:
-				var expected = reason.a.expected;
-				var actual = reason.a.actual;
-				var extra = reason.a.extra;
-				var missing = reason.a.missing;
-				var missingStr = $elm$core$List$isEmpty(missing) ? '' : ('\nThese keys are missing: ' + function (d) {
-					return '[ ' + (d + ' ]');
-				}(
-					A2($elm$core$String$join, ', ', missing)));
-				var extraStr = $elm$core$List$isEmpty(extra) ? '' : ('\nThese keys are extra: ' + function (d) {
-					return '[ ' + (d + ' ]');
-				}(
-					A2($elm$core$String$join, ', ', extra)));
-				return A2(
-					$elm$core$String$join,
-					'',
-					_List_fromArray(
-						[
-							A3($elm_explorations$test$Test$Runner$Failure$verticalBar, description, expected, actual),
-							'\n',
-							extraStr,
-							missingStr
-						]));
-		}
-	});
+var $elm$core$String$contains = _String_contains;
 var $elm_explorations$test$Test$Expectation$Pass = {$: 'Pass'};
 var $elm_explorations$test$Expect$pass = $elm_explorations$test$Test$Expectation$Pass;
-var $elm$url$Url$addPort = F2(
-	function (maybePort, starter) {
-		if (maybePort.$ === 'Nothing') {
-			return starter;
-		} else {
-			var port_ = maybePort.a;
-			return starter + (':' + $elm$core$String$fromInt(port_));
-		}
+var $elm_explorations$test$Test$Internal$toString = _Debug_toString;
+var $elm_explorations$test$Expect$testWith = F5(
+	function (makeReason, label, runTest, expected, actual) {
+		return A2(runTest, actual, expected) ? $elm_explorations$test$Expect$pass : $elm_explorations$test$Test$Expectation$fail(
+			{
+				description: label,
+				reason: A2(
+					makeReason,
+					$elm_explorations$test$Test$Internal$toString(expected),
+					$elm_explorations$test$Test$Internal$toString(actual))
+			});
 	});
-var $elm$url$Url$addPrefixed = F3(
-	function (prefix, maybeSegment, starter) {
-		if (maybeSegment.$ === 'Nothing') {
-			return starter;
-		} else {
-			var segment = maybeSegment.a;
-			return _Utils_ap(
-				starter,
-				_Utils_ap(prefix, segment));
-		}
+var $elm$core$String$toInt = _String_toInt;
+var $elm_explorations$test$Expect$equateWith = F4(
+	function (reason, comparison, b, a) {
+		var isJust = function (x) {
+			if (x.$ === 'Just') {
+				return true;
+			} else {
+				return false;
+			}
+		};
+		var isFloat = function (x) {
+			return isJust(
+				$elm$core$String$toFloat(x)) && (!isJust(
+				$elm$core$String$toInt(x)));
+		};
+		var usesFloats = isFloat(
+			$elm_explorations$test$Test$Internal$toString(a)) || isFloat(
+			$elm_explorations$test$Test$Internal$toString(b));
+		var floatError = A2($elm$core$String$contains, reason, 'not') ? 'Do not use Expect.notEqual with floats. Use Float.notWithin instead.' : 'Do not use Expect.equal with floats. Use Float.within instead.';
+		return usesFloats ? $elm_explorations$test$Expect$fail(floatError) : A5($elm_explorations$test$Expect$testWith, $elm_explorations$test$Test$Runner$Failure$Equality, reason, comparison, b, a);
 	});
-var $elm$url$Url$toString = function (url) {
-	var http = function () {
-		var _v0 = url.protocol;
-		if (_v0.$ === 'Http') {
-			return 'http://';
-		} else {
-			return 'https://';
-		}
-	}();
-	return A3(
-		$elm$url$Url$addPrefixed,
-		'#',
-		url.fragment,
-		A3(
-			$elm$url$Url$addPrefixed,
-			'?',
-			url.query,
-			_Utils_ap(
-				A2(
-					$elm$url$Url$addPort,
-					url.port_,
-					_Utils_ap(http, url.host)),
-				url.path)));
+var $elm_explorations$test$Expect$equal = A2($elm_explorations$test$Expect$equateWith, 'Expect.equal', $elm$core$Basics$eq);
+var $elm_explorations$test$Test$Internal$blankDescriptionFailure = $elm_explorations$test$Test$Internal$failNow(
+	{
+		description: 'This test has a blank description. Let\'s give it a useful one!',
+		reason: $elm_explorations$test$Test$Runner$Failure$Invalid($elm_explorations$test$Test$Runner$Failure$BadDescription)
+	});
+var $elm_explorations$test$Test$test = F2(
+	function (untrimmedDesc, thunk) {
+		var desc = $elm$core$String$trim(untrimmedDesc);
+		return $elm$core$String$isEmpty(desc) ? $elm_explorations$test$Test$Internal$blankDescriptionFailure : A2(
+			$elm_explorations$test$Test$Internal$Labeled,
+			desc,
+			$elm_explorations$test$Test$Internal$UnitTest(
+				function (_v0) {
+					return _List_fromArray(
+						[
+							thunk(_Utils_Tuple0)
+						]);
+				}));
+	});
+var $author$project$KeyboardKeyTests$stub = A2(
+	$elm_explorations$test$Test$test,
+	'Stub test',
+	function (_v0) {
+		return A2($elm_explorations$test$Expect$equal, 4, 2 + 2);
+	});
+var $author$project$KeyboardKey$CharacterKey = function (a) {
+	return {$: 'CharacterKey', a: a};
 };
-var $avh4$elm_program_test$ProgramTest$done = function (programTest) {
-	if (programTest.$ === 'Active') {
-		return $elm_explorations$test$Expect$pass;
-	} else {
-		switch (programTest.a.$) {
-			case 'ChangedPage':
-				var _v1 = programTest.a;
-				var cause = _v1.a;
-				var finalLocation = _v1.b;
-				return $elm_explorations$test$Expect$fail(
-					cause + (' caused the program to end by navigating to ' + ($avh4$elm_program_test$ProgramTest$escapeString(
-						$elm$url$Url$toString(finalLocation)) + '.  NOTE: If this is what you intended, use ProgramTest.expectPageChange to end your test.')));
-			case 'ExpectFailed':
-				var _v2 = programTest.a;
-				var expectationName = _v2.a;
-				var description = _v2.b;
-				var reason = _v2.c;
-				return $elm_explorations$test$Expect$fail(
-					expectationName + (':\n' + A2($elm_explorations$test$Test$Runner$Failure$format, description, reason)));
-			case 'SimulateFailed':
-				var _v3 = programTest.a;
-				var functionName = _v3.a;
-				var message = _v3.b;
-				return $elm_explorations$test$Expect$fail(functionName + (':\n' + message));
-			case 'SimulateFailedToFindTarget':
-				var _v4 = programTest.a;
-				var functionName = _v4.a;
-				var message = _v4.b;
-				return $elm_explorations$test$Expect$fail(functionName + (':\n' + message));
-			case 'SimulateLastEffectFailed':
-				var message = programTest.a.a;
-				return $elm_explorations$test$Expect$fail('simulateLastEffect failed: ' + message);
-			case 'InvalidLocationUrl':
-				var _v5 = programTest.a;
-				var functionName = _v5.a;
-				var invalidUrl = _v5.b;
-				return $elm_explorations$test$Expect$fail(
-					functionName + (': ' + ('Not a valid absolute URL:\n' + $avh4$elm_program_test$ProgramTest$escapeString(invalidUrl))));
-			case 'InvalidFlags':
-				var _v6 = programTest.a;
-				var functionName = _v6.a;
-				var message = _v6.b;
-				return $elm_explorations$test$Expect$fail(functionName + (':\n' + message));
-			case 'ProgramDoesNotSupportNavigation':
-				var functionName = programTest.a.a;
-				return $elm_explorations$test$Expect$fail(functionName + ': Program does not support navigation.  Use ProgramTest.createApplication to create a ProgramTest that supports navigation.');
-			case 'NoBaseUrl':
-				var _v7 = programTest.a;
-				var functionName = _v7.a;
-				var relativeUrl = _v7.b;
-				return $elm_explorations$test$Expect$fail(
-					functionName + (': The ProgramTest does not have a base URL and cannot resolve the relative URL ' + ($avh4$elm_program_test$ProgramTest$escapeString(relativeUrl) + '.  Use ProgramTest.withBaseUrl before calling ProgramTest.start to create a ProgramTest that can resolve relative URLs.')));
-			case 'NoMatchingHttpRequest':
-				var _v8 = programTest.a;
-				var functionName = _v8.a;
-				var request = _v8.b;
-				var pendingRequests = _v8.c;
-				return $elm_explorations$test$Expect$fail(
-					$elm$core$String$concat(
-						_List_fromArray(
-							[
-								functionName,
-								': ',
-								'Expected HTTP request (',
-								request.method,
-								' ',
-								request.url,
-								') to have been made, but it was not.\n',
-								function () {
-								if (!pendingRequests.b) {
-									return '    No requests were made.';
-								} else {
-									return $elm$core$String$concat(
-										_List_fromArray(
-											[
-												'    The following requests were made:\n',
-												A2(
-												$elm$core$String$join,
-												'\n',
-												A2(
-													$elm$core$List$map,
-													function (_v10) {
-														var method = _v10.a;
-														var url = _v10.b;
-														return '      - ' + (method + (' ' + url));
-													},
-													pendingRequests))
-											]));
-								}
-							}()
-							])));
-			case 'EffectSimulationNotConfigured':
-				var functionName = programTest.a.a;
-				return $elm_explorations$test$Expect$fail('TEST SETUP ERROR: In order to use ' + (functionName + ', you MUST use ProgramTest.withSimulatedEffects before calling ProgramTest.start'));
-			default:
-				var _v11 = programTest.a;
-				var assertionName = _v11.a;
-				var message = _v11.b;
-				return $elm_explorations$test$Expect$fail(assertionName + (': ' + message));
-		}
+var $author$project$Solfege$Di = {$: 'Di'};
+var $author$project$Solfege$Do = {$: 'Do'};
+var $author$project$Solfege$Fa = {$: 'Fa'};
+var $author$project$Solfege$Fi = {$: 'Fi'};
+var $author$project$Solfege$La = {$: 'La'};
+var $author$project$Solfege$Le = {$: 'Le'};
+var $author$project$Solfege$Me = {$: 'Me'};
+var $author$project$Solfege$Mi = {$: 'Mi'};
+var $author$project$Solfege$Re = {$: 'Re'};
+var $author$project$Solfege$Sol = {$: 'Sol'};
+var $author$project$Solfege$Te = {$: 'Te'};
+var $author$project$Solfege$Ti = {$: 'Ti'};
+var $elm$core$Basics$modBy = _Basics_modBy;
+var $author$project$Solfege$fromInt = function (i) {
+	var _v0 = A2($elm$core$Basics$modBy, 12, i);
+	switch (_v0) {
+		case 0:
+			return $author$project$Solfege$Do;
+		case 1:
+			return $author$project$Solfege$Di;
+		case 2:
+			return $author$project$Solfege$Re;
+		case 3:
+			return $author$project$Solfege$Me;
+		case 4:
+			return $author$project$Solfege$Mi;
+		case 5:
+			return $author$project$Solfege$Fa;
+		case 6:
+			return $author$project$Solfege$Fi;
+		case 7:
+			return $author$project$Solfege$Sol;
+		case 8:
+			return $author$project$Solfege$Le;
+		case 9:
+			return $author$project$Solfege$La;
+		case 10:
+			return $author$project$Solfege$Te;
+		case 11:
+			return $author$project$Solfege$Ti;
+		default:
+			return $author$project$Solfege$Do;
 	}
 };
+var $author$project$Solfege$fromKeyboardKey = function (key) {
+	switch (key.a) {
+		case '`':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(0));
+		case '1':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(1));
+		case '2':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(2));
+		case '3':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(3));
+		case '4':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(4));
+		case '5':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(5));
+		case '6':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(6));
+		case '7':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(7));
+		case '8':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(8));
+		case '9':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(9));
+		case '0':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(10));
+		case '-':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(11));
+		case '=':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(12));
+		default:
+			return $elm$core$Result$Err('KeyboardKey Error');
+	}
+};
+var $author$project$SolfegeTests$testGetSolfegeReturnsErrorForNonKey = A2(
+	$elm_explorations$test$Test$test,
+	'getSolfegeReturnsErrorForNonKey',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			$elm$core$Result$Err('KeyboardKey Error'),
+			$author$project$Solfege$fromKeyboardKey(
+				$author$project$KeyboardKey$CharacterKey('d')));
+	});
+var $author$project$SolfegeTests$testGetsSolfegeFromHighDo = A2(
+	$elm_explorations$test$Test$test,
+	'getsSolfegeFromHighDo',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			$elm$core$Result$Ok($author$project$Solfege$Do),
+			$author$project$Solfege$fromKeyboardKey(
+				$author$project$KeyboardKey$CharacterKey('=')));
+	});
+var $author$project$SolfegeTests$testGetsSolfegeFromValidKeyboardKey = A2(
+	$elm_explorations$test$Test$test,
+	'getsSolfegeFromValidKeyboardKey',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			$elm$core$Result$Ok($author$project$Solfege$Sol),
+			$author$project$Solfege$fromKeyboardKey(
+				$author$project$KeyboardKey$CharacterKey('7')));
+	});
 var $avh4$elm_program_test$ProgramTest$ExpectFailed = F3(
 	function (a, b, c) {
 		return {$: 'ExpectFailed', a: a, b: b, c: c};
@@ -8982,7 +8870,6 @@ var $elm_explorations$test$Test$Html$Query$Internal$getElementAtHelp = F2(
 			}
 		}
 	});
-var $elm$core$Basics$modBy = _Basics_modBy;
 var $elm_explorations$test$Test$Html$Query$Internal$getElementAt = F2(
 	function (index, list) {
 		var length = $elm$core$List$length(list);
@@ -9071,7 +8958,6 @@ var $elm_explorations$test$Test$Html$Query$Internal$joinAsList = F2(
 			', ',
 			A2($elm$core$List$map, toStr, list)) + ' ]'));
 	});
-var $elm$core$String$contains = _String_contains;
 var $elm_explorations$test$Test$Html$Internal$ElmHtml$InternalTypes$MarkdownNode = function (a) {
 	return {$: 'MarkdownNode', a: a};
 };
@@ -9939,6 +9825,312 @@ var $elm_explorations$test$Test$Html$Query$has = F2(
 			query,
 			A2($elm_explorations$test$Test$Html$Query$Internal$has, selectors, query));
 	});
+var $avh4$elm_program_test$ProgramTest$ensureViewHas = F2(
+	function (selector, programTest) {
+		return A3(
+			$avh4$elm_program_test$ProgramTest$expectViewHelper,
+			'ensureViewHas',
+			$elm_explorations$test$Test$Html$Query$has(selector),
+			programTest);
+	});
+var $elm$core$String$concat = function (strings) {
+	return A2($elm$core$String$join, '', strings);
+};
+var $avh4$elm_program_test$ProgramTest$escapeString = function (s) {
+	return '\"' + (s + '\"');
+};
+var $elm_explorations$test$Test$Runner$Failure$toStringLists = $elm$core$String$join(', ');
+var $elm_explorations$test$Test$Runner$Failure$verticalBar = F3(
+	function (comparison, expected, actual) {
+		return A2(
+			$elm$core$String$join,
+			'\n',
+			_List_fromArray(
+				[actual, '╵', '│ ' + comparison, '╷', expected]));
+	});
+var $elm_explorations$test$Test$Runner$Failure$listDiffToString = F4(
+	function (index, description, _v0, originals) {
+		listDiffToString:
+		while (true) {
+			var expected = _v0.expected;
+			var actual = _v0.actual;
+			var _v1 = _Utils_Tuple2(expected, actual);
+			if (!_v1.a.b) {
+				if (!_v1.b.b) {
+					return A2(
+						$elm$core$String$join,
+						'',
+						_List_fromArray(
+							[
+								'Two lists were unequal previously, yet ended up equal later.',
+								'This should never happen!',
+								'Please report this bug to https://github.com/elm-community/elm-test/issues - and include these lists: ',
+								'\n',
+								$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
+								'\n',
+								$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual)
+							]));
+				} else {
+					var _v3 = _v1.b;
+					var first = _v3.a;
+					return A3(
+						$elm_explorations$test$Test$Runner$Failure$verticalBar,
+						description + ' was longer than',
+						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
+						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual));
+				}
+			} else {
+				if (!_v1.b.b) {
+					var _v2 = _v1.a;
+					var first = _v2.a;
+					return A3(
+						$elm_explorations$test$Test$Runner$Failure$verticalBar,
+						description + ' was shorter than',
+						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
+						$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual));
+				} else {
+					var _v4 = _v1.a;
+					var firstExpected = _v4.a;
+					var restExpected = _v4.b;
+					var _v5 = _v1.b;
+					var firstActual = _v5.a;
+					var restActual = _v5.b;
+					if (_Utils_eq(firstExpected, firstActual)) {
+						var $temp$index = index + 1,
+							$temp$description = description,
+							$temp$_v0 = {actual: restActual, expected: restExpected},
+							$temp$originals = originals;
+						index = $temp$index;
+						description = $temp$description;
+						_v0 = $temp$_v0;
+						originals = $temp$originals;
+						continue listDiffToString;
+					} else {
+						return A2(
+							$elm$core$String$join,
+							'',
+							_List_fromArray(
+								[
+									A3(
+									$elm_explorations$test$Test$Runner$Failure$verticalBar,
+									description,
+									$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalExpected),
+									$elm_explorations$test$Test$Runner$Failure$toStringLists(originals.originalActual)),
+									'\n\nThe first diff is at index ',
+									$elm$core$String$fromInt(index),
+									': it was `',
+									firstActual,
+									'`, but `',
+									firstExpected,
+									'` was expected.'
+								]));
+					}
+				}
+			}
+		}
+	});
+var $elm_explorations$test$Test$Runner$Failure$format = F2(
+	function (description, reason) {
+		switch (reason.$) {
+			case 'Custom':
+				return description;
+			case 'Equality':
+				var e = reason.a;
+				var a = reason.b;
+				return A3($elm_explorations$test$Test$Runner$Failure$verticalBar, description, e, a);
+			case 'Comparison':
+				var e = reason.a;
+				var a = reason.b;
+				return A3($elm_explorations$test$Test$Runner$Failure$verticalBar, description, e, a);
+			case 'TODO':
+				return description;
+			case 'Invalid':
+				if (reason.a.$ === 'BadDescription') {
+					var _v1 = reason.a;
+					return (description === '') ? 'The empty string is not a valid test description.' : ('This is an invalid test description: ' + description);
+				} else {
+					return description;
+				}
+			case 'ListDiff':
+				var expected = reason.a;
+				var actual = reason.b;
+				return A4(
+					$elm_explorations$test$Test$Runner$Failure$listDiffToString,
+					0,
+					description,
+					{actual: actual, expected: expected},
+					{originalActual: actual, originalExpected: expected});
+			default:
+				var expected = reason.a.expected;
+				var actual = reason.a.actual;
+				var extra = reason.a.extra;
+				var missing = reason.a.missing;
+				var missingStr = $elm$core$List$isEmpty(missing) ? '' : ('\nThese keys are missing: ' + function (d) {
+					return '[ ' + (d + ' ]');
+				}(
+					A2($elm$core$String$join, ', ', missing)));
+				var extraStr = $elm$core$List$isEmpty(extra) ? '' : ('\nThese keys are extra: ' + function (d) {
+					return '[ ' + (d + ' ]');
+				}(
+					A2($elm$core$String$join, ', ', extra)));
+				return A2(
+					$elm$core$String$join,
+					'',
+					_List_fromArray(
+						[
+							A3($elm_explorations$test$Test$Runner$Failure$verticalBar, description, expected, actual),
+							'\n',
+							extraStr,
+							missingStr
+						]));
+		}
+	});
+var $elm$url$Url$addPort = F2(
+	function (maybePort, starter) {
+		if (maybePort.$ === 'Nothing') {
+			return starter;
+		} else {
+			var port_ = maybePort.a;
+			return starter + (':' + $elm$core$String$fromInt(port_));
+		}
+	});
+var $elm$url$Url$addPrefixed = F3(
+	function (prefix, maybeSegment, starter) {
+		if (maybeSegment.$ === 'Nothing') {
+			return starter;
+		} else {
+			var segment = maybeSegment.a;
+			return _Utils_ap(
+				starter,
+				_Utils_ap(prefix, segment));
+		}
+	});
+var $elm$url$Url$toString = function (url) {
+	var http = function () {
+		var _v0 = url.protocol;
+		if (_v0.$ === 'Http') {
+			return 'http://';
+		} else {
+			return 'https://';
+		}
+	}();
+	return A3(
+		$elm$url$Url$addPrefixed,
+		'#',
+		url.fragment,
+		A3(
+			$elm$url$Url$addPrefixed,
+			'?',
+			url.query,
+			_Utils_ap(
+				A2(
+					$elm$url$Url$addPort,
+					url.port_,
+					_Utils_ap(http, url.host)),
+				url.path)));
+};
+var $avh4$elm_program_test$ProgramTest$done = function (programTest) {
+	if (programTest.$ === 'Active') {
+		return $elm_explorations$test$Expect$pass;
+	} else {
+		switch (programTest.a.$) {
+			case 'ChangedPage':
+				var _v1 = programTest.a;
+				var cause = _v1.a;
+				var finalLocation = _v1.b;
+				return $elm_explorations$test$Expect$fail(
+					cause + (' caused the program to end by navigating to ' + ($avh4$elm_program_test$ProgramTest$escapeString(
+						$elm$url$Url$toString(finalLocation)) + '.  NOTE: If this is what you intended, use ProgramTest.expectPageChange to end your test.')));
+			case 'ExpectFailed':
+				var _v2 = programTest.a;
+				var expectationName = _v2.a;
+				var description = _v2.b;
+				var reason = _v2.c;
+				return $elm_explorations$test$Expect$fail(
+					expectationName + (':\n' + A2($elm_explorations$test$Test$Runner$Failure$format, description, reason)));
+			case 'SimulateFailed':
+				var _v3 = programTest.a;
+				var functionName = _v3.a;
+				var message = _v3.b;
+				return $elm_explorations$test$Expect$fail(functionName + (':\n' + message));
+			case 'SimulateFailedToFindTarget':
+				var _v4 = programTest.a;
+				var functionName = _v4.a;
+				var message = _v4.b;
+				return $elm_explorations$test$Expect$fail(functionName + (':\n' + message));
+			case 'SimulateLastEffectFailed':
+				var message = programTest.a.a;
+				return $elm_explorations$test$Expect$fail('simulateLastEffect failed: ' + message);
+			case 'InvalidLocationUrl':
+				var _v5 = programTest.a;
+				var functionName = _v5.a;
+				var invalidUrl = _v5.b;
+				return $elm_explorations$test$Expect$fail(
+					functionName + (': ' + ('Not a valid absolute URL:\n' + $avh4$elm_program_test$ProgramTest$escapeString(invalidUrl))));
+			case 'InvalidFlags':
+				var _v6 = programTest.a;
+				var functionName = _v6.a;
+				var message = _v6.b;
+				return $elm_explorations$test$Expect$fail(functionName + (':\n' + message));
+			case 'ProgramDoesNotSupportNavigation':
+				var functionName = programTest.a.a;
+				return $elm_explorations$test$Expect$fail(functionName + ': Program does not support navigation.  Use ProgramTest.createApplication to create a ProgramTest that supports navigation.');
+			case 'NoBaseUrl':
+				var _v7 = programTest.a;
+				var functionName = _v7.a;
+				var relativeUrl = _v7.b;
+				return $elm_explorations$test$Expect$fail(
+					functionName + (': The ProgramTest does not have a base URL and cannot resolve the relative URL ' + ($avh4$elm_program_test$ProgramTest$escapeString(relativeUrl) + '.  Use ProgramTest.withBaseUrl before calling ProgramTest.start to create a ProgramTest that can resolve relative URLs.')));
+			case 'NoMatchingHttpRequest':
+				var _v8 = programTest.a;
+				var functionName = _v8.a;
+				var request = _v8.b;
+				var pendingRequests = _v8.c;
+				return $elm_explorations$test$Expect$fail(
+					$elm$core$String$concat(
+						_List_fromArray(
+							[
+								functionName,
+								': ',
+								'Expected HTTP request (',
+								request.method,
+								' ',
+								request.url,
+								') to have been made, but it was not.\n',
+								function () {
+								if (!pendingRequests.b) {
+									return '    No requests were made.';
+								} else {
+									return $elm$core$String$concat(
+										_List_fromArray(
+											[
+												'    The following requests were made:\n',
+												A2(
+												$elm$core$String$join,
+												'\n',
+												A2(
+													$elm$core$List$map,
+													function (_v10) {
+														var method = _v10.a;
+														var url = _v10.b;
+														return '      - ' + (method + (' ' + url));
+													},
+													pendingRequests))
+											]));
+								}
+							}()
+							])));
+			case 'EffectSimulationNotConfigured':
+				var functionName = programTest.a.a;
+				return $elm_explorations$test$Expect$fail('TEST SETUP ERROR: In order to use ' + (functionName + ', you MUST use ProgramTest.withSimulatedEffects before calling ProgramTest.start'));
+			default:
+				var _v11 = programTest.a;
+				var assertionName = _v11.a;
+				var message = _v11.b;
+				return $elm_explorations$test$Expect$fail(assertionName + (': ' + message));
+		}
+	}
+};
 var $avh4$elm_program_test$ProgramTest$expectViewHas = F2(
 	function (selector, programTest) {
 		return $avh4$elm_program_test$ProgramTest$done(
@@ -10236,7 +10428,6 @@ var $elm$core$String$left = F2(
 	function (n, string) {
 		return (n < 1) ? '' : A3($elm$core$String$slice, 0, n, string);
 	});
-var $elm$core$String$toInt = _String_toInt;
 var $elm$url$Url$chompBeforePath = F5(
 	function (protocol, path, params, frag, str) {
 		if ($elm$core$String$isEmpty(str) || A2($elm$core$String$contains, '@', str)) {
@@ -11726,6 +11917,58 @@ var $elm$core$Basics$never = function (_v0) {
 	}
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $author$project$Solfege$toInt = function (s) {
+	switch (s.$) {
+		case 'Do':
+			return 0;
+		case 'Di':
+			return 1;
+		case 'Re':
+			return 2;
+		case 'Me':
+			return 3;
+		case 'Mi':
+			return 4;
+		case 'Fa':
+			return 5;
+		case 'Fi':
+			return 6;
+		case 'Sol':
+			return 7;
+		case 'Le':
+			return 8;
+		case 'La':
+			return 9;
+		case 'Te':
+			return 10;
+		default:
+			return 11;
+	}
+};
+var $author$project$Main$pressKeyOnModel = F2(
+	function (model, solfege) {
+		return _Utils_update(
+			model,
+			{
+				isKeyPressed: A3(
+					$elm$core$Dict$insert,
+					$author$project$Solfege$toInt(solfege),
+					true,
+					model.isKeyPressed)
+			});
+	});
+var $author$project$Main$releaseKeyOnModel = F2(
+	function (model, solfege) {
+		return _Utils_update(
+			model,
+			{
+				isKeyPressed: A3(
+					$elm$core$Dict$insert,
+					$author$project$Solfege$toInt(solfege),
+					false,
+					model.isKeyPressed)
+			});
+	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -11736,23 +11979,43 @@ var $author$project$Main$update = F2(
 					$elm$browser$Browser$Navigation$load(
 						$elm$url$Url$toString(url)));
 			case 'MouseDownOn':
-				var key = msg.a;
+				var i = msg.a;
+				var _v1 = $author$project$Solfege$fromInt(i);
+				var key = _v1;
 				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							isKeyPressed: A3($elm$core$Dict$insert, key, true, model.isKeyPressed)
-						}),
+					A2($author$project$Main$pressKeyOnModel, model, key),
 					$elm$core$Platform$Cmd$none);
+			case 'MouseUpOn':
+				var i = msg.a;
+				var _v2 = $author$project$Solfege$fromInt(i);
+				var key = _v2;
+				return _Utils_Tuple2(
+					A2($author$project$Main$releaseKeyOnModel, model, key),
+					$elm$core$Platform$Cmd$none);
+			case 'KeyDownOn':
+				var keyboardKey = msg.a;
+				var _v3 = $author$project$Solfege$fromKeyboardKey(keyboardKey);
+				if (_v3.$ === 'Ok') {
+					var key = _v3.a;
+					return _Utils_Tuple2(
+						A2($author$project$Main$pressKeyOnModel, model, key),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					var s = _v3.a;
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
 			default:
-				var key = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							isKeyPressed: A3($elm$core$Dict$insert, key, false, model.isKeyPressed)
-						}),
-					$elm$core$Platform$Cmd$none);
+				var keyboardKey = msg.a;
+				var _v4 = $author$project$Solfege$fromKeyboardKey(keyboardKey);
+				if (_v4.$ === 'Ok') {
+					var key = _v4.a;
+					return _Utils_Tuple2(
+						A2($author$project$Main$releaseKeyOnModel, model, key),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					var s = _v4.a;
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
 		}
 	});
 var $elm$browser$Browser$Document = F2(
@@ -11776,49 +12039,6 @@ var $author$project$Main$MouseUpOn = function (a) {
 };
 var $author$project$Main$getKeyName = function (n) {
 	return 'key-' + $elm$core$String$fromInt(n);
-};
-var $author$project$Solfege$Di = {$: 'Di'};
-var $author$project$Solfege$Do = {$: 'Do'};
-var $author$project$Solfege$Fa = {$: 'Fa'};
-var $author$project$Solfege$Fi = {$: 'Fi'};
-var $author$project$Solfege$La = {$: 'La'};
-var $author$project$Solfege$Le = {$: 'Le'};
-var $author$project$Solfege$Me = {$: 'Me'};
-var $author$project$Solfege$Mi = {$: 'Mi'};
-var $author$project$Solfege$Re = {$: 'Re'};
-var $author$project$Solfege$Sol = {$: 'Sol'};
-var $author$project$Solfege$Te = {$: 'Te'};
-var $author$project$Solfege$Ti = {$: 'Ti'};
-var $author$project$Solfege$getSolfege = function (i) {
-	var _v0 = A2($elm$core$Basics$modBy, 12, i);
-	switch (_v0) {
-		case 0:
-			return $author$project$Solfege$Do;
-		case 1:
-			return $author$project$Solfege$Di;
-		case 2:
-			return $author$project$Solfege$Re;
-		case 3:
-			return $author$project$Solfege$Me;
-		case 4:
-			return $author$project$Solfege$Mi;
-		case 5:
-			return $author$project$Solfege$Fa;
-		case 6:
-			return $author$project$Solfege$Fi;
-		case 7:
-			return $author$project$Solfege$Sol;
-		case 8:
-			return $author$project$Solfege$Le;
-		case 9:
-			return $author$project$Solfege$La;
-		case 10:
-			return $author$project$Solfege$Te;
-		case 11:
-			return $author$project$Solfege$Ti;
-		default:
-			return $author$project$Solfege$Do;
-	}
 };
 var $author$project$Solfege$getSolfegeName = function (s) {
 	switch (s.$) {
@@ -11870,7 +12090,7 @@ var $author$project$Main$getLabelFromKey = F2(
 			return A2(
 				$author$project$Main$showTextOrNothing,
 				$author$project$Solfege$getSolfegeName(
-					$author$project$Solfege$getSolfege(key)),
+					$author$project$Solfege$fromInt(key)),
 				_switch);
 		}
 	});
@@ -11986,32 +12206,13 @@ var $author$project$MainTests$startProgramForTesting = F2(
 				$avh4$elm_program_test$ProgramTest$createApplication(
 					{init: $author$project$Main$init, onUrlChange: $author$project$Main$ChangeUrl, onUrlRequest: $author$project$Main$loadUrlFromUrlRequest, update: $author$project$Main$update, view: $author$project$Main$view})));
 	});
-var $elm_explorations$test$Test$Internal$blankDescriptionFailure = $elm_explorations$test$Test$Internal$failNow(
-	{
-		description: 'This test has a blank description. Let\'s give it a useful one!',
-		reason: $elm_explorations$test$Test$Runner$Failure$Invalid($elm_explorations$test$Test$Runner$Failure$BadDescription)
-	});
-var $elm_explorations$test$Test$test = F2(
-	function (untrimmedDesc, thunk) {
-		var desc = $elm$core$String$trim(untrimmedDesc);
-		return $elm$core$String$isEmpty(desc) ? $elm_explorations$test$Test$Internal$blankDescriptionFailure : A2(
-			$elm_explorations$test$Test$Internal$Labeled,
-			desc,
-			$elm_explorations$test$Test$Internal$UnitTest(
-				function (_v0) {
-					return _List_fromArray(
-						[
-							thunk(_Utils_Tuple0)
-						]);
-				}));
-	});
 var $elm_explorations$test$Test$Html$Selector$Internal$Text = function (a) {
 	return {$: 'Text', a: a};
 };
 var $elm_explorations$test$Test$Html$Selector$text = $elm_explorations$test$Test$Html$Selector$Internal$Text;
-var $author$project$MainTests$testKeyClickAndReleaseResultsInNoText = A2(
+var $author$project$MainTests$testKeyClickDisplaysSolfege = A2(
 	$elm_explorations$test$Test$test,
-	'keyClickAndReleaseResultsInNoText',
+	'keyClickDisplaysSolfege',
 	function (_v0) {
 		return A2(
 			$avh4$elm_program_test$ProgramTest$expectViewHas,
@@ -12028,33 +12229,20 @@ var $author$project$MainTests$testKeyClickAndReleaseResultsInNoText = A2(
 							$elm_explorations$test$Test$Html$Selector$id('key-4')
 						])),
 				A2(
-					$author$project$MainTests$mouseDown,
-					$elm_explorations$test$Test$Html$Query$find(
-						_List_fromArray(
-							[
-								$elm_explorations$test$Test$Html$Selector$id('key-4')
-							])),
-					A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0))));
-	});
-var $author$project$MainTests$testKeyClickSendsKeyPressedMessage = A2(
-	$elm_explorations$test$Test$test,
-	'keyClickSendsKeyPressedMessage',
-	function (_v0) {
-		return A2(
-			$avh4$elm_program_test$ProgramTest$expectViewHas,
-			_List_fromArray(
-				[
-					$elm_explorations$test$Test$Html$Selector$id('key-11'),
-					$elm_explorations$test$Test$Html$Selector$text('Ti')
-				]),
-			A2(
-				$author$project$MainTests$mouseDown,
-				$elm_explorations$test$Test$Html$Query$find(
+					$avh4$elm_program_test$ProgramTest$ensureViewHas,
 					_List_fromArray(
 						[
-							$elm_explorations$test$Test$Html$Selector$id('key-11')
-						])),
-				A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0)));
+							$elm_explorations$test$Test$Html$Selector$id('key-11'),
+							$elm_explorations$test$Test$Html$Selector$text('Ti')
+						]),
+					A2(
+						$author$project$MainTests$mouseDown,
+						$elm_explorations$test$Test$Html$Query$find(
+							_List_fromArray(
+								[
+									$elm_explorations$test$Test$Html$Selector$id('key-11')
+								])),
+						A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0)))));
 	});
 var $author$project$MainTests$testKeyRenders = A2(
 	$elm_explorations$test$Test$test,
@@ -12072,6 +12260,65 @@ var $author$project$MainTests$testKeyRenders = A2(
 					$author$project$Main$Model($elm$core$Dict$empty),
 					57)));
 	});
+var $elm_explorations$test$Test$Html$Event$custom = $elm$core$Tuple$pair;
+var $author$project$KeyboardKey$toString = function (key) {
+	var s = key.a;
+	return s;
+};
+var $author$project$MainTests$keyboardKeyObject = function (key) {
+	return $elm$json$Json$Encode$object(
+		_List_fromArray(
+			[
+				_Utils_Tuple2(
+				'key',
+				$elm$json$Json$Encode$string(
+					$author$project$KeyboardKey$toString(key)))
+			]));
+};
+var $author$project$MainTests$keyboardKeyDown = function (key) {
+	return A2(
+		$avh4$elm_program_test$ProgramTest$simulateDomEvent,
+		$elm$core$Basics$identity,
+		A2(
+			$elm_explorations$test$Test$Html$Event$custom,
+			'keydown',
+			$author$project$MainTests$keyboardKeyObject(key)));
+};
+var $author$project$MainTests$keyboardKeyUp = function (key) {
+	return A2(
+		$avh4$elm_program_test$ProgramTest$simulateDomEvent,
+		$elm$core$Basics$identity,
+		A2(
+			$elm_explorations$test$Test$Html$Event$custom,
+			'keyup',
+			$author$project$MainTests$keyboardKeyObject(key)));
+};
+var $author$project$MainTests$testKeyboardKeyPressDisplaysSolfege = A2(
+	$elm_explorations$test$Test$test,
+	'keyboardKeyPressDisplaysSolfege',
+	function (_v0) {
+		return A2(
+			$avh4$elm_program_test$ProgramTest$expectViewHas,
+			_List_fromArray(
+				[
+					$elm_explorations$test$Test$Html$Selector$id('key-5'),
+					$elm_explorations$test$Test$Html$Selector$text('')
+				]),
+			A2(
+				$author$project$MainTests$keyboardKeyUp,
+				$author$project$KeyboardKey$CharacterKey('5'),
+				A2(
+					$avh4$elm_program_test$ProgramTest$ensureViewHas,
+					_List_fromArray(
+						[
+							$elm_explorations$test$Test$Html$Selector$id('key-5'),
+							$elm_explorations$test$Test$Html$Selector$text('Fa')
+						]),
+					A2(
+						$author$project$MainTests$keyboardKeyDown,
+						$author$project$KeyboardKey$CharacterKey('5'),
+						A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0)))));
+	});
 var $author$project$MainTests$getKeySelector = function (i) {
 	return $elm_explorations$test$Test$Html$Selector$id(
 		'key-' + $elm$core$String$fromInt(i));
@@ -12087,6 +12334,23 @@ var $author$project$MainTests$testPageHasTwelveKeys = A2(
 				$author$project$MainTests$getKeySelector,
 				A2($elm$core$List$range, 0, 11)),
 			A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0));
+	});
+var $author$project$MainTests$stubInitModel = A3(
+	$author$project$Main$init,
+	_Utils_Tuple0,
+	A6($elm$url$Url$Url, $elm$url$Url$Http, 'mystubbedtestsolfegeapp.com', $elm$core$Maybe$Nothing, '', $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing),
+	_Utils_Tuple0);
+var $author$project$MainTests$testPressKeyOnModel = A2(
+	$elm_explorations$test$Test$test,
+	'pressesKeyOnModel',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			$elm$core$Maybe$Just(true),
+			A2(
+				$elm$core$Dict$get,
+				5,
+				A2($author$project$Main$pressKeyOnModel, $author$project$MainTests$stubInitModel.a, $author$project$Solfege$Fa).isKeyPressed));
 	});
 var $elm_explorations$test$Test$Html$Selector$Internal$Class = function (a) {
 	return {$: 'Class', a: a};
@@ -12120,43 +12384,6 @@ var $elm_explorations$test$Test$Html$Query$count = F2(
 					expect,
 					A3($elm_explorations$test$Test$Html$Query$Internal$failWithQuery, showTrace, 'Query.count', query))));
 	});
-var $elm_explorations$test$Test$Runner$Failure$Equality = F2(
-	function (a, b) {
-		return {$: 'Equality', a: a, b: b};
-	});
-var $elm_explorations$test$Test$Internal$toString = _Debug_toString;
-var $elm_explorations$test$Expect$testWith = F5(
-	function (makeReason, label, runTest, expected, actual) {
-		return A2(runTest, actual, expected) ? $elm_explorations$test$Expect$pass : $elm_explorations$test$Test$Expectation$fail(
-			{
-				description: label,
-				reason: A2(
-					makeReason,
-					$elm_explorations$test$Test$Internal$toString(expected),
-					$elm_explorations$test$Test$Internal$toString(actual))
-			});
-	});
-var $elm_explorations$test$Expect$equateWith = F4(
-	function (reason, comparison, b, a) {
-		var isJust = function (x) {
-			if (x.$ === 'Just') {
-				return true;
-			} else {
-				return false;
-			}
-		};
-		var isFloat = function (x) {
-			return isJust(
-				$elm$core$String$toFloat(x)) && (!isJust(
-				$elm$core$String$toInt(x)));
-		};
-		var usesFloats = isFloat(
-			$elm_explorations$test$Test$Internal$toString(a)) || isFloat(
-			$elm_explorations$test$Test$Internal$toString(b));
-		var floatError = A2($elm$core$String$contains, reason, 'not') ? 'Do not use Expect.notEqual with floats. Use Float.notWithin instead.' : 'Do not use Expect.equal with floats. Use Float.within instead.';
-		return usesFloats ? $elm_explorations$test$Expect$fail(floatError) : A5($elm_explorations$test$Expect$testWith, $elm_explorations$test$Test$Runner$Failure$Equality, reason, comparison, b, a);
-	});
-var $elm_explorations$test$Expect$equal = A2($elm_explorations$test$Expect$equateWith, 'Expect.equal', $elm$core$Basics$eq);
 var $elm_explorations$test$Test$Html$Query$Internal$FindAll = function (a) {
 	return {$: 'FindAll', a: a};
 };
@@ -12223,7 +12450,7 @@ var $author$project$SolfegeTests$testSolfegeGets = A2(
 				[$author$project$Solfege$Do, $author$project$Solfege$Di, $author$project$Solfege$Re, $author$project$Solfege$Me, $author$project$Solfege$Mi, $author$project$Solfege$Fa, $author$project$Solfege$Fi, $author$project$Solfege$Sol, $author$project$Solfege$Le, $author$project$Solfege$La, $author$project$Solfege$Te, $author$project$Solfege$Ti, $author$project$Solfege$Do, $author$project$Solfege$Di, $author$project$Solfege$Re, $author$project$Solfege$Me]),
 			A2(
 				$elm$core$List$map,
-				$author$project$Solfege$getSolfege,
+				$author$project$Solfege$fromInt,
 				A2($elm$core$List$range, 0, 15)));
 	});
 var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
@@ -12236,18 +12463,18 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				['Do', 'Di', 'Re', 'Me', 'Mi', 'Fa', 'Fi', 'Sol', 'Le', 'La', 'Te', 'Ti', 'Do', 'Di', 'Re', 'Me']),
 			A2(
 				$elm$core$List$map,
-				A2($elm$core$Basics$composeR, $author$project$Solfege$getSolfege, $author$project$Solfege$getSolfegeName),
+				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$getSolfegeName),
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Test$Generated$Main299715943$main = A2(
+var $author$project$Test$Generated$Main4020376027$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
-			['/Users/christopherdugan/elm_projects/solfeger/tests/MainTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/SolfegeTests.elm']),
+			['/Users/christopherdugan/elm_projects/solfeger/tests/KeyboardKeyTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/MainTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/SolfegeTests.elm']),
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 207302378192161
+		seed: 133872650682946
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -12256,17 +12483,22 @@ var $author$project$Test$Generated$Main299715943$main = A2(
 				$elm_explorations$test$Test$describe,
 				'MainTests',
 				_List_fromArray(
-					[$author$project$MainTests$testKeyClickAndReleaseResultsInNoText, $author$project$MainTests$testShowTextShowsAlternateTextWhenFalse, $author$project$MainTests$testPageHasTwelveKeys, $author$project$MainTests$testKeyClickSendsKeyPressedMessage, $author$project$MainTests$testRenderKeysRendersTheCorrectNumberOfKeys, $author$project$MainTests$testShowTextShowsTextWhenTrue, $author$project$MainTests$testKeyRenders])),
+					[$author$project$MainTests$testShowTextShowsAlternateTextWhenFalse, $author$project$MainTests$testKeyClickDisplaysSolfege, $author$project$MainTests$testPageHasTwelveKeys, $author$project$MainTests$testRenderKeysRendersTheCorrectNumberOfKeys, $author$project$MainTests$testKeyboardKeyPressDisplaysSolfege, $author$project$MainTests$testShowTextShowsTextWhenTrue, $author$project$MainTests$testKeyRenders, $author$project$MainTests$testPressKeyOnModel])),
 				A2(
 				$elm_explorations$test$Test$describe,
 				'SolfegeTests',
 				_List_fromArray(
-					[$author$project$SolfegeTests$testSolfegeGets, $author$project$SolfegeTests$testSolfegeGetsNames]))
+					[$author$project$SolfegeTests$testGetsSolfegeFromValidKeyboardKey, $author$project$SolfegeTests$testSolfegeGets, $author$project$SolfegeTests$testGetSolfegeReturnsErrorForNonKey, $author$project$SolfegeTests$testSolfegeGetsNames, $author$project$SolfegeTests$testGetsSolfegeFromHighDo])),
+				A2(
+				$elm_explorations$test$Test$describe,
+				'KeyboardKeyTests',
+				_List_fromArray(
+					[$author$project$KeyboardKeyTests$stub]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main299715943':{'init':$author$project$Test$Generated$Main299715943$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main4020376027':{'init':$author$project$Test$Generated$Main4020376027$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-83095.sock";
+var pipeFilename = "/tmp/elm_test-84983.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

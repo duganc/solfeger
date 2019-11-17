@@ -1,12 +1,16 @@
 module Main exposing (..)
 
 import Browser exposing (Document, UrlRequest(..), application)
+import Browser.Events exposing (onKeyDown, onKeyUp)
 import Browser.Navigation exposing (Key, load, pushUrl)
 import Dict exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Json.Decode as Decode exposing (Decoder)
+import KeyboardKey exposing (..)
 import List exposing (range)
+import Platform.Sub exposing (batch)
 import Solfege exposing (..)
 import String exposing (fromInt)
 import Url exposing (Protocol(..), Url, fromString, toString)
@@ -48,13 +52,43 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ChangeUrl url ->
-            ( model, toString url |> load )
+            ( model, Url.toString url |> load )
 
-        MouseDownOn key ->
-            ( { model | isKeyPressed = Dict.insert key True model.isKeyPressed }, Cmd.none )
+        MouseDownOn i ->
+            case Solfege.fromInt i of
+                key ->
+                    ( pressKeyOnModel model key, Cmd.none )
 
-        MouseUpOn key ->
-            ( { model | isKeyPressed = Dict.insert key False model.isKeyPressed }, Cmd.none )
+        MouseUpOn i ->
+            case Solfege.fromInt i of
+                key ->
+                    ( releaseKeyOnModel model key, Cmd.none )
+
+        KeyDownOn keyboardKey ->
+            case fromKeyboardKey keyboardKey of
+                Ok key ->
+                    ( pressKeyOnModel model key, Cmd.none )
+
+                Err s ->
+                    ( model, Cmd.none )
+
+        KeyUpOn keyboardKey ->
+            case fromKeyboardKey keyboardKey of
+                Ok key ->
+                    ( releaseKeyOnModel model key, Cmd.none )
+
+                Err s ->
+                    ( model, Cmd.none )
+
+
+pressKeyOnModel : Model -> Solfege -> Model
+pressKeyOnModel model solfege =
+    { model | isKeyPressed = Dict.insert (Solfege.toInt solfege) True model.isKeyPressed }
+
+
+releaseKeyOnModel : Model -> Solfege -> Model
+releaseKeyOnModel model solfege =
+    { model | isKeyPressed = Dict.insert (Solfege.toInt solfege) False model.isKeyPressed }
 
 
 urlRequestToUrl : UrlRequest -> Url
@@ -83,7 +117,20 @@ loadUrlFromUrlRequest =
 
 subscriptions : model -> Sub Msg
 subscriptions model =
-    Sub.none
+    batch
+        [ Browser.Events.onKeyDown keyDownDecoder
+        , Browser.Events.onKeyUp keyUpDecoder
+        ]
+
+
+keyDownDecoder : Decode.Decoder Msg
+keyDownDecoder =
+    Decode.map KeyDownOn keyDecoder
+
+
+keyUpDecoder : Decode.Decoder Msg
+keyUpDecoder =
+    Decode.map KeyUpOn keyDecoder
 
 
 
@@ -94,6 +141,8 @@ type Msg
     = ChangeUrl Url
     | MouseDownOn Int
     | MouseUpOn Int
+    | KeyDownOn KeyboardKey
+    | KeyUpOn KeyboardKey
 
 
 view : Model -> Document Msg
@@ -108,12 +157,18 @@ renderKeys model n =
 
 renderKey : Model -> Int -> Html Msg
 renderKey model n =
-    div [ class "key", id (getKeyName n), onMouseDown (MouseDownOn n), onMouseUp (MouseUpOn n) ] [ text (getLabelFromKey model.isKeyPressed n) ]
+    div
+        [ class "key"
+        , id (getKeyName n)
+        , onMouseDown (MouseDownOn n)
+        , onMouseUp (MouseUpOn n)
+        ]
+        [ text (getLabelFromKey model.isKeyPressed n) ]
 
 
 getKeyName : Int -> String
 getKeyName n =
-    "key-" ++ fromInt n
+    "key-" ++ String.fromInt n
 
 
 getLabelFromKey : Dict Int Bool -> Int -> String
@@ -123,7 +178,7 @@ getLabelFromKey isKeyPressed key =
             "Error!"
 
         Just switch ->
-            showTextOrNothing (getSolfege key |> getSolfegeName) switch
+            showTextOrNothing (Solfege.fromInt key |> getSolfegeName) switch
 
 
 showTextOrNothing : String -> Bool -> String

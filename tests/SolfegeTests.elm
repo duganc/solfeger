@@ -2,6 +2,7 @@ module SolfegeTests exposing (..)
 
 import Expect exposing (Expectation)
 import Html exposing (..)
+import KeyboardKey exposing (..)
 import List exposing (range)
 import Solfege exposing (..)
 import String exposing (fromInt)
@@ -16,7 +17,7 @@ testSolfegeGets =
     test "getsSolfege" <|
         \() ->
             range 0 15
-                |> List.map getSolfege
+                |> List.map Solfege.fromInt
                 |> Expect.equal [ Do, Di, Re, Me, Mi, Fa, Fi, Sol, Le, La, Te, Ti, Do, Di, Re, Me ]
 
 
@@ -25,5 +26,32 @@ testSolfegeGetsNames =
     test "solfegeGetsNames" <|
         \() ->
             range 0 15
-                |> List.map (getSolfege >> getSolfegeName)
+                |> List.map (Solfege.fromInt >> getSolfegeName)
                 |> Expect.equal [ "Do", "Di", "Re", "Me", "Mi", "Fa", "Fi", "Sol", "Le", "La", "Te", "Ti", "Do", "Di", "Re", "Me" ]
+
+
+testGetsSolfegeFromValidKeyboardKey : Test
+testGetsSolfegeFromValidKeyboardKey =
+    test "getsSolfegeFromValidKeyboardKey" <|
+        \() ->
+            CharacterKey "7"
+                |> fromKeyboardKey
+                |> Expect.equal (Ok Sol)
+
+
+testGetsSolfegeFromHighDo : Test
+testGetsSolfegeFromHighDo =
+    test "getsSolfegeFromHighDo" <|
+        \() ->
+            CharacterKey "="
+                |> fromKeyboardKey
+                |> Expect.equal (Ok Do)
+
+
+testGetSolfegeReturnsErrorForNonKey : Test
+testGetSolfegeReturnsErrorForNonKey =
+    test "getSolfegeReturnsErrorForNonKey" <|
+        \() ->
+            CharacterKey "d"
+                |> fromKeyboardKey
+                |> Expect.equal (Err "KeyboardKey Error")

@@ -4,9 +4,9 @@
 [ ] User Stories
 	[ ] v0 - Chromatic keyboard
 		[x] Hit page
-		[ ] View keyboard (12 keys)
-		[ ] Click on keys
-			[ ] Shows solfege
+		[x] View keyboard (12 keys)
+		[x] Click on keys
+			[x] Shows solfege
 			[ ] Plays note
 		[ ] Top row of keyboard (1-=) map to the 12 keys
 	[ ] v1 - Alternate scales

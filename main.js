@@ -5259,11 +5259,450 @@ var $author$project$Main$urlRequestToUrl = function (request) {
 };
 var $author$project$Main$loadUrlFromUrlRequest = A2($elm$core$Basics$composeR, $author$project$Main$urlRequestToUrl, $author$project$Main$ChangeUrl);
 var $elm$core$Platform$Sub$batch = _Platform_batch;
-var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $author$project$Main$KeyDownOn = function (a) {
+	return {$: 3, a: a};
+};
+var $author$project$KeyboardKey$CharacterKey = $elm$core$Basics$identity;
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$KeyboardKey$keyDecoder = A2(
+	$elm$json$Json$Decode$map,
+	$elm$core$Basics$identity,
+	A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
+var $author$project$Main$keyDownDecoder = A2($elm$json$Json$Decode$map, $author$project$Main$KeyDownOn, $author$project$KeyboardKey$keyDecoder);
+var $author$project$Main$KeyUpOn = function (a) {
+	return {$: 4, a: a};
+};
+var $author$project$Main$keyUpDecoder = A2($elm$json$Json$Decode$map, $author$project$Main$KeyUpOn, $author$project$KeyboardKey$keyDecoder);
+var $elm$browser$Browser$Events$Document = 0;
+var $elm$browser$Browser$Events$MySub = F3(
+	function (a, b, c) {
+		return {$: 0, a: a, b: b, c: c};
+	});
+var $elm$browser$Browser$Events$State = F2(
+	function (subs, pids) {
+		return {aP: pids, a3: subs};
+	});
+var $elm$browser$Browser$Events$init = $elm$core$Task$succeed(
+	A2($elm$browser$Browser$Events$State, _List_Nil, $elm$core$Dict$empty));
+var $elm$browser$Browser$Events$nodeToKey = function (node) {
+	if (!node) {
+		return 'd_';
+	} else {
+		return 'w_';
+	}
+};
+var $elm$browser$Browser$Events$addKey = function (sub) {
+	var node = sub.a;
+	var name = sub.b;
+	return _Utils_Tuple2(
+		_Utils_ap(
+			$elm$browser$Browser$Events$nodeToKey(node),
+			name),
+		sub);
+};
+var $elm$core$Process$kill = _Scheduler_kill;
+var $elm$core$Dict$foldl = F3(
+	function (func, acc, dict) {
+		foldl:
+		while (true) {
+			if (dict.$ === -2) {
+				return acc;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var $temp$func = func,
+					$temp$acc = A3(
+					func,
+					key,
+					value,
+					A3($elm$core$Dict$foldl, func, acc, left)),
+					$temp$dict = right;
+				func = $temp$func;
+				acc = $temp$acc;
+				dict = $temp$dict;
+				continue foldl;
+			}
+		}
+	});
+var $elm$core$Dict$merge = F6(
+	function (leftStep, bothStep, rightStep, leftDict, rightDict, initialResult) {
+		var stepState = F3(
+			function (rKey, rValue, _v0) {
+				stepState:
+				while (true) {
+					var list = _v0.a;
+					var result = _v0.b;
+					if (!list.b) {
+						return _Utils_Tuple2(
+							list,
+							A3(rightStep, rKey, rValue, result));
+					} else {
+						var _v2 = list.a;
+						var lKey = _v2.a;
+						var lValue = _v2.b;
+						var rest = list.b;
+						if (_Utils_cmp(lKey, rKey) < 0) {
+							var $temp$rKey = rKey,
+								$temp$rValue = rValue,
+								$temp$_v0 = _Utils_Tuple2(
+								rest,
+								A3(leftStep, lKey, lValue, result));
+							rKey = $temp$rKey;
+							rValue = $temp$rValue;
+							_v0 = $temp$_v0;
+							continue stepState;
+						} else {
+							if (_Utils_cmp(lKey, rKey) > 0) {
+								return _Utils_Tuple2(
+									list,
+									A3(rightStep, rKey, rValue, result));
+							} else {
+								return _Utils_Tuple2(
+									rest,
+									A4(bothStep, lKey, lValue, rValue, result));
+							}
+						}
+					}
+				}
+			});
+		var _v3 = A3(
+			$elm$core$Dict$foldl,
+			stepState,
+			_Utils_Tuple2(
+				$elm$core$Dict$toList(leftDict),
+				initialResult),
+			rightDict);
+		var leftovers = _v3.a;
+		var intermediateResult = _v3.b;
+		return A3(
+			$elm$core$List$foldl,
+			F2(
+				function (_v4, result) {
+					var k = _v4.a;
+					var v = _v4.b;
+					return A3(leftStep, k, v, result);
+				}),
+			intermediateResult,
+			leftovers);
+	});
+var $elm$browser$Browser$Events$Event = F2(
+	function (key, event) {
+		return {aA: event, aG: key};
+	});
+var $elm$core$Platform$sendToSelf = _Platform_sendToSelf;
+var $elm$browser$Browser$Events$spawn = F3(
+	function (router, key, _v0) {
+		var node = _v0.a;
+		var name = _v0.b;
+		var actualNode = function () {
+			if (!node) {
+				return _Browser_doc;
+			} else {
+				return _Browser_window;
+			}
+		}();
+		return A2(
+			$elm$core$Task$map,
+			function (value) {
+				return _Utils_Tuple2(key, value);
+			},
+			A3(
+				_Browser_on,
+				actualNode,
+				name,
+				function (event) {
+					return A2(
+						$elm$core$Platform$sendToSelf,
+						router,
+						A2($elm$browser$Browser$Events$Event, key, event));
+				}));
+	});
+var $elm$core$Dict$union = F2(
+	function (t1, t2) {
+		return A3($elm$core$Dict$foldl, $elm$core$Dict$insert, t2, t1);
+	});
+var $elm$browser$Browser$Events$onEffects = F3(
+	function (router, subs, state) {
+		var stepRight = F3(
+			function (key, sub, _v6) {
+				var deads = _v6.a;
+				var lives = _v6.b;
+				var news = _v6.c;
+				return _Utils_Tuple3(
+					deads,
+					lives,
+					A2(
+						$elm$core$List$cons,
+						A3($elm$browser$Browser$Events$spawn, router, key, sub),
+						news));
+			});
+		var stepLeft = F3(
+			function (_v4, pid, _v5) {
+				var deads = _v5.a;
+				var lives = _v5.b;
+				var news = _v5.c;
+				return _Utils_Tuple3(
+					A2($elm$core$List$cons, pid, deads),
+					lives,
+					news);
+			});
+		var stepBoth = F4(
+			function (key, pid, _v2, _v3) {
+				var deads = _v3.a;
+				var lives = _v3.b;
+				var news = _v3.c;
+				return _Utils_Tuple3(
+					deads,
+					A3($elm$core$Dict$insert, key, pid, lives),
+					news);
+			});
+		var newSubs = A2($elm$core$List$map, $elm$browser$Browser$Events$addKey, subs);
+		var _v0 = A6(
+			$elm$core$Dict$merge,
+			stepLeft,
+			stepBoth,
+			stepRight,
+			state.aP,
+			$elm$core$Dict$fromList(newSubs),
+			_Utils_Tuple3(_List_Nil, $elm$core$Dict$empty, _List_Nil));
+		var deadPids = _v0.a;
+		var livePids = _v0.b;
+		var makeNewPids = _v0.c;
+		return A2(
+			$elm$core$Task$andThen,
+			function (pids) {
+				return $elm$core$Task$succeed(
+					A2(
+						$elm$browser$Browser$Events$State,
+						newSubs,
+						A2(
+							$elm$core$Dict$union,
+							livePids,
+							$elm$core$Dict$fromList(pids))));
+			},
+			A2(
+				$elm$core$Task$andThen,
+				function (_v1) {
+					return $elm$core$Task$sequence(makeNewPids);
+				},
+				$elm$core$Task$sequence(
+					A2($elm$core$List$map, $elm$core$Process$kill, deadPids))));
+	});
+var $elm$core$List$maybeCons = F3(
+	function (f, mx, xs) {
+		var _v0 = f(mx);
+		if (!_v0.$) {
+			var x = _v0.a;
+			return A2($elm$core$List$cons, x, xs);
+		} else {
+			return xs;
+		}
+	});
+var $elm$core$List$filterMap = F2(
+	function (f, xs) {
+		return A3(
+			$elm$core$List$foldr,
+			$elm$core$List$maybeCons(f),
+			_List_Nil,
+			xs);
+	});
+var $elm$browser$Browser$Events$onSelfMsg = F3(
+	function (router, _v0, state) {
+		var key = _v0.aG;
+		var event = _v0.aA;
+		var toMessage = function (_v2) {
+			var subKey = _v2.a;
+			var _v3 = _v2.b;
+			var node = _v3.a;
+			var name = _v3.b;
+			var decoder = _v3.c;
+			return _Utils_eq(subKey, key) ? A2(_Browser_decodeEvent, decoder, event) : $elm$core$Maybe$Nothing;
+		};
+		var messages = A2($elm$core$List$filterMap, toMessage, state.a3);
+		return A2(
+			$elm$core$Task$andThen,
+			function (_v1) {
+				return $elm$core$Task$succeed(state);
+			},
+			$elm$core$Task$sequence(
+				A2(
+					$elm$core$List$map,
+					$elm$core$Platform$sendToApp(router),
+					messages)));
+	});
+var $elm$browser$Browser$Events$subMap = F2(
+	function (func, _v0) {
+		var node = _v0.a;
+		var name = _v0.b;
+		var decoder = _v0.c;
+		return A3(
+			$elm$browser$Browser$Events$MySub,
+			node,
+			name,
+			A2($elm$json$Json$Decode$map, func, decoder));
+	});
+_Platform_effectManagers['Browser.Events'] = _Platform_createManager($elm$browser$Browser$Events$init, $elm$browser$Browser$Events$onEffects, $elm$browser$Browser$Events$onSelfMsg, 0, $elm$browser$Browser$Events$subMap);
+var $elm$browser$Browser$Events$subscription = _Platform_leaf('Browser.Events');
+var $elm$browser$Browser$Events$on = F3(
+	function (node, name, decoder) {
+		return $elm$browser$Browser$Events$subscription(
+			A3($elm$browser$Browser$Events$MySub, node, name, decoder));
+	});
+var $elm$browser$Browser$Events$onKeyDown = A2($elm$browser$Browser$Events$on, 0, 'keydown');
+var $elm$browser$Browser$Events$onKeyUp = A2($elm$browser$Browser$Events$on, 0, 'keyup');
 var $author$project$Main$subscriptions = function (model) {
-	return $elm$core$Platform$Sub$none;
+	return $elm$core$Platform$Sub$batch(
+		_List_fromArray(
+			[
+				$elm$browser$Browser$Events$onKeyDown($author$project$Main$keyDownDecoder),
+				$elm$browser$Browser$Events$onKeyUp($author$project$Main$keyUpDecoder)
+			]));
+};
+var $author$project$Solfege$Di = 1;
+var $author$project$Solfege$Do = 0;
+var $author$project$Solfege$Fa = 5;
+var $author$project$Solfege$Fi = 6;
+var $author$project$Solfege$La = 9;
+var $author$project$Solfege$Le = 8;
+var $author$project$Solfege$Me = 3;
+var $author$project$Solfege$Mi = 4;
+var $author$project$Solfege$Re = 2;
+var $author$project$Solfege$Sol = 7;
+var $author$project$Solfege$Te = 10;
+var $author$project$Solfege$Ti = 11;
+var $elm$core$Basics$modBy = _Basics_modBy;
+var $author$project$Solfege$fromInt = function (i) {
+	var _v0 = A2($elm$core$Basics$modBy, 12, i);
+	switch (_v0) {
+		case 0:
+			return 0;
+		case 1:
+			return 1;
+		case 2:
+			return 2;
+		case 3:
+			return 3;
+		case 4:
+			return 4;
+		case 5:
+			return 5;
+		case 6:
+			return 6;
+		case 7:
+			return 7;
+		case 8:
+			return 8;
+		case 9:
+			return 9;
+		case 10:
+			return 10;
+		case 11:
+			return 11;
+		default:
+			return 0;
+	}
+};
+var $author$project$Solfege$fromKeyboardKey = function (key) {
+	switch (key) {
+		case '`':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(0));
+		case '1':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(1));
+		case '2':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(2));
+		case '3':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(3));
+		case '4':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(4));
+		case '5':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(5));
+		case '6':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(6));
+		case '7':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(7));
+		case '8':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(8));
+		case '9':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(9));
+		case '0':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(10));
+		case '-':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(11));
+		case '=':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(12));
+		default:
+			return $elm$core$Result$Err('KeyboardKey Error');
+	}
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $author$project$Solfege$toInt = function (s) {
+	switch (s) {
+		case 0:
+			return 0;
+		case 1:
+			return 1;
+		case 2:
+			return 2;
+		case 3:
+			return 3;
+		case 4:
+			return 4;
+		case 5:
+			return 5;
+		case 6:
+			return 6;
+		case 7:
+			return 7;
+		case 8:
+			return 8;
+		case 9:
+			return 9;
+		case 10:
+			return 10;
+		default:
+			return 11;
+	}
+};
+var $author$project$Main$pressKeyOnModel = F2(
+	function (model, solfege) {
+		return _Utils_update(
+			model,
+			{
+				H: A3(
+					$elm$core$Dict$insert,
+					$author$project$Solfege$toInt(solfege),
+					true,
+					model.H)
+			});
+	});
+var $author$project$Main$releaseKeyOnModel = F2(
+	function (model, solfege) {
+		return _Utils_update(
+			model,
+			{
+				H: A3(
+					$elm$core$Dict$insert,
+					$author$project$Solfege$toInt(solfege),
+					false,
+					model.H)
+			});
+	});
 var $elm$url$Url$addPort = F2(
 	function (maybePort, starter) {
 		if (maybePort.$ === 1) {
@@ -5318,23 +5757,43 @@ var $author$project$Main$update = F2(
 					$elm$browser$Browser$Navigation$load(
 						$elm$url$Url$toString(url)));
 			case 1:
-				var key = msg.a;
+				var i = msg.a;
+				var _v1 = $author$project$Solfege$fromInt(i);
+				var key = _v1;
 				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							H: A3($elm$core$Dict$insert, key, true, model.H)
-						}),
+					A2($author$project$Main$pressKeyOnModel, model, key),
 					$elm$core$Platform$Cmd$none);
+			case 2:
+				var i = msg.a;
+				var _v2 = $author$project$Solfege$fromInt(i);
+				var key = _v2;
+				return _Utils_Tuple2(
+					A2($author$project$Main$releaseKeyOnModel, model, key),
+					$elm$core$Platform$Cmd$none);
+			case 3:
+				var keyboardKey = msg.a;
+				var _v3 = $author$project$Solfege$fromKeyboardKey(keyboardKey);
+				if (!_v3.$) {
+					var key = _v3.a;
+					return _Utils_Tuple2(
+						A2($author$project$Main$pressKeyOnModel, model, key),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					var s = _v3.a;
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
 			default:
-				var key = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							H: A3($elm$core$Dict$insert, key, false, model.H)
-						}),
-					$elm$core$Platform$Cmd$none);
+				var keyboardKey = msg.a;
+				var _v4 = $author$project$Solfege$fromKeyboardKey(keyboardKey);
+				if (!_v4.$) {
+					var key = _v4.a;
+					return _Utils_Tuple2(
+						A2($author$project$Main$releaseKeyOnModel, model, key),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					var s = _v4.a;
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
 		}
 	});
 var $elm$browser$Browser$Document = F2(
@@ -5391,50 +5850,6 @@ var $elm$core$Dict$get = F2(
 			}
 		}
 	});
-var $author$project$Solfege$Di = 1;
-var $author$project$Solfege$Do = 0;
-var $author$project$Solfege$Fa = 5;
-var $author$project$Solfege$Fi = 6;
-var $author$project$Solfege$La = 9;
-var $author$project$Solfege$Le = 8;
-var $author$project$Solfege$Me = 3;
-var $author$project$Solfege$Mi = 4;
-var $author$project$Solfege$Re = 2;
-var $author$project$Solfege$Sol = 7;
-var $author$project$Solfege$Te = 10;
-var $author$project$Solfege$Ti = 11;
-var $elm$core$Basics$modBy = _Basics_modBy;
-var $author$project$Solfege$getSolfege = function (i) {
-	var _v0 = A2($elm$core$Basics$modBy, 12, i);
-	switch (_v0) {
-		case 0:
-			return 0;
-		case 1:
-			return 1;
-		case 2:
-			return 2;
-		case 3:
-			return 3;
-		case 4:
-			return 4;
-		case 5:
-			return 5;
-		case 6:
-			return 6;
-		case 7:
-			return 7;
-		case 8:
-			return 8;
-		case 9:
-			return 9;
-		case 10:
-			return 10;
-		case 11:
-			return 11;
-		default:
-			return 0;
-	}
-};
 var $author$project$Solfege$getSolfegeName = function (s) {
 	switch (s) {
 		case 0:
@@ -5485,7 +5900,7 @@ var $author$project$Main$getLabelFromKey = F2(
 			return A2(
 				$author$project$Main$showTextOrNothing,
 				$author$project$Solfege$getSolfegeName(
-					$author$project$Solfege$getSolfege(key)),
+					$author$project$Solfege$fromInt(key)),
 				_switch);
 		}
 	});

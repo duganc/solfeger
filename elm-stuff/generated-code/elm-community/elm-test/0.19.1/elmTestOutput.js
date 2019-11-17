@@ -11165,6 +11165,10 @@ var $avh4$elm_program_test$ProgramTest$simulateDomEvent = F3(
 var $author$project$MainTests$mouseDown = function (query) {
 	return A2($avh4$elm_program_test$ProgramTest$simulateDomEvent, query, $elm_explorations$test$Test$Html$Event$mouseDown);
 };
+var $elm_explorations$test$Test$Html$Event$mouseUp = _Utils_Tuple2('mouseup', $elm_explorations$test$Test$Html$Event$emptyObject);
+var $author$project$MainTests$mouseUp = function (query) {
+	return A2($avh4$elm_program_test$ProgramTest$simulateDomEvent, query, $elm_explorations$test$Test$Html$Event$mouseUp);
+};
 var $author$project$Main$ChangeUrl = function (a) {
 	return {$: 'ChangeUrl', a: a};
 };
@@ -11665,9 +11669,21 @@ var $avh4$elm_program_test$ProgramTest$createApplication = function (program) {
 				}
 			}));
 };
+var $author$project$Main$Model = function (isKeyPressed) {
+	return {isKeyPressed: isKeyPressed};
+};
 var $author$project$Main$init = F3(
 	function (_v0, _v1, _v2) {
-		return _Utils_Tuple2('Testing!', $elm$core$Platform$Cmd$none);
+		return _Utils_Tuple2(
+			$author$project$Main$Model(
+				$elm$core$Dict$fromList(
+					A2(
+						$elm$core$List$map,
+						function (i) {
+							return _Utils_Tuple2(i, false);
+						},
+						A2($elm$core$List$range, 0, 11)))),
+			$elm$core$Platform$Cmd$none);
 	});
 var $author$project$Main$urlRequestToUrl = function (request) {
 	if (request.$ === 'External') {
@@ -11721,10 +11737,22 @@ var $author$project$Main$update = F2(
 						$elm$url$Url$toString(url)));
 			case 'MouseDownOn':
 				var key = msg.a;
-				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							isKeyPressed: A3($elm$core$Dict$insert, key, true, model.isKeyPressed)
+						}),
+					$elm$core$Platform$Cmd$none);
 			default:
 				var key = msg.a;
-				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							isKeyPressed: A3($elm$core$Dict$insert, key, false, model.isKeyPressed)
+						}),
+					$elm$core$Platform$Cmd$none);
 		}
 	});
 var $elm$browser$Browser$Document = F2(
@@ -11743,9 +11771,109 @@ var $elm$html$Html$div = _VirtualDom_node('div');
 var $author$project$Main$MouseDownOn = function (a) {
 	return {$: 'MouseDownOn', a: a};
 };
+var $author$project$Main$MouseUpOn = function (a) {
+	return {$: 'MouseUpOn', a: a};
+};
 var $author$project$Main$getKeyName = function (n) {
 	return 'key-' + $elm$core$String$fromInt(n);
 };
+var $author$project$Solfege$Di = {$: 'Di'};
+var $author$project$Solfege$Do = {$: 'Do'};
+var $author$project$Solfege$Fa = {$: 'Fa'};
+var $author$project$Solfege$Fi = {$: 'Fi'};
+var $author$project$Solfege$La = {$: 'La'};
+var $author$project$Solfege$Le = {$: 'Le'};
+var $author$project$Solfege$Me = {$: 'Me'};
+var $author$project$Solfege$Mi = {$: 'Mi'};
+var $author$project$Solfege$Re = {$: 'Re'};
+var $author$project$Solfege$Sol = {$: 'Sol'};
+var $author$project$Solfege$Te = {$: 'Te'};
+var $author$project$Solfege$Ti = {$: 'Ti'};
+var $author$project$Solfege$getSolfege = function (i) {
+	var _v0 = A2($elm$core$Basics$modBy, 12, i);
+	switch (_v0) {
+		case 0:
+			return $author$project$Solfege$Do;
+		case 1:
+			return $author$project$Solfege$Di;
+		case 2:
+			return $author$project$Solfege$Re;
+		case 3:
+			return $author$project$Solfege$Me;
+		case 4:
+			return $author$project$Solfege$Mi;
+		case 5:
+			return $author$project$Solfege$Fa;
+		case 6:
+			return $author$project$Solfege$Fi;
+		case 7:
+			return $author$project$Solfege$Sol;
+		case 8:
+			return $author$project$Solfege$Le;
+		case 9:
+			return $author$project$Solfege$La;
+		case 10:
+			return $author$project$Solfege$Te;
+		case 11:
+			return $author$project$Solfege$Ti;
+		default:
+			return $author$project$Solfege$Do;
+	}
+};
+var $author$project$Solfege$getSolfegeName = function (s) {
+	switch (s.$) {
+		case 'Do':
+			return 'Do';
+		case 'Di':
+			return 'Di';
+		case 'Re':
+			return 'Re';
+		case 'Me':
+			return 'Me';
+		case 'Mi':
+			return 'Mi';
+		case 'Fa':
+			return 'Fa';
+		case 'Fi':
+			return 'Fi';
+		case 'Sol':
+			return 'Sol';
+		case 'Le':
+			return 'Le';
+		case 'La':
+			return 'La';
+		case 'Te':
+			return 'Te';
+		default:
+			return 'Ti';
+	}
+};
+var $author$project$Main$showText = F3(
+	function (ifTrue, ifFalse, _switch) {
+		if (_switch) {
+			return ifTrue;
+		} else {
+			return ifFalse;
+		}
+	});
+var $author$project$Main$showTextOrNothing = F2(
+	function (ifTrue, _switch) {
+		return A3($author$project$Main$showText, ifTrue, '', _switch);
+	});
+var $author$project$Main$getLabelFromKey = F2(
+	function (isKeyPressed, key) {
+		var _v0 = A2($elm$core$Dict$get, key, isKeyPressed);
+		if (_v0.$ === 'Nothing') {
+			return 'Error!';
+		} else {
+			var _switch = _v0.a;
+			return A2(
+				$author$project$Main$showTextOrNothing,
+				$author$project$Solfege$getSolfegeName(
+					$author$project$Solfege$getSolfege(key)),
+				_switch);
+		}
+	});
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
 var $elm$html$Html$Events$on = F2(
@@ -11761,35 +11889,44 @@ var $elm$html$Html$Events$onMouseDown = function (msg) {
 		'mousedown',
 		$elm$json$Json$Decode$succeed(msg));
 };
+var $elm$html$Html$Events$onMouseUp = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'mouseup',
+		$elm$json$Json$Decode$succeed(msg));
+};
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$Main$renderKey = function (n) {
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('key'),
-				$elm$html$Html$Attributes$id(
-				$author$project$Main$getKeyName(n)),
-				$elm$html$Html$Events$onMouseDown(
-				$author$project$Main$MouseDownOn(
-					$author$project$Main$getKeyName(n)))
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text(
-				$author$project$Main$getKeyName(n))
-			]));
-};
-var $author$project$Main$renderKeys = function (n) {
-	return A2(
-		$elm$html$Html$div,
-		_List_Nil,
-		A2(
-			$elm$core$List$map,
-			$author$project$Main$renderKey,
-			A2($elm$core$List$range, 0, n - 1)));
-};
+var $author$project$Main$renderKey = F2(
+	function (model, n) {
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('key'),
+					$elm$html$Html$Attributes$id(
+					$author$project$Main$getKeyName(n)),
+					$elm$html$Html$Events$onMouseDown(
+					$author$project$Main$MouseDownOn(n)),
+					$elm$html$Html$Events$onMouseUp(
+					$author$project$Main$MouseUpOn(n))
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text(
+					A2($author$project$Main$getLabelFromKey, model.isKeyPressed, n))
+				]));
+	});
+var $author$project$Main$renderKeys = F2(
+	function (model, n) {
+		return A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			A2(
+				$elm$core$List$map,
+				$author$project$Main$renderKey(model),
+				A2($elm$core$List$range, 0, n - 1)));
+	});
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$browser$Browser$Document,
@@ -11804,7 +11941,7 @@ var $author$project$Main$view = function (model) {
 					]),
 				_List_fromArray(
 					[
-						$author$project$Main$renderKeys(12)
+						A2($author$project$Main$renderKeys, model, 12)
 					]))
 			]));
 };
@@ -11872,6 +12009,33 @@ var $elm_explorations$test$Test$Html$Selector$Internal$Text = function (a) {
 	return {$: 'Text', a: a};
 };
 var $elm_explorations$test$Test$Html$Selector$text = $elm_explorations$test$Test$Html$Selector$Internal$Text;
+var $author$project$MainTests$testKeyClickAndReleaseResultsInNoText = A2(
+	$elm_explorations$test$Test$test,
+	'keyClickAndReleaseResultsInNoText',
+	function (_v0) {
+		return A2(
+			$avh4$elm_program_test$ProgramTest$expectViewHas,
+			_List_fromArray(
+				[
+					$elm_explorations$test$Test$Html$Selector$id('key-4'),
+					$elm_explorations$test$Test$Html$Selector$text('')
+				]),
+			A2(
+				$author$project$MainTests$mouseUp,
+				$elm_explorations$test$Test$Html$Query$find(
+					_List_fromArray(
+						[
+							$elm_explorations$test$Test$Html$Selector$id('key-4')
+						])),
+				A2(
+					$author$project$MainTests$mouseDown,
+					$elm_explorations$test$Test$Html$Query$find(
+						_List_fromArray(
+							[
+								$elm_explorations$test$Test$Html$Selector$id('key-4')
+							])),
+					A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0))));
+	});
 var $author$project$MainTests$testKeyClickSendsKeyPressedMessage = A2(
 	$elm_explorations$test$Test$test,
 	'keyClickSendsKeyPressedMessage',
@@ -11903,7 +12067,10 @@ var $author$project$MainTests$testKeyRenders = A2(
 					$elm_explorations$test$Test$Html$Selector$id('key-57')
 				]),
 			$elm_explorations$test$Test$Html$Query$fromHtml(
-				$author$project$Main$renderKey(57)));
+				A2(
+					$author$project$Main$renderKey,
+					$author$project$Main$Model($elm$core$Dict$empty),
+					57)));
 	});
 var $author$project$MainTests$getKeySelector = function (i) {
 	return $elm_explorations$test$Test$Html$Selector$id(
@@ -12023,54 +12190,32 @@ var $author$project$MainTests$testRenderKeysRendersTheCorrectNumberOfKeys = A2(
 						$elm_explorations$test$Test$Html$Selector$class('key')
 					]),
 				$elm_explorations$test$Test$Html$Query$fromHtml(
-					$author$project$Main$renderKeys(3))));
+					A2(
+						$author$project$Main$renderKeys,
+						$author$project$Main$Model($elm$core$Dict$empty),
+						3))));
 	});
-var $author$project$Solfege$Di = {$: 'Di'};
-var $author$project$Solfege$Do = {$: 'Do'};
-var $author$project$Solfege$Fa = {$: 'Fa'};
-var $author$project$Solfege$Fi = {$: 'Fi'};
-var $author$project$Solfege$La = {$: 'La'};
-var $author$project$Solfege$Le = {$: 'Le'};
-var $author$project$Solfege$Me = {$: 'Me'};
-var $author$project$Solfege$Mi = {$: 'Mi'};
-var $author$project$Solfege$Re = {$: 'Re'};
-var $author$project$Solfege$Sol = {$: 'Sol'};
-var $author$project$Solfege$Te = {$: 'Te'};
-var $author$project$Solfege$Ti = {$: 'Ti'};
-var $author$project$Solfege$getSolfegeName = function (i) {
-	var _v0 = A2($elm$core$Basics$modBy, 12, i);
-	switch (_v0) {
-		case 0:
-			return $author$project$Solfege$Do;
-		case 1:
-			return $author$project$Solfege$Di;
-		case 2:
-			return $author$project$Solfege$Re;
-		case 3:
-			return $author$project$Solfege$Me;
-		case 4:
-			return $author$project$Solfege$Mi;
-		case 5:
-			return $author$project$Solfege$Fa;
-		case 6:
-			return $author$project$Solfege$Fi;
-		case 7:
-			return $author$project$Solfege$Sol;
-		case 8:
-			return $author$project$Solfege$Le;
-		case 9:
-			return $author$project$Solfege$La;
-		case 10:
-			return $author$project$Solfege$Te;
-		case 11:
-			return $author$project$Solfege$Ti;
-		default:
-			return $author$project$Solfege$Do;
-	}
-};
-var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
+var $author$project$MainTests$testShowTextShowsAlternateTextWhenFalse = A2(
 	$elm_explorations$test$Test$test,
-	'solfegeGetsNames',
+	'showTextShowsAlternateTextWhenFalse',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			'Alternative text',
+			A3($author$project$Main$showText, 'Here\'s some text', 'Alternative text', false));
+	});
+var $author$project$MainTests$testShowTextShowsTextWhenTrue = A2(
+	$elm_explorations$test$Test$test,
+	'showTextShowsTextWhenTrue',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			'Here\'s some text',
+			A3($author$project$Main$showText, 'Here\'s some text', 'Alternative text', true));
+	});
+var $author$project$SolfegeTests$testSolfegeGets = A2(
+	$elm_explorations$test$Test$test,
+	'getsSolfege',
 	function (_v0) {
 		return A2(
 			$elm_explorations$test$Expect$equal,
@@ -12078,10 +12223,23 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				[$author$project$Solfege$Do, $author$project$Solfege$Di, $author$project$Solfege$Re, $author$project$Solfege$Me, $author$project$Solfege$Mi, $author$project$Solfege$Fa, $author$project$Solfege$Fi, $author$project$Solfege$Sol, $author$project$Solfege$Le, $author$project$Solfege$La, $author$project$Solfege$Te, $author$project$Solfege$Ti, $author$project$Solfege$Do, $author$project$Solfege$Di, $author$project$Solfege$Re, $author$project$Solfege$Me]),
 			A2(
 				$elm$core$List$map,
-				$author$project$Solfege$getSolfegeName,
+				$author$project$Solfege$getSolfege,
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Test$Generated$Main3540965741$main = A2(
+var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
+	$elm_explorations$test$Test$test,
+	'solfegeGetsNames',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			_List_fromArray(
+				['Do', 'Di', 'Re', 'Me', 'Mi', 'Fa', 'Fi', 'Sol', 'Le', 'La', 'Te', 'Ti', 'Do', 'Di', 'Re', 'Me']),
+			A2(
+				$elm$core$List$map,
+				A2($elm$core$Basics$composeR, $author$project$Solfege$getSolfege, $author$project$Solfege$getSolfegeName),
+				A2($elm$core$List$range, 0, 15)));
+	});
+var $author$project$Test$Generated$Main299715943$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -12089,7 +12247,7 @@ var $author$project$Test$Generated$Main3540965741$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 29925736076940
+		seed: 207302378192161
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -12098,17 +12256,17 @@ var $author$project$Test$Generated$Main3540965741$main = A2(
 				$elm_explorations$test$Test$describe,
 				'MainTests',
 				_List_fromArray(
-					[$author$project$MainTests$testPageHasTwelveKeys, $author$project$MainTests$testKeyClickSendsKeyPressedMessage, $author$project$MainTests$testRenderKeysRendersTheCorrectNumberOfKeys, $author$project$MainTests$testKeyRenders])),
+					[$author$project$MainTests$testKeyClickAndReleaseResultsInNoText, $author$project$MainTests$testShowTextShowsAlternateTextWhenFalse, $author$project$MainTests$testPageHasTwelveKeys, $author$project$MainTests$testKeyClickSendsKeyPressedMessage, $author$project$MainTests$testRenderKeysRendersTheCorrectNumberOfKeys, $author$project$MainTests$testShowTextShowsTextWhenTrue, $author$project$MainTests$testKeyRenders])),
 				A2(
 				$elm_explorations$test$Test$describe,
 				'SolfegeTests',
 				_List_fromArray(
-					[$author$project$SolfegeTests$testSolfegeGetsNames]))
+					[$author$project$SolfegeTests$testSolfegeGets, $author$project$SolfegeTests$testSolfegeGetsNames]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main3540965741':{'init':$author$project$Test$Generated$Main3540965741$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main299715943':{'init':$author$project$Test$Generated$Main299715943$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-82544.sock";
+var pipeFilename = "/tmp/elm_test-83095.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

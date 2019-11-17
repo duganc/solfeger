@@ -2,10 +2,12 @@ module Main exposing (..)
 
 import Browser exposing (Document, UrlRequest(..), application)
 import Browser.Navigation exposing (Key, load, pushUrl)
+import Dict exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import List exposing (range)
+import Solfege exposing (..)
 import String exposing (fromInt)
 import Url exposing (Protocol(..), Url, fromString, toString)
 
@@ -26,12 +28,12 @@ main =
 
 
 type alias Model =
-    String
+    { isKeyPressed : Dict Int Bool }
 
 
 init : Flags -> Url -> key -> ( Model, Cmd Msg )
 init _ _ _ =
-    ( "Testing!", Cmd.none )
+    ( Model (Dict.fromList (range 0 11 |> List.map (\i -> ( i, False )))), Cmd.none )
 
 
 type alias Flags =
@@ -49,10 +51,10 @@ update msg model =
             ( model, toString url |> load )
 
         MouseDownOn key ->
-            ( model, Cmd.none )
+            ( { model | isKeyPressed = Dict.insert key True model.isKeyPressed }, Cmd.none )
 
         MouseUpOn key ->
-            ( model, Cmd.none )
+            ( { model | isKeyPressed = Dict.insert key False model.isKeyPressed }, Cmd.none )
 
 
 urlRequestToUrl : UrlRequest -> Url
@@ -90,25 +92,50 @@ subscriptions model =
 
 type Msg
     = ChangeUrl Url
-    | MouseDownOn String
-    | MouseUpOn String
+    | MouseDownOn Int
+    | MouseUpOn Int
 
 
 view : Model -> Document Msg
 view model =
-    Document "Solfeger" [ div [ class "table" ] [ renderKeys 12 ] ]
+    Document "Solfeger" [ div [ class "table" ] [ renderKeys model 12 ] ]
 
 
-renderKeys : Int -> Html Msg
-renderKeys n =
-    range 0 (n - 1) |> List.map renderKey |> div []
+renderKeys : Model -> Int -> Html Msg
+renderKeys model n =
+    range 0 (n - 1) |> List.map (renderKey model) |> div []
 
 
-renderKey : Int -> Html Msg
-renderKey n =
-    div [ class "key", id (getKeyName n), onMouseDown (MouseDownOn (getKeyName n)) ] [ text (getKeyName n) ]
+renderKey : Model -> Int -> Html Msg
+renderKey model n =
+    div [ class "key", id (getKeyName n), onMouseDown (MouseDownOn n), onMouseUp (MouseUpOn n) ] [ text (getLabelFromKey model.isKeyPressed n) ]
 
 
 getKeyName : Int -> String
 getKeyName n =
     "key-" ++ fromInt n
+
+
+getLabelFromKey : Dict Int Bool -> Int -> String
+getLabelFromKey isKeyPressed key =
+    case Dict.get key isKeyPressed of
+        Nothing ->
+            "Error!"
+
+        Just switch ->
+            showTextOrNothing (getSolfege key |> getSolfegeName) switch
+
+
+showTextOrNothing : String -> Bool -> String
+showTextOrNothing ifTrue switch =
+    showText ifTrue "" switch
+
+
+showText : String -> String -> Bool -> String
+showText ifTrue ifFalse switch =
+    case switch of
+        True ->
+            ifTrue
+
+        False ->
+            ifFalse

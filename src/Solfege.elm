@@ -1,4 +1,4 @@
-module Solfege exposing (Solfege(..), getSolfegeName)
+module Solfege exposing (Solfege(..), getSolfege, getSolfegeName)
 
 
 type Solfege
@@ -16,8 +16,8 @@ type Solfege
     | Ti
 
 
-getSolfegeName : Int -> Solfege
-getSolfegeName i =
+getSolfege : Int -> Solfege
+getSolfege i =
     case modBy 12 i of
         0 ->
             Do
@@ -57,6 +57,46 @@ getSolfegeName i =
 
         _ ->
             Do
+
+
+getSolfegeName : Solfege -> String
+getSolfegeName s =
+    case s of
+        Do ->
+            "Do"
+
+        Di ->
+            "Di"
+
+        Re ->
+            "Re"
+
+        Me ->
+            "Me"
+
+        Mi ->
+            "Mi"
+
+        Fa ->
+            "Fa"
+
+        Fi ->
+            "Fi"
+
+        Sol ->
+            "Sol"
+
+        Le ->
+            "Le"
+
+        La ->
+            "La"
+
+        Te ->
+            "Te"
+
+        Ti ->
+            "Ti"
 
 
 

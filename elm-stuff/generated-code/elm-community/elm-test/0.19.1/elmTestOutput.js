@@ -11931,6 +11931,34 @@ var $avh4$elm_program_test$ProgramTest$start = F2(
 		var program = _v0.b;
 		return A3(program, options.baseUrl, flags, options);
 	});
+var $author$project$Solfege$getSolfegeName = function (s) {
+	switch (s.$) {
+		case 'Do':
+			return 'Do';
+		case 'Di':
+			return 'Di';
+		case 'Re':
+			return 'Re';
+		case 'Me':
+			return 'Me';
+		case 'Mi':
+			return 'Mi';
+		case 'Fa':
+			return 'Fa';
+		case 'Fi':
+			return 'Fi';
+		case 'Sol':
+			return 'Sol';
+		case 'Le':
+			return 'Le';
+		case 'La':
+			return 'La';
+		case 'Te':
+			return 'Te';
+		default:
+			return 'Ti';
+	}
+};
 var $elm$browser$Browser$External = function (a) {
 	return {$: 'External', a: a};
 };
@@ -11950,6 +11978,7 @@ var $elm$core$Basics$never = function (_v0) {
 	}
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $author$project$Main$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
 var $author$project$Solfege$toInt = function (s) {
 	switch (s.$) {
 		case 'Do':
@@ -12017,7 +12046,8 @@ var $author$project$Main$update = F2(
 				var key = _v1;
 				return _Utils_Tuple2(
 					A2($author$project$Main$pressKeyOnModel, model, key),
-					$elm$core$Platform$Cmd$none);
+					$author$project$Main$playTone(
+						$author$project$Solfege$getSolfegeName(key)));
 			case 'MouseUpOn':
 				var i = msg.a;
 				var _v2 = $author$project$Solfege$fromInt(i);
@@ -12032,7 +12062,8 @@ var $author$project$Main$update = F2(
 					var key = _v3.a;
 					return _Utils_Tuple2(
 						A2($author$project$Main$pressKeyOnModel, model, key),
-						$elm$core$Platform$Cmd$none);
+						$author$project$Main$playTone(
+							$author$project$Solfege$getSolfegeName(key)));
 				} else {
 					var s = _v3.a;
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -12072,34 +12103,6 @@ var $author$project$Main$MouseUpOn = function (a) {
 };
 var $author$project$Main$getKeyName = function (n) {
 	return 'key-' + $elm$core$String$fromInt(n);
-};
-var $author$project$Solfege$getSolfegeName = function (s) {
-	switch (s.$) {
-		case 'Do':
-			return 'Do';
-		case 'Di':
-			return 'Di';
-		case 'Re':
-			return 'Re';
-		case 'Me':
-			return 'Me';
-		case 'Mi':
-			return 'Mi';
-		case 'Fa':
-			return 'Fa';
-		case 'Fi':
-			return 'Fi';
-		case 'Sol':
-			return 'Sol';
-		case 'Le':
-			return 'Le';
-		case 'La':
-			return 'La';
-		case 'Te':
-			return 'Te';
-		default:
-			return 'Ti';
-	}
 };
 var $author$project$Main$showText = F3(
 	function (ifTrue, ifFalse, _switch) {
@@ -12576,7 +12579,7 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$getSolfegeName),
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Test$Generated$Main2653412799$main = A2(
+var $author$project$Test$Generated$Main1443215882$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -12584,7 +12587,7 @@ var $author$project$Test$Generated$Main2653412799$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 333976924745620
+		seed: 383226363750815
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -12605,10 +12608,10 @@ var $author$project$Test$Generated$Main2653412799$main = A2(
 				_List_fromArray(
 					[$author$project$KeyboardKeyTests$stub]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main2653412799':{'init':$author$project$Test$Generated$Main2653412799$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main1443215882':{'init':$author$project$Test$Generated$Main1443215882$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-85516.sock";
+var pipeFilename = "/tmp/elm_test-86162.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

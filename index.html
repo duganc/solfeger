@@ -13,6 +13,9 @@
   var app = Elm.Main.init({
     node: document.getElementById('elm')
   });
+  app.ports.playTone.subscribe(function(data) {
+    console.log(JSON.stringify(data));
+  });
   </script>
 </body>
 </html>

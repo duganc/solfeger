@@ -1,4 +1,4 @@
-module Main exposing (..)
+port module Main exposing (..)
 
 import Browser exposing (Document, UrlRequest(..), application)
 import Browser.Events exposing (onKeyDown, onKeyUp)
@@ -8,6 +8,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Json.Decode as Decode exposing (Decoder)
+import Json.Encode as Encode exposing (Value)
 import KeyboardKey exposing (..)
 import List exposing (range)
 import Platform.Sub exposing (batch)
@@ -25,6 +26,9 @@ main =
         , onUrlRequest = loadUrlFromUrlRequest
         , onUrlChange = ChangeUrl
         }
+
+
+port playTone : String -> Cmd msg
 
 
 
@@ -57,7 +61,7 @@ update msg model =
         MouseDownOn i ->
             case Solfege.fromInt i of
                 key ->
-                    ( pressKeyOnModel model key, Cmd.none )
+                    ( pressKeyOnModel model key, playTone (Solfege.getSolfegeName key) )
 
         MouseUpOn i ->
             case Solfege.fromInt i of
@@ -67,7 +71,7 @@ update msg model =
         KeyDownOn keyboardKey ->
             case fromKeyboardKey keyboardKey of
                 Ok key ->
-                    ( pressKeyOnModel model key, Cmd.none )
+                    ( pressKeyOnModel model key, playTone (Solfege.getSolfegeName key) )
 
                 Err s ->
                     ( model, Cmd.none )

@@ -5650,37 +5650,60 @@ var $author$project$Solfege$fromKeyboardKey = function (key) {
 			return $elm$core$Result$Err('KeyboardKey Error');
 	}
 };
-var $author$project$Solfege$getSolfegeName = function (s) {
-	switch (s) {
+var $author$project$Note$A = 0;
+var $author$project$Note$ASharp = 1;
+var $author$project$Note$B = 2;
+var $author$project$Note$C = 3;
+var $author$project$Note$CSharp = 4;
+var $author$project$Note$D = 5;
+var $author$project$Note$DSharp = 6;
+var $author$project$Note$E = 7;
+var $author$project$Note$F = 8;
+var $author$project$Note$FSharp = 9;
+var $author$project$Note$G = 10;
+var $author$project$Note$GSharp = 11;
+var $author$project$Note$fromInt = function (i) {
+	switch (i) {
 		case 0:
-			return 'Do';
+			return $elm$core$Result$Ok(0);
 		case 1:
-			return 'Di';
+			return $elm$core$Result$Ok(1);
 		case 2:
-			return 'Re';
+			return $elm$core$Result$Ok(2);
 		case 3:
-			return 'Me';
+			return $elm$core$Result$Ok(3);
 		case 4:
-			return 'Mi';
+			return $elm$core$Result$Ok(4);
 		case 5:
-			return 'Fa';
+			return $elm$core$Result$Ok(5);
 		case 6:
-			return 'Fi';
+			return $elm$core$Result$Ok(6);
 		case 7:
-			return 'Sol';
+			return $elm$core$Result$Ok(7);
 		case 8:
-			return 'Le';
+			return $elm$core$Result$Ok(8);
 		case 9:
-			return 'La';
+			return $elm$core$Result$Ok(9);
 		case 10:
-			return 'Te';
+			return $elm$core$Result$Ok(10);
+		case 11:
+			return $elm$core$Result$Ok(11);
 		default:
-			return 'Ti';
+			return $elm$core$Result$Err(
+				$elm$core$String$fromInt(i));
 	}
 };
-var $elm$browser$Browser$Navigation$load = _Browser_load;
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $author$project$Main$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
+var $elm$core$Result$map = F2(
+	function (func, ra) {
+		if (!ra.$) {
+			var a = ra.a;
+			return $elm$core$Result$Ok(
+				func(a));
+		} else {
+			var e = ra.a;
+			return $elm$core$Result$Err(e);
+		}
+	});
 var $author$project$Solfege$toInt = function (s) {
 	switch (s) {
 		case 0:
@@ -5709,6 +5732,51 @@ var $author$project$Solfege$toInt = function (s) {
 			return 11;
 	}
 };
+var $author$project$Note$toString = function (note) {
+	switch (note) {
+		case 0:
+			return 'A3';
+		case 1:
+			return 'A#3';
+		case 2:
+			return 'B3';
+		case 3:
+			return 'C4';
+		case 4:
+			return 'C#4';
+		case 5:
+			return 'D4';
+		case 6:
+			return 'D#4';
+		case 7:
+			return 'E4';
+		case 8:
+			return 'F4';
+		case 9:
+			return 'F#4';
+		case 10:
+			return 'G4';
+		default:
+			return 'G#4';
+	}
+};
+var $author$project$Main$getNoteString = function (solfege) {
+	var _v0 = A2(
+		$elm$core$Result$map,
+		$author$project$Note$toString,
+		$author$project$Note$fromInt(
+			$author$project$Solfege$toInt(solfege)));
+	if (!_v0.$) {
+		var s = _v0.a;
+		return s;
+	} else {
+		var s = _v0.a;
+		return s;
+	}
+};
+var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $author$project$Main$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
 var $author$project$Main$pressKeyOnModel = F2(
 	function (model, solfege) {
 		return _Utils_update(
@@ -5793,7 +5861,7 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					A2($author$project$Main$pressKeyOnModel, model, key),
 					$author$project$Main$playTone(
-						$author$project$Solfege$getSolfegeName(key)));
+						$author$project$Main$getNoteString(key)));
 			case 2:
 				var i = msg.a;
 				var _v2 = $author$project$Solfege$fromInt(i);
@@ -5809,7 +5877,7 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						A2($author$project$Main$pressKeyOnModel, model, key),
 						$author$project$Main$playTone(
-							$author$project$Solfege$getSolfegeName(key)));
+							$author$project$Main$getNoteString(key)));
 				} else {
 					var s = _v3.a;
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -5881,6 +5949,34 @@ var $elm$core$Dict$get = F2(
 			}
 		}
 	});
+var $author$project$Solfege$getSolfegeName = function (s) {
+	switch (s) {
+		case 0:
+			return 'Do';
+		case 1:
+			return 'Di';
+		case 2:
+			return 'Re';
+		case 3:
+			return 'Me';
+		case 4:
+			return 'Mi';
+		case 5:
+			return 'Fa';
+		case 6:
+			return 'Fi';
+		case 7:
+			return 'Sol';
+		case 8:
+			return 'Le';
+		case 9:
+			return 'La';
+		case 10:
+			return 'Te';
+		default:
+			return 'Ti';
+	}
+};
 var $author$project$Main$showText = F3(
 	function (ifTrue, ifFalse, _switch) {
 		if (_switch) {

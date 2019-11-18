@@ -11,6 +11,7 @@ import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode exposing (Value)
 import KeyboardKey exposing (..)
 import List exposing (range)
+import Note exposing (..)
 import Platform.Sub exposing (batch)
 import Solfege exposing (..)
 import String exposing (fromInt)
@@ -61,7 +62,7 @@ update msg model =
         MouseDownOn i ->
             case Solfege.fromInt i of
                 key ->
-                    ( pressKeyOnModel model key, playTone (Solfege.getSolfegeName key) )
+                    ( pressKeyOnModel model key, playTone (getNoteString key) )
 
         MouseUpOn i ->
             case Solfege.fromInt i of
@@ -71,7 +72,7 @@ update msg model =
         KeyDownOn keyboardKey ->
             case fromKeyboardKey keyboardKey of
                 Ok key ->
-                    ( pressKeyOnModel model key, playTone (Solfege.getSolfegeName key) )
+                    ( pressKeyOnModel model key, playTone (getNoteString key) )
 
                 Err s ->
                     ( model, Cmd.none )
@@ -83,6 +84,16 @@ update msg model =
 
                 Err s ->
                     ( model, Cmd.none )
+
+
+getNoteString : Solfege -> String
+getNoteString solfege =
+    case Solfege.toInt solfege |> Note.fromInt |> Result.map Note.toString of
+        Ok s ->
+            s
+
+        Err s ->
+            s
 
 
 pressKeyOnModel : Model -> Solfege -> Model
@@ -99,7 +110,7 @@ urlRequestToUrl : UrlRequest -> Url
 urlRequestToUrl request =
     case request of
         External s ->
-            case fromString s of
+            case Url.fromString s of
                 Nothing ->
                     Url Http "google.com" Nothing "" Nothing Nothing
 

@@ -11931,54 +11931,49 @@ var $avh4$elm_program_test$ProgramTest$start = F2(
 		var program = _v0.b;
 		return A3(program, options.baseUrl, flags, options);
 	});
-var $author$project$Solfege$getSolfegeName = function (s) {
-	switch (s.$) {
-		case 'Do':
-			return 'Do';
-		case 'Di':
-			return 'Di';
-		case 'Re':
-			return 'Re';
-		case 'Me':
-			return 'Me';
-		case 'Mi':
-			return 'Mi';
-		case 'Fa':
-			return 'Fa';
-		case 'Fi':
-			return 'Fi';
-		case 'Sol':
-			return 'Sol';
-		case 'Le':
-			return 'Le';
-		case 'La':
-			return 'La';
-		case 'Te':
-			return 'Te';
+var $author$project$Note$A = {$: 'A'};
+var $author$project$Note$ASharp = {$: 'ASharp'};
+var $author$project$Note$B = {$: 'B'};
+var $author$project$Note$C = {$: 'C'};
+var $author$project$Note$CSharp = {$: 'CSharp'};
+var $author$project$Note$D = {$: 'D'};
+var $author$project$Note$DSharp = {$: 'DSharp'};
+var $author$project$Note$E = {$: 'E'};
+var $author$project$Note$F = {$: 'F'};
+var $author$project$Note$FSharp = {$: 'FSharp'};
+var $author$project$Note$G = {$: 'G'};
+var $author$project$Note$GSharp = {$: 'GSharp'};
+var $author$project$Note$fromInt = function (i) {
+	switch (i) {
+		case 0:
+			return $elm$core$Result$Ok($author$project$Note$A);
+		case 1:
+			return $elm$core$Result$Ok($author$project$Note$ASharp);
+		case 2:
+			return $elm$core$Result$Ok($author$project$Note$B);
+		case 3:
+			return $elm$core$Result$Ok($author$project$Note$C);
+		case 4:
+			return $elm$core$Result$Ok($author$project$Note$CSharp);
+		case 5:
+			return $elm$core$Result$Ok($author$project$Note$D);
+		case 6:
+			return $elm$core$Result$Ok($author$project$Note$DSharp);
+		case 7:
+			return $elm$core$Result$Ok($author$project$Note$E);
+		case 8:
+			return $elm$core$Result$Ok($author$project$Note$F);
+		case 9:
+			return $elm$core$Result$Ok($author$project$Note$FSharp);
+		case 10:
+			return $elm$core$Result$Ok($author$project$Note$G);
+		case 11:
+			return $elm$core$Result$Ok($author$project$Note$GSharp);
 		default:
-			return 'Ti';
+			return $elm$core$Result$Err(
+				$elm$core$String$fromInt(i));
 	}
 };
-var $elm$browser$Browser$External = function (a) {
-	return {$: 'External', a: a};
-};
-var $elm$browser$Browser$Internal = function (a) {
-	return {$: 'Internal', a: a};
-};
-var $elm$browser$Browser$Dom$NotFound = function (a) {
-	return {$: 'NotFound', a: a};
-};
-var $elm$core$Basics$never = function (_v0) {
-	never:
-	while (true) {
-		var nvr = _v0.a;
-		var $temp$_v0 = nvr;
-		_v0 = $temp$_v0;
-		continue never;
-	}
-};
-var $elm$browser$Browser$Navigation$load = _Browser_load;
-var $author$project$Main$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
 var $author$project$Solfege$toInt = function (s) {
 	switch (s.$) {
 		case 'Do':
@@ -12007,6 +12002,68 @@ var $author$project$Solfege$toInt = function (s) {
 			return 11;
 	}
 };
+var $author$project$Note$toString = function (note) {
+	switch (note.$) {
+		case 'A':
+			return 'A4';
+		case 'ASharp':
+			return 'A#4';
+		case 'B':
+			return 'B4';
+		case 'C':
+			return 'C4';
+		case 'CSharp':
+			return 'C#4';
+		case 'D':
+			return 'D4';
+		case 'DSharp':
+			return 'D#4';
+		case 'E':
+			return 'E4';
+		case 'F':
+			return 'F4';
+		case 'FSharp':
+			return 'F#4';
+		case 'G':
+			return 'G4';
+		default:
+			return 'G#4';
+	}
+};
+var $author$project$Main$getNoteString = function (solfege) {
+	var _v0 = A2(
+		$elm$core$Result$map,
+		$author$project$Note$toString,
+		$author$project$Note$fromInt(
+			$author$project$Solfege$toInt(solfege)));
+	if (_v0.$ === 'Ok') {
+		var s = _v0.a;
+		return s;
+	} else {
+		var s = _v0.a;
+		return s;
+	}
+};
+var $elm$browser$Browser$External = function (a) {
+	return {$: 'External', a: a};
+};
+var $elm$browser$Browser$Internal = function (a) {
+	return {$: 'Internal', a: a};
+};
+var $elm$browser$Browser$Dom$NotFound = function (a) {
+	return {$: 'NotFound', a: a};
+};
+var $elm$core$Basics$never = function (_v0) {
+	never:
+	while (true) {
+		var nvr = _v0.a;
+		var $temp$_v0 = nvr;
+		_v0 = $temp$_v0;
+		continue never;
+	}
+};
+var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $author$project$Main$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
 var $author$project$Main$pressKeyOnModel = F2(
 	function (model, solfege) {
 		return _Utils_update(
@@ -12047,7 +12104,7 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					A2($author$project$Main$pressKeyOnModel, model, key),
 					$author$project$Main$playTone(
-						$author$project$Solfege$getSolfegeName(key)));
+						$author$project$Main$getNoteString(key)));
 			case 'MouseUpOn':
 				var i = msg.a;
 				var _v2 = $author$project$Solfege$fromInt(i);
@@ -12063,7 +12120,7 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						A2($author$project$Main$pressKeyOnModel, model, key),
 						$author$project$Main$playTone(
-							$author$project$Solfege$getSolfegeName(key)));
+							$author$project$Main$getNoteString(key)));
 				} else {
 					var s = _v3.a;
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -12103,6 +12160,34 @@ var $author$project$Main$MouseUpOn = function (a) {
 };
 var $author$project$Main$getKeyName = function (n) {
 	return 'key-' + $elm$core$String$fromInt(n);
+};
+var $author$project$Solfege$getSolfegeName = function (s) {
+	switch (s.$) {
+		case 'Do':
+			return 'Do';
+		case 'Di':
+			return 'Di';
+		case 'Re':
+			return 'Re';
+		case 'Me':
+			return 'Me';
+		case 'Mi':
+			return 'Mi';
+		case 'Fa':
+			return 'Fa';
+		case 'Fi':
+			return 'Fi';
+		case 'Sol':
+			return 'Sol';
+		case 'Le':
+			return 'Le';
+		case 'La':
+			return 'La';
+		case 'Te':
+			return 'Te';
+		default:
+			return 'Ti';
+	}
 };
 var $author$project$Main$showText = F3(
 	function (ifTrue, ifFalse, _switch) {
@@ -12579,7 +12664,7 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$getSolfegeName),
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Test$Generated$Main1443215882$main = A2(
+var $author$project$Test$Generated$Main4128172529$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -12587,7 +12672,7 @@ var $author$project$Test$Generated$Main1443215882$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 383226363750815
+		seed: 142838144375411
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -12608,10 +12693,10 @@ var $author$project$Test$Generated$Main1443215882$main = A2(
 				_List_fromArray(
 					[$author$project$KeyboardKeyTests$stub]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main1443215882':{'init':$author$project$Test$Generated$Main1443215882$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main4128172529':{'init':$author$project$Test$Generated$Main4128172529$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-86162.sock";
+var pipeFilename = "/tmp/elm_test-87139.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

@@ -1,8 +1,9 @@
 
-function playTone() {
+function playTone(note) {
+	console.log("playTone(" + note + ")")
 	var synth = new Tone.Synth().toMaster();
 	if (Tone.context.state !== 'running') {
         Tone.context.resume();
     }
-	synth.triggerAttackRelease("C4", "8n");
+	synth.triggerAttackRelease(note, "8n");
 }

@@ -24,7 +24,7 @@ To play notes, either click them or use the number row on your keyboard from the
 		 - [x] View keyboard (12 keys)
 		 - [x] Click on keys
 			 - [x] Shows solfege
-			 - [ ] Plays note
+			 - [x] Plays note
 		 - [x] Top row of keyboard (1-=) map to the 12 keys
 	 - [ ] v1 - Alternate scales
 		 - [ ] Dropdown to pick scales
@@ -34,7 +34,8 @@ To play notes, either click them or use the number row on your keyboard from the
 		 - [ ] Left function lowers note
 	 - [ ] v2 - Overlay scale on piano keys
 	 - [ ] Nice-to-haves
-		 - [ ] Hold note and key display for some minimum time to keep it from being too fast to  - see
+	 	 - [ ] Logo
+		 - [ ] Hold note and key display for some minimum time to keep it from being too fast to see
 
 - [ ] Design
 	- [ ] HTML only

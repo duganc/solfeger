@@ -73,6 +73,7 @@ testKeyboardKeyPressDisplaysSolfege =
                 |> expectViewHas [ Selector.id "key-6", Selector.text "" ]
 
 
+testRenderKeysRendersTheCorrectNumberOfKeys : Test
 testRenderKeysRendersTheCorrectNumberOfKeys =
     test "renderKeysRendersTheCorrectNumberOfKeys" <|
         \() ->
@@ -82,6 +83,7 @@ testRenderKeysRendersTheCorrectNumberOfKeys =
                 |> Query.count (Expect.equal 3)
 
 
+testPressKeyOnModel : Test
 testPressKeyOnModel =
     test "pressesKeyOnModel" <|
         \() ->

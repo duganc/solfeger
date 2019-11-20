@@ -12310,7 +12310,7 @@ var $author$project$Main$renderNoteSelector = function (i) {
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class('scale-note-selector'),
+				$elm$html$Html$Attributes$class('scale-selector'),
 				$elm$html$Html$Attributes$id(
 				'scale-note-' + $elm$core$String$fromInt(i))
 			]),
@@ -12382,7 +12382,7 @@ var $author$project$Main$renderScaleTypeSelector = function (i) {
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class('scale-type-selector'),
+				$elm$html$Html$Attributes$class('scale-selector'),
 				$elm$html$Html$Attributes$id(
 				'scale-type-' + $elm$core$String$fromInt(i))
 			]),
@@ -12401,7 +12401,7 @@ var $author$project$Main$renderScaleTypeSelector = function (i) {
 var $author$project$Main$getAllScaleTypeSelectors = A2(
 	$elm$core$List$map,
 	$author$project$Main$renderScaleTypeSelector,
-	A2($elm$core$List$range, 0, 16));
+	A2($elm$core$List$range, 0, 6));
 var $author$project$Main$renderScaleSelector = _List_fromArray(
 	[
 		A2(
@@ -12850,7 +12850,7 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$getSolfegeName),
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Test$Generated$Main3895364567$main = A2(
+var $author$project$Test$Generated$Main392018425$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -12858,7 +12858,7 @@ var $author$project$Test$Generated$Main3895364567$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 266104819411375
+		seed: 125863593977796
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -12879,10 +12879,10 @@ var $author$project$Test$Generated$Main3895364567$main = A2(
 				_List_fromArray(
 					[$author$project$KeyboardKeyTests$stub]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main3895364567':{'init':$author$project$Test$Generated$Main3895364567$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main392018425':{'init':$author$project$Test$Generated$Main392018425$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-89192.sock";
+var pipeFilename = "/tmp/elm_test-89265.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

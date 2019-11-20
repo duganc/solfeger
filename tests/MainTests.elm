@@ -8,11 +8,13 @@ import Json.Encode as Encode exposing (Value)
 import KeyboardKey exposing (..)
 import List exposing (range)
 import Main exposing (Flags, Model, Msg(..), init, loadUrlFromUrlRequest, pressKeyOnModel, releaseKeyOnModel, renderKey, renderKeys, showText, subscriptions, update, view)
+import Note exposing (Note(..), fromInt, toString)
 import ProgramTest exposing (ProgramTest, SimulatedSub, clickButton, ensureViewHas, expectViewHas, simulateDomEvent, start)
+import Scale exposing (Scale, ScaleType(..), scaleTypeFromInt, scaleTypeToString)
 import SimulatedEffect.Ports
 import SimulatedEffect.Sub
 import Solfege exposing (..)
-import String exposing (fromInt)
+import String exposing (fromInt, toLower)
 import Test exposing (..)
 import Test.Html.Event as Event
 import Test.Html.Query as Query
@@ -41,6 +43,22 @@ testPageHasTwelveKeys =
         \() ->
             startProgramForTesting "http://www.mysolfegeapp.com" ()
                 |> expectViewHas (range 0 11 |> List.map getKeySelector)
+
+
+testPageHasScaleNoteSelector : Test
+testPageHasScaleNoteSelector =
+    test "pageHasScaleNoteSelector" <|
+        \() ->
+            startProgramForTesting "http://www.mysolfegeapp.com" ()
+                |> expectViewHas (range 0 11 |> List.map getScaleNoteSelector)
+
+
+testPageHasScaleTypeSelector : Test
+testPageHasScaleTypeSelector =
+    test "pageHasScaleTypeSelector" <|
+        \() ->
+            startProgramForTesting "http://www.mysolfegeapp.com" ()
+                |> expectViewHas (range 0 6 |> List.map getScaleTypeSelector)
 
 
 testKeyClickDisplaysSolfege : Test
@@ -168,5 +186,20 @@ keyboardKeyObject key =
 
 
 getKeySelector : Int -> Selector.Selector
-getKeySelector i =
-    Selector.id ("key-" ++ String.fromInt i)
+getKeySelector =
+    getIdSelector "key"
+
+
+getScaleTypeSelector : Int -> Selector.Selector
+getScaleTypeSelector =
+    getIdSelector "scale-type"
+
+
+getScaleNoteSelector : Int -> Selector.Selector
+getScaleNoteSelector =
+    getIdSelector "scale-note"
+
+
+getIdSelector : String -> Int -> Selector.Selector
+getIdSelector s i =
+    (s ++ "-" ++ String.fromInt i) |> Selector.id

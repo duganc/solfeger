@@ -11974,6 +11974,34 @@ var $author$project$Note$fromInt = function (i) {
 				$elm$core$String$fromInt(i));
 	}
 };
+var $author$project$Note$toAbsoluteString = function (note) {
+	switch (note.$) {
+		case 'A':
+			return 'A3';
+		case 'ASharp':
+			return 'A#3';
+		case 'B':
+			return 'B3';
+		case 'C':
+			return 'C4';
+		case 'CSharp':
+			return 'C#4';
+		case 'D':
+			return 'D4';
+		case 'DSharp':
+			return 'D#4';
+		case 'E':
+			return 'E4';
+		case 'F':
+			return 'F4';
+		case 'FSharp':
+			return 'F#4';
+		case 'G':
+			return 'G4';
+		default:
+			return 'G#4';
+	}
+};
 var $author$project$Solfege$toInt = function (s) {
 	switch (s.$) {
 		case 'Do':
@@ -12002,38 +12030,10 @@ var $author$project$Solfege$toInt = function (s) {
 			return 11;
 	}
 };
-var $author$project$Note$toString = function (note) {
-	switch (note.$) {
-		case 'A':
-			return 'A3';
-		case 'ASharp':
-			return 'A#3';
-		case 'B':
-			return 'B3';
-		case 'C':
-			return 'C4';
-		case 'CSharp':
-			return 'C#4';
-		case 'D':
-			return 'D4';
-		case 'DSharp':
-			return 'D#4';
-		case 'E':
-			return 'E4';
-		case 'F':
-			return 'F4';
-		case 'FSharp':
-			return 'F#4';
-		case 'G':
-			return 'G4';
-		default:
-			return 'G#4';
-	}
-};
-var $author$project$Main$getNoteString = function (solfege) {
+var $author$project$Main$getAbsoluteNoteString = function (solfege) {
 	var _v0 = A2(
 		$elm$core$Result$map,
-		$author$project$Note$toString,
+		$author$project$Note$toAbsoluteString,
 		$author$project$Note$fromInt(
 			$author$project$Solfege$toInt(solfege)));
 	if (_v0.$ === 'Ok') {
@@ -12104,7 +12104,7 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					A2($author$project$Main$pressKeyOnModel, model, key),
 					$author$project$Main$playTone(
-						$author$project$Main$getNoteString(key)));
+						$author$project$Main$getAbsoluteNoteString(key)));
 			case 'MouseUpOn':
 				var i = msg.a;
 				var _v2 = $author$project$Solfege$fromInt(i);
@@ -12120,7 +12120,7 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						A2($author$project$Main$pressKeyOnModel, model, key),
 						$author$project$Main$playTone(
-							$author$project$Main$getNoteString(key)));
+							$author$project$Main$getAbsoluteNoteString(key)));
 				} else {
 					var s = _v3.a;
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -12268,6 +12268,157 @@ var $author$project$Main$renderKeys = F2(
 				$author$project$Main$renderKey(model),
 				A2($elm$core$List$range, 0, n - 1)));
 	});
+var $author$project$Note$toString = function (note) {
+	switch (note.$) {
+		case 'A':
+			return 'A';
+		case 'ASharp':
+			return 'A#';
+		case 'B':
+			return 'B';
+		case 'C':
+			return 'C';
+		case 'CSharp':
+			return 'C#';
+		case 'D':
+			return 'D';
+		case 'DSharp':
+			return 'D#';
+		case 'E':
+			return 'E';
+		case 'F':
+			return 'F';
+		case 'FSharp':
+			return 'F#';
+		case 'G':
+			return 'G';
+		default:
+			return 'G#';
+	}
+};
+var $elm$core$Result$withDefault = F2(
+	function (def, result) {
+		if (result.$ === 'Ok') {
+			var a = result.a;
+			return a;
+		} else {
+			return def;
+		}
+	});
+var $author$project$Main$renderNoteSelector = function (i) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('scale-note-selector'),
+				$elm$html$Html$Attributes$id(
+				'scale-note-' + $elm$core$String$fromInt(i))
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text(
+				A2(
+					$elm$core$Result$withDefault,
+					'ERROR!',
+					A2(
+						$elm$core$Result$map,
+						$author$project$Note$toString,
+						$author$project$Note$fromInt(i))))
+			]));
+};
+var $author$project$Main$getAllNoteSelectors = A2(
+	$elm$core$List$map,
+	$author$project$Main$renderNoteSelector,
+	A2($elm$core$List$range, 0, 11));
+var $author$project$Scale$Chromatic = {$: 'Chromatic'};
+var $author$project$Scale$Dorian = {$: 'Dorian'};
+var $author$project$Scale$Locrian = {$: 'Locrian'};
+var $author$project$Scale$Lydian = {$: 'Lydian'};
+var $author$project$Scale$Major = {$: 'Major'};
+var $author$project$Scale$Mixolydian = {$: 'Mixolydian'};
+var $author$project$Scale$Phrygian = {$: 'Phrygian'};
+var $author$project$Scale$scaleTypeFromInt = function (i) {
+	switch (i) {
+		case 0:
+			return $elm$core$Result$Ok($author$project$Scale$Chromatic);
+		case 1:
+			return $elm$core$Result$Ok($author$project$Scale$Locrian);
+		case 2:
+			return $elm$core$Result$Ok($author$project$Scale$Major);
+		case 3:
+			return $elm$core$Result$Ok($author$project$Scale$Dorian);
+		case 4:
+			return $elm$core$Result$Ok($author$project$Scale$Phrygian);
+		case 5:
+			return $elm$core$Result$Ok($author$project$Scale$Lydian);
+		case 6:
+			return $elm$core$Result$Ok($author$project$Scale$Mixolydian);
+		default:
+			return $elm$core$Result$Err('Invalid integer representation of ScaleType');
+	}
+};
+var $author$project$Scale$scaleTypeToString = function (t) {
+	switch (t.$) {
+		case 'Chromatic':
+			return 'Chromatic';
+		case 'Minor':
+			return 'Minor';
+		case 'Locrian':
+			return 'Locrian';
+		case 'Major':
+			return 'Major';
+		case 'Dorian':
+			return 'Dorian';
+		case 'Phrygian':
+			return 'Phrygian';
+		case 'Lydian':
+			return 'Lydian';
+		default:
+			return 'Mixolydian';
+	}
+};
+var $author$project$Main$renderScaleTypeSelector = function (i) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('scale-type-selector'),
+				$elm$html$Html$Attributes$id(
+				'scale-type-' + $elm$core$String$fromInt(i))
+			]),
+		_List_fromArray(
+			[
+				$elm$html$Html$text(
+				A2(
+					$elm$core$Result$withDefault,
+					'ERROR!',
+					A2(
+						$elm$core$Result$map,
+						$author$project$Scale$scaleTypeToString,
+						$author$project$Scale$scaleTypeFromInt(i))))
+			]));
+};
+var $author$project$Main$getAllScaleTypeSelectors = A2(
+	$elm$core$List$map,
+	$author$project$Main$renderScaleTypeSelector,
+	A2($elm$core$List$range, 0, 16));
+var $author$project$Main$renderScaleSelector = _List_fromArray(
+	[
+		A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('table')
+			]),
+		$author$project$Main$getAllNoteSelectors),
+		A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('table')
+			]),
+		$author$project$Main$getAllScaleTypeSelectors)
+	]);
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$browser$Browser$Document,
@@ -12283,7 +12434,14 @@ var $author$project$Main$view = function (model) {
 				_List_fromArray(
 					[
 						A2($author$project$Main$renderKeys, model, 12)
-					]))
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('table')
+					]),
+				$author$project$Main$renderScaleSelector)
 			]));
 };
 var $avh4$elm_program_test$ProgramTest$InvalidLocationUrl = F2(
@@ -12517,10 +12675,38 @@ var $author$project$MainTests$testKeyboardKeyPressDisplaysSolfege = A2(
 									$author$project$KeyboardKey$CharacterKey('5')),
 								A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0)))))));
 	});
-var $author$project$MainTests$getKeySelector = function (i) {
-	return $elm_explorations$test$Test$Html$Selector$id(
-		'key-' + $elm$core$String$fromInt(i));
-};
+var $author$project$MainTests$getIdSelector = F2(
+	function (s, i) {
+		return $elm_explorations$test$Test$Html$Selector$id(
+			s + ('-' + $elm$core$String$fromInt(i)));
+	});
+var $author$project$MainTests$getScaleNoteSelector = $author$project$MainTests$getIdSelector('scale-note');
+var $author$project$MainTests$testPageHasScaleNoteSelector = A2(
+	$elm_explorations$test$Test$test,
+	'pageHasScaleNoteSelector',
+	function (_v0) {
+		return A2(
+			$avh4$elm_program_test$ProgramTest$expectViewHas,
+			A2(
+				$elm$core$List$map,
+				$author$project$MainTests$getScaleNoteSelector,
+				A2($elm$core$List$range, 0, 11)),
+			A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0));
+	});
+var $author$project$MainTests$getScaleTypeSelector = $author$project$MainTests$getIdSelector('scale-type');
+var $author$project$MainTests$testPageHasScaleTypeSelector = A2(
+	$elm_explorations$test$Test$test,
+	'pageHasScaleTypeSelector',
+	function (_v0) {
+		return A2(
+			$avh4$elm_program_test$ProgramTest$expectViewHas,
+			A2(
+				$elm$core$List$map,
+				$author$project$MainTests$getScaleTypeSelector,
+				A2($elm$core$List$range, 0, 6)),
+			A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0));
+	});
+var $author$project$MainTests$getKeySelector = $author$project$MainTests$getIdSelector('key');
 var $author$project$MainTests$testPageHasTwelveKeys = A2(
 	$elm_explorations$test$Test$test,
 	'pageHasTwelveKeys',
@@ -12664,7 +12850,7 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$getSolfegeName),
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Test$Generated$Main3504423783$main = A2(
+var $author$project$Test$Generated$Main3895364567$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -12672,7 +12858,7 @@ var $author$project$Test$Generated$Main3504423783$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 399681116761565
+		seed: 266104819411375
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -12681,7 +12867,7 @@ var $author$project$Test$Generated$Main3504423783$main = A2(
 				$elm_explorations$test$Test$describe,
 				'MainTests',
 				_List_fromArray(
-					[$author$project$MainTests$testShowTextShowsAlternateTextWhenFalse, $author$project$MainTests$testKeyClickDisplaysSolfege, $author$project$MainTests$testPageHasTwelveKeys, $author$project$MainTests$testRenderKeysRendersTheCorrectNumberOfKeys, $author$project$MainTests$testKeyboardKeyPressDisplaysSolfege, $author$project$MainTests$testShowTextShowsTextWhenTrue, $author$project$MainTests$testKeyRenders, $author$project$MainTests$testPressKeyOnModel])),
+					[$author$project$MainTests$testShowTextShowsAlternateTextWhenFalse, $author$project$MainTests$testKeyClickDisplaysSolfege, $author$project$MainTests$testPageHasScaleNoteSelector, $author$project$MainTests$testPageHasTwelveKeys, $author$project$MainTests$testRenderKeysRendersTheCorrectNumberOfKeys, $author$project$MainTests$testKeyboardKeyPressDisplaysSolfege, $author$project$MainTests$testShowTextShowsTextWhenTrue, $author$project$MainTests$testPageHasScaleTypeSelector, $author$project$MainTests$testKeyRenders, $author$project$MainTests$testPressKeyOnModel])),
 				A2(
 				$elm_explorations$test$Test$describe,
 				'SolfegeTests',
@@ -12693,10 +12879,10 @@ var $author$project$Test$Generated$Main3504423783$main = A2(
 				_List_fromArray(
 					[$author$project$KeyboardKeyTests$stub]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main3504423783':{'init':$author$project$Test$Generated$Main3504423783$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main3895364567':{'init':$author$project$Test$Generated$Main3895364567$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-88588.sock";
+var pipeFilename = "/tmp/elm_test-89192.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

@@ -17,6 +17,18 @@ body {
 	border-radius: 7px;
 }
 
+.scale-selector {
+	background-color: white;
+	display: table-cell;
+	height: 20px;
+	width: 20px;
+	border: solid;
+	border-width: 2px;
+	border-color: #242424;
+	padding: 2px;
+	margin: 2px;
+	border-radius: 7px;
+}
 
 /*Utility*/
 
@@ -38,6 +50,10 @@ body {
 
 .bg-white {
 	background-color: white;
+}
+
+.border-radius-medium {
+	border-radius: 7px;
 }
 
 .color-very-dark {

@@ -13,6 +13,7 @@ import KeyboardKey exposing (..)
 import List exposing (range)
 import Note exposing (..)
 import Platform.Sub exposing (batch)
+import Scale exposing (..)
 import Solfege exposing (..)
 import String exposing (fromInt)
 import Url exposing (Protocol(..), Url, fromString, toString)
@@ -62,7 +63,7 @@ update msg model =
         MouseDownOn i ->
             case Solfege.fromInt i of
                 key ->
-                    ( pressKeyOnModel model key, playTone (getNoteString key) )
+                    ( pressKeyOnModel model key, playTone (getAbsoluteNoteString key) )
 
         MouseUpOn i ->
             case Solfege.fromInt i of
@@ -72,7 +73,7 @@ update msg model =
         KeyDownOn keyboardKey ->
             case fromKeyboardKey keyboardKey of
                 Ok key ->
-                    ( pressKeyOnModel model key, playTone (getNoteString key) )
+                    ( pressKeyOnModel model key, playTone (getAbsoluteNoteString key) )
 
                 Err s ->
                     ( model, Cmd.none )
@@ -86,9 +87,9 @@ update msg model =
                     ( model, Cmd.none )
 
 
-getNoteString : Solfege -> String
-getNoteString solfege =
-    case Solfege.toInt solfege |> Note.fromInt |> Result.map Note.toString of
+getAbsoluteNoteString : Solfege -> String
+getAbsoluteNoteString solfege =
+    case Solfege.toInt solfege |> Note.fromInt |> Result.map Note.toAbsoluteString of
         Ok s ->
             s
 
@@ -162,7 +163,10 @@ type Msg
 
 view : Model -> Document Msg
 view model =
-    Document "Solfeger" [ div [ class "table" ] [ renderKeys model 12 ] ]
+    Document "Solfeger"
+        [ div [ class "table" ] [ renderKeys model 12 ]
+        , div [ class "table" ] renderScaleSelector
+        ]
 
 
 renderKeys : Model -> Int -> Html Msg
@@ -209,3 +213,30 @@ showText ifTrue ifFalse switch =
 
         False ->
             ifFalse
+
+
+renderScaleSelector : List (Html Msg)
+renderScaleSelector =
+    [ div [ class "table" ] getAllNoteSelectors
+    , div [ class "table" ] getAllScaleTypeSelectors
+    ]
+
+
+getAllNoteSelectors : List (Html Msg)
+getAllNoteSelectors =
+    range 0 11 |> List.map renderNoteSelector
+
+
+renderNoteSelector : Int -> Html Msg
+renderNoteSelector i =
+    div [ class "scale-selector", id ("scale-note-" ++ String.fromInt i) ] [ i |> Note.fromInt |> Result.map Note.toString |> Result.withDefault "ERROR!" |> text ]
+
+
+getAllScaleTypeSelectors : List (Html Msg)
+getAllScaleTypeSelectors =
+    range 0 6 |> List.map renderScaleTypeSelector
+
+
+renderScaleTypeSelector : Int -> Html Msg
+renderScaleTypeSelector i =
+    div [ class "scale-selector", id ("scale-type-" ++ String.fromInt i) ] [ i |> Scale.scaleTypeFromInt |> Result.map Scale.scaleTypeToString |> Result.withDefault "ERROR!" |> text ]

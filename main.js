@@ -6210,12 +6210,31 @@ var $author$project$Main$renderScaleSelector = _List_fromArray(
 			]),
 		$author$project$Main$getAllScaleTypeSelectors)
 	]);
+var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $author$project$Main$viewFooter = A2(
+	$elm$html$Html$a,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$href('http://creativecommons.org/licenses/by-nc/4.0/')
+		]),
+	_List_fromArray(
+		[
+			$elm$html$Html$text('This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 License.')
+		]));
+var $author$project$Main$viewHeader = A2($elm$html$Html$div, _List_Nil, _List_Nil);
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$browser$Browser$Document,
 		'Solfeger',
 		_List_fromArray(
 			[
+				$author$project$Main$viewHeader,
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -6232,7 +6251,8 @@ var $author$project$Main$view = function (model) {
 					[
 						$elm$html$Html$Attributes$class('table')
 					]),
-				$author$project$Main$renderScaleSelector)
+				$author$project$Main$renderScaleSelector),
+				$author$project$Main$viewFooter
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$application(

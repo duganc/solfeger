@@ -164,9 +164,21 @@ type Msg
 view : Model -> Document Msg
 view model =
     Document "Solfeger"
-        [ div [ class "table" ] [ renderKeys model 12 ]
+        [ viewHeader
+        , div [ class "table" ] [ renderKeys model 12 ]
         , div [ class "table" ] renderScaleSelector
+        , viewFooter
         ]
+
+
+viewHeader : Html Msg
+viewHeader =
+    div [] []
+
+
+viewFooter : Html Msg
+viewFooter =
+    a [ href "http://creativecommons.org/licenses/by-nc/4.0/" ] [ text "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 License." ]
 
 
 renderKeys : Model -> Int -> Html Msg

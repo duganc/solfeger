@@ -1,4 +1,4 @@
-module Note exposing (Note(..), fromInt, fromString, toString)
+module Note exposing (Note(..), fromInt, fromString, toAbsoluteString, toString)
 
 
 type Note
@@ -18,6 +18,46 @@ type Note
 
 toString : Note -> String
 toString note =
+    case note of
+        A ->
+            "A"
+
+        ASharp ->
+            "A#"
+
+        B ->
+            "B"
+
+        C ->
+            "C"
+
+        CSharp ->
+            "C#"
+
+        D ->
+            "D"
+
+        DSharp ->
+            "D#"
+
+        E ->
+            "E"
+
+        F ->
+            "F"
+
+        FSharp ->
+            "F#"
+
+        G ->
+            "G"
+
+        GSharp ->
+            "G#"
+
+
+toAbsoluteString : Note -> String
+toAbsoluteString note =
     case note of
         A ->
             "A3"

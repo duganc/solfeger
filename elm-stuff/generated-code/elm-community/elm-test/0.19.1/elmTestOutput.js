@@ -12419,12 +12419,43 @@ var $author$project$Main$renderScaleSelector = _List_fromArray(
 			]),
 		$author$project$Main$getAllScaleTypeSelectors)
 	]);
+var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $elm$html$Html$p = _VirtualDom_node('p');
+var $author$project$Main$viewFooter = A2(
+	$elm$html$Html$p,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$class('text-color-white')
+		]),
+	_List_fromArray(
+		[
+			$elm$html$Html$text('This work is licensed under a '),
+			A2(
+			$elm$html$Html$a,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$href('http://creativecommons.org/licenses/by-nc/4.0/')
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Creative Commons Attribution-NonCommercial 4.0 License')
+				])),
+			$elm$html$Html$text('.')
+		]));
+var $author$project$Main$viewHeader = A2($elm$html$Html$div, _List_Nil, _List_Nil);
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$browser$Browser$Document,
 		'Solfeger',
 		_List_fromArray(
 			[
+				$author$project$Main$viewHeader,
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -12441,7 +12472,8 @@ var $author$project$Main$view = function (model) {
 					[
 						$elm$html$Html$Attributes$class('table')
 					]),
-				$author$project$Main$renderScaleSelector)
+				$author$project$Main$renderScaleSelector),
+				$author$project$Main$viewFooter
 			]));
 };
 var $avh4$elm_program_test$ProgramTest$InvalidLocationUrl = F2(
@@ -12850,7 +12882,7 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$getSolfegeName),
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Test$Generated$Main1226300169$main = A2(
+var $author$project$Test$Generated$Main4268224904$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -12858,7 +12890,7 @@ var $author$project$Test$Generated$Main1226300169$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 48797378935279
+		seed: 333652890997595
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -12879,10 +12911,10 @@ var $author$project$Test$Generated$Main1226300169$main = A2(
 				_List_fromArray(
 					[$author$project$KeyboardKeyTests$stub]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main1226300169':{'init':$author$project$Test$Generated$Main1226300169$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main4268224904':{'init':$author$project$Test$Generated$Main4268224904$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-622.sock";
+var pipeFilename = "/tmp/elm_test-2129.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

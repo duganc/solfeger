@@ -6217,15 +6217,24 @@ var $elm$html$Html$Attributes$href = function (url) {
 		'href',
 		_VirtualDom_noJavaScriptUri(url));
 };
+var $elm$html$Html$p = _VirtualDom_node('p');
 var $author$project$Main$viewFooter = A2(
-	$elm$html$Html$a,
+	$elm$html$Html$p,
+	_List_Nil,
 	_List_fromArray(
 		[
-			$elm$html$Html$Attributes$href('http://creativecommons.org/licenses/by-nc/4.0/')
-		]),
-	_List_fromArray(
-		[
-			$elm$html$Html$text('This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 License.')
+			$elm$html$Html$text('This work is licensed under a '),
+			A2(
+			$elm$html$Html$a,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$href('http://creativecommons.org/licenses/by-nc/4.0/')
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Creative Commons Attribution-NonCommercial 4.0 License')
+				])),
+			$elm$html$Html$text('.')
 		]));
 var $author$project$Main$viewHeader = A2($elm$html$Html$div, _List_Nil, _List_Nil);
 var $author$project$Main$view = function (model) {

@@ -178,7 +178,11 @@ viewHeader =
 
 viewFooter : Html Msg
 viewFooter =
-    a [ href "http://creativecommons.org/licenses/by-nc/4.0/" ] [ text "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 License." ]
+    p []
+        [ text "This work is licensed under a "
+        , a [ href "http://creativecommons.org/licenses/by-nc/4.0/" ] [ text "Creative Commons Attribution-NonCommercial 4.0 License" ]
+        , text "."
+        ]
 
 
 renderKeys : Model -> Int -> Html Msg

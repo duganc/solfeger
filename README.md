@@ -25,9 +25,9 @@ To play notes, either click them or use the number row on your keyboard from the
 		 - [x] Click on keys
 			 - [x] Shows solfege
 			 - [x] Plays note
-		 - [x] Top row of keyboard (1-=) map to the 12 keys
+		 - [x] Top row of keyboard (tilda through equals sign) map to the 12 keys
 	 - [ ] v1 - Alternate scales
-		 - [ ] Dropdown to pick scales
+		 - [ ] Buttons to pick scales
 		 - [ ] 0-7 or other subset map to the keys
 		 - [ ] Unused keys are faded out
 		 - [ ] Left shift raises note
@@ -38,6 +38,12 @@ To play notes, either click them or use the number row on your keyboard from the
 		 - [ ] Hold note and key display for some minimum time to keep it from being too fast to see
 
 - [ ] Design
-	- [ ] HTML only
+	- [ ] Page Structure
+		- [x] Header & Footer
+		- [ ] Integrate into SPA
 	- [ ] Grayscale Design
 	- [ ] Full design
+
+## License
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 License](http://creativecommons.org/licenses/by-nc/4.0/).

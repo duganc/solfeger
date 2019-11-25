@@ -21,6 +21,7 @@ p, a, div, button {
 	margin: 2px;
 	border-radius: 7px;
 	text-align: center;
+	font-weight: bold;
 }
 
 .scale-selector {
@@ -35,6 +36,7 @@ p, a, div, button {
 	margin-top: 2px;
 	border-radius: 7px;
 	text-align: center;
+	font-weight: bold;
 }
 
 /*Utility*/

@@ -11860,20 +11860,26 @@ var $avh4$elm_program_test$ProgramTest$createApplication = function (program) {
 				}
 			}));
 };
-var $author$project$Main$Model = function (isKeyPressed) {
-	return {isKeyPressed: isKeyPressed};
-};
+var $author$project$Main$Model = F2(
+	function (isKeyPressed, selectedScale) {
+		return {isKeyPressed: isKeyPressed, selectedScale: selectedScale};
+	});
+var $author$project$Note$A = {$: 'A'};
+var $author$project$Scale$Chromatic = {$: 'Chromatic'};
+var $author$project$Scale$default = _Utils_Tuple2($author$project$Note$A, $author$project$Scale$Chromatic);
 var $author$project$Main$init = F3(
 	function (_v0, _v1, _v2) {
 		return _Utils_Tuple2(
-			$author$project$Main$Model(
+			A2(
+				$author$project$Main$Model,
 				$elm$core$Dict$fromList(
 					A2(
 						$elm$core$List$map,
 						function (i) {
 							return _Utils_Tuple2(i, false);
 						},
-						A2($elm$core$List$range, 0, 11)))),
+						A2($elm$core$List$range, 0, 11))),
+				$author$project$Scale$default),
 			$elm$core$Platform$Cmd$none);
 	});
 var $author$project$Main$urlRequestToUrl = function (request) {
@@ -11931,7 +11937,6 @@ var $avh4$elm_program_test$ProgramTest$start = F2(
 		var program = _v0.b;
 		return A3(program, options.baseUrl, flags, options);
 	});
-var $author$project$Note$A = {$: 'A'};
 var $author$project$Note$ASharp = {$: 'ASharp'};
 var $author$project$Note$B = {$: 'B'};
 var $author$project$Note$C = {$: 'C'};
@@ -12330,7 +12335,6 @@ var $author$project$Main$getAllNoteSelectors = A2(
 	$elm$core$List$map,
 	$author$project$Main$renderNoteSelector,
 	A2($elm$core$List$range, 0, 11));
-var $author$project$Scale$Chromatic = {$: 'Chromatic'};
 var $author$project$Scale$Dorian = {$: 'Dorian'};
 var $author$project$Scale$Locrian = {$: 'Locrian'};
 var $author$project$Scale$Lydian = {$: 'Lydian'};
@@ -12584,7 +12588,7 @@ var $author$project$MainTests$testKeyRenders = A2(
 			$elm_explorations$test$Test$Html$Query$fromHtml(
 				A2(
 					$author$project$Main$renderKey,
-					$author$project$Main$Model($elm$core$Dict$empty),
+					A2($author$project$Main$Model, $elm$core$Dict$empty, $author$project$Scale$default),
 					57)));
 	});
 var $author$project$KeyboardKey$toString = function (key) {
@@ -12835,9 +12839,297 @@ var $author$project$MainTests$testRenderKeysRendersTheCorrectNumberOfKeys = A2(
 				$elm_explorations$test$Test$Html$Query$fromHtml(
 					A2(
 						$author$project$Main$renderKeys,
-						$author$project$Main$Model($elm$core$Dict$empty),
+						A2($author$project$Main$Model, $elm$core$Dict$empty, $author$project$Scale$default),
 						3))));
 	});
+var $author$project$Scale$Minor = {$: 'Minor'};
+var $author$project$Note$toInt = function (n) {
+	switch (n.$) {
+		case 'A':
+			return 0;
+		case 'ASharp':
+			return 1;
+		case 'B':
+			return 2;
+		case 'C':
+			return 3;
+		case 'CSharp':
+			return 4;
+		case 'D':
+			return 5;
+		case 'DSharp':
+			return 6;
+		case 'E':
+			return 7;
+		case 'F':
+			return 8;
+		case 'FSharp':
+			return 9;
+		case 'G':
+			return 10;
+		default:
+			return 11;
+	}
+};
+var $author$project$Scale$notes = function (_v0) {
+	var note = _v0.a;
+	var scale = _v0.b;
+	return A2(
+		$elm$core$List$map,
+		$elm$core$Basics$add(
+			$author$project$Note$toInt(note)),
+		function () {
+			switch (scale.$) {
+				case 'Chromatic':
+					return A2($elm$core$List$range, 0, 12);
+				case 'Minor':
+					return _List_fromArray(
+						[0, 2, 3, 5, 7, 8, 10]);
+				case 'Locrian':
+					return _List_fromArray(
+						[0, 1, 3, 5, 6, 8, 10]);
+				case 'Major':
+					return _List_fromArray(
+						[0, 2, 4, 5, 7, 9, 11]);
+				case 'Dorian':
+					return _List_fromArray(
+						[0, 2, 3, 5, 7, 9, 10]);
+				case 'Phrygian':
+					return _List_fromArray(
+						[0, 1, 3, 5, 7, 8, 10]);
+				case 'Lydian':
+					return _List_fromArray(
+						[0, 2, 4, 6, 7, 9, 11]);
+				default:
+					return _List_fromArray(
+						[0, 2, 4, 5, 7, 9, 10]);
+			}
+		}());
+};
+var $elm$core$List$takeReverse = F3(
+	function (n, list, kept) {
+		takeReverse:
+		while (true) {
+			if (n <= 0) {
+				return kept;
+			} else {
+				if (!list.b) {
+					return kept;
+				} else {
+					var x = list.a;
+					var xs = list.b;
+					var $temp$n = n - 1,
+						$temp$list = xs,
+						$temp$kept = A2($elm$core$List$cons, x, kept);
+					n = $temp$n;
+					list = $temp$list;
+					kept = $temp$kept;
+					continue takeReverse;
+				}
+			}
+		}
+	});
+var $elm$core$List$takeTailRec = F2(
+	function (n, list) {
+		return $elm$core$List$reverse(
+			A3($elm$core$List$takeReverse, n, list, _List_Nil));
+	});
+var $elm$core$List$takeFast = F3(
+	function (ctr, n, list) {
+		if (n <= 0) {
+			return _List_Nil;
+		} else {
+			var _v0 = _Utils_Tuple2(n, list);
+			_v0$1:
+			while (true) {
+				_v0$5:
+				while (true) {
+					if (!_v0.b.b) {
+						return list;
+					} else {
+						if (_v0.b.b.b) {
+							switch (_v0.a) {
+								case 1:
+									break _v0$1;
+								case 2:
+									var _v2 = _v0.b;
+									var x = _v2.a;
+									var _v3 = _v2.b;
+									var y = _v3.a;
+									return _List_fromArray(
+										[x, y]);
+								case 3:
+									if (_v0.b.b.b.b) {
+										var _v4 = _v0.b;
+										var x = _v4.a;
+										var _v5 = _v4.b;
+										var y = _v5.a;
+										var _v6 = _v5.b;
+										var z = _v6.a;
+										return _List_fromArray(
+											[x, y, z]);
+									} else {
+										break _v0$5;
+									}
+								default:
+									if (_v0.b.b.b.b && _v0.b.b.b.b.b) {
+										var _v7 = _v0.b;
+										var x = _v7.a;
+										var _v8 = _v7.b;
+										var y = _v8.a;
+										var _v9 = _v8.b;
+										var z = _v9.a;
+										var _v10 = _v9.b;
+										var w = _v10.a;
+										var tl = _v10.b;
+										return (ctr > 1000) ? A2(
+											$elm$core$List$cons,
+											x,
+											A2(
+												$elm$core$List$cons,
+												y,
+												A2(
+													$elm$core$List$cons,
+													z,
+													A2(
+														$elm$core$List$cons,
+														w,
+														A2($elm$core$List$takeTailRec, n - 4, tl))))) : A2(
+											$elm$core$List$cons,
+											x,
+											A2(
+												$elm$core$List$cons,
+												y,
+												A2(
+													$elm$core$List$cons,
+													z,
+													A2(
+														$elm$core$List$cons,
+														w,
+														A3($elm$core$List$takeFast, ctr + 1, n - 4, tl)))));
+									} else {
+										break _v0$5;
+									}
+							}
+						} else {
+							if (_v0.a === 1) {
+								break _v0$1;
+							} else {
+								break _v0$5;
+							}
+						}
+					}
+				}
+				return list;
+			}
+			var _v1 = _v0.b;
+			var x = _v1.a;
+			return _List_fromArray(
+				[x]);
+		}
+	});
+var $elm$core$List$take = F2(
+	function (n, list) {
+		return A3($elm$core$List$takeFast, 0, n, list);
+	});
+var $author$project$ScaleTests$testScaleGetsCorrectNotes = A2(
+	$elm_explorations$test$Test$describe,
+	'Scales get correct notes',
+	_List_fromArray(
+		[
+			A2(
+			$elm_explorations$test$Test$test,
+			'cChromaticScaleHasTheRightNotes',
+			function (_v0) {
+				return A2(
+					$elm_explorations$test$Expect$equal,
+					A2($elm$core$List$range, 3, 15),
+					$author$project$Scale$notes(
+						_Utils_Tuple2($author$project$Note$C, $author$project$Scale$Chromatic)));
+			}),
+			A2(
+			$elm_explorations$test$Test$test,
+			'eMinorScaleHasTheRightNotes',
+			function (_v1) {
+				return A2(
+					$elm_explorations$test$Expect$equal,
+					_List_fromArray(
+						[7, 9, 10, 12, 14, 15, 17]),
+					$author$project$Scale$notes(
+						_Utils_Tuple2($author$project$Note$E, $author$project$Scale$Minor)));
+			}),
+			A2(
+			$elm_explorations$test$Test$test,
+			'gSharpMajorScaleHasTheRightNotes',
+			function (_v2) {
+				return A2(
+					$elm_explorations$test$Expect$equal,
+					_List_fromArray(
+						[11, 13, 15, 16, 18, 20, 22]),
+					$author$project$Scale$notes(
+						_Utils_Tuple2($author$project$Note$GSharp, $author$project$Scale$Major)));
+			}),
+			A2(
+			$elm_explorations$test$Test$test,
+			'bDorianHasARaisedSixth',
+			function (_v3) {
+				return A2(
+					$elm_explorations$test$Expect$equal,
+					$elm$core$Maybe$Just(11),
+					$elm$core$List$head(
+						$elm$core$List$reverse(
+							A2(
+								$elm$core$List$take,
+								6,
+								$author$project$Scale$notes(
+									_Utils_Tuple2($author$project$Note$B, $author$project$Scale$Dorian))))));
+			}),
+			A2(
+			$elm_explorations$test$Test$test,
+			'ePhrygianHasAFlatTwo',
+			function (_v4) {
+				return A2(
+					$elm_explorations$test$Expect$equal,
+					$elm$core$Maybe$Just(8),
+					$elm$core$List$head(
+						$elm$core$List$reverse(
+							A2(
+								$elm$core$List$take,
+								2,
+								$author$project$Scale$notes(
+									_Utils_Tuple2($author$project$Note$E, $author$project$Scale$Phrygian))))));
+			}),
+			A2(
+			$elm_explorations$test$Test$test,
+			'cSharpLydianHasARaisedFourth',
+			function (_v5) {
+				return A2(
+					$elm_explorations$test$Expect$equal,
+					$elm$core$Maybe$Just(10),
+					$elm$core$List$head(
+						$elm$core$List$reverse(
+							A2(
+								$elm$core$List$take,
+								4,
+								$author$project$Scale$notes(
+									_Utils_Tuple2($author$project$Note$CSharp, $author$project$Scale$Lydian))))));
+			}),
+			A2(
+			$elm_explorations$test$Test$test,
+			'DMixolydianHasAFlatSeven',
+			function (_v6) {
+				return A2(
+					$elm_explorations$test$Expect$equal,
+					$elm$core$Maybe$Just(15),
+					$elm$core$List$head(
+						$elm$core$List$reverse(
+							A2(
+								$elm$core$List$take,
+								7,
+								$author$project$Scale$notes(
+									_Utils_Tuple2($author$project$Note$D, $author$project$Scale$Mixolydian))))));
+			})
+		]));
 var $author$project$MainTests$testShowTextShowsAlternateTextWhenFalse = A2(
 	$elm_explorations$test$Test$test,
 	'showTextShowsAlternateTextWhenFalse',
@@ -12882,15 +13174,15 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$getSolfegeName),
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Test$Generated$Main4268224904$main = A2(
+var $author$project$Test$Generated$Main2511901033$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
-			['/Users/christopherdugan/elm_projects/solfeger/tests/KeyboardKeyTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/MainTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/SolfegeTests.elm']),
+			['/Users/christopherdugan/elm_projects/solfeger/tests/KeyboardKeyTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/MainTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/ScaleTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/SolfegeTests.elm']),
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 333652890997595
+		seed: 373323546106283
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -12909,12 +13201,17 @@ var $author$project$Test$Generated$Main4268224904$main = A2(
 				$elm_explorations$test$Test$describe,
 				'KeyboardKeyTests',
 				_List_fromArray(
-					[$author$project$KeyboardKeyTests$stub]))
+					[$author$project$KeyboardKeyTests$stub])),
+				A2(
+				$elm_explorations$test$Test$describe,
+				'ScaleTests',
+				_List_fromArray(
+					[$author$project$ScaleTests$testScaleGetsCorrectNotes]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main4268224904':{'init':$author$project$Test$Generated$Main4268224904$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main2511901033':{'init':$author$project$Test$Generated$Main2511901033$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-2129.sock";
+var pipeFilename = "/tmp/elm_test-3669.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

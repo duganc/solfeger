@@ -1,4 +1,4 @@
-module Note exposing (Note(..), fromInt, fromString, toAbsoluteString, toString)
+module Note exposing (Note(..), fromInt, fromString, toAbsoluteString, toInt, toString)
 
 
 type Note
@@ -164,6 +164,46 @@ fromString s =
 
         _ ->
             Err s
+
+
+toInt : Note -> Int
+toInt n =
+    case n of
+        A ->
+            0
+
+        ASharp ->
+            1
+
+        B ->
+            2
+
+        C ->
+            3
+
+        CSharp ->
+            4
+
+        D ->
+            5
+
+        DSharp ->
+            6
+
+        E ->
+            7
+
+        F ->
+            8
+
+        FSharp ->
+            9
+
+        G ->
+            10
+
+        GSharp ->
+            11
 
 
 fromInt : Int -> Result String Note

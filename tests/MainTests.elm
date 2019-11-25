@@ -10,7 +10,7 @@ import List exposing (range)
 import Main exposing (Flags, Model, Msg(..), init, loadUrlFromUrlRequest, pressKeyOnModel, releaseKeyOnModel, renderKey, renderKeys, showText, subscriptions, update, view)
 import Note exposing (Note(..), fromInt, toString)
 import ProgramTest exposing (ProgramTest, SimulatedSub, clickButton, ensureViewHas, expectViewHas, simulateDomEvent, start)
-import Scale exposing (Scale, ScaleType(..), scaleTypeFromInt, scaleTypeToString)
+import Scale exposing (Scale, ScaleType(..), default, scaleTypeFromInt, scaleTypeToString)
 import SimulatedEffect.Ports
 import SimulatedEffect.Sub
 import Solfege exposing (..)
@@ -95,7 +95,7 @@ testRenderKeysRendersTheCorrectNumberOfKeys : Test
 testRenderKeysRendersTheCorrectNumberOfKeys =
     test "renderKeysRendersTheCorrectNumberOfKeys" <|
         \() ->
-            renderKeys (Model Dict.empty) 3
+            renderKeys (Model Dict.empty Scale.default) 3
                 |> Query.fromHtml
                 |> Query.findAll [ Selector.class "key" ]
                 |> Query.count (Expect.equal 3)
@@ -115,7 +115,7 @@ testKeyRenders : Test
 testKeyRenders =
     test "keyRenders" <|
         \() ->
-            renderKey (Model Dict.empty) 57
+            renderKey (Model Dict.empty Scale.default) 57
                 |> Query.fromHtml
                 |> Query.has [ Selector.id "key-57" ]
 

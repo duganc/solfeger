@@ -1,6 +1,6 @@
-module Scale exposing (Scale, ScaleType(..), scaleTypeFromInt, scaleTypeToString)
+module Scale exposing (Scale, ScaleType(..), default, notes, scaleTypeFromInt, scaleTypeToString)
 
-import Note exposing (Note(..))
+import Note exposing (Note(..), toInt)
 
 
 type alias Scale =
@@ -16,6 +16,41 @@ type ScaleType
     | Phrygian
     | Lydian
     | Mixolydian
+
+
+default : Scale
+default =
+    ( A, Chromatic )
+
+
+notes : Scale -> List Int
+notes ( note, scale ) =
+    List.map ((+) (Note.toInt note))
+        (case scale of
+            Chromatic ->
+                List.range 0 12
+
+            Minor ->
+                [ 0, 2, 3, 5, 7, 8, 10 ]
+
+            Locrian ->
+                [ 0, 1, 3, 5, 6, 8, 10 ]
+
+            Major ->
+                [ 0, 2, 4, 5, 7, 9, 11 ]
+
+            Dorian ->
+                [ 0, 2, 3, 5, 7, 9, 10 ]
+
+            Phrygian ->
+                [ 0, 1, 3, 5, 7, 8, 10 ]
+
+            Lydian ->
+                [ 0, 2, 4, 6, 7, 9, 11 ]
+
+            Mixolydian ->
+                [ 0, 2, 4, 5, 7, 9, 10 ]
+        )
 
 
 scaleTypeFromInt : Int -> Result String ScaleType

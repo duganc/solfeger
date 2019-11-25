@@ -6220,7 +6220,10 @@ var $elm$html$Html$Attributes$href = function (url) {
 var $elm$html$Html$p = _VirtualDom_node('p');
 var $author$project$Main$viewFooter = A2(
 	$elm$html$Html$p,
-	_List_Nil,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$class('text-color-white')
+		]),
 	_List_fromArray(
 		[
 			$elm$html$Html$text('This work is licensed under a '),

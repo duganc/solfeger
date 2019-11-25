@@ -85,6 +85,14 @@ p, a, div, button {
 	color: #DBDBDB;
 }
 
+.text-color-white {
+	color: white;
+}
+
+.text-bold {
+	font-weight: bold;
+}
+
 .margin-1 {
 	margin: 10px;
 }

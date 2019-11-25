@@ -16,10 +16,6 @@ At the moment, this isn't being served anywhere so the best option is to clone t
 
 To play notes, either click them or use the number row on your keyboard from the backtick key to the `=`.  For instance, 4 will be `Mi`, the fifth note of the chromatic scale (because backtick is `Do`, 1 is `Di`, etc.).  
 
-## License
-
-This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 License](http://creativecommons.org/licenses/by-nc/4.0/).
-
 ## Todo
 
  - [ ] User Stories
@@ -47,3 +43,7 @@ This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 Li
 		- [ ] Integrate into SPA
 	- [ ] Grayscale Design
 	- [ ] Full design
+
+## License
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 License](http://creativecommons.org/licenses/by-nc/4.0/).

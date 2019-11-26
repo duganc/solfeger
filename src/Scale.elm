@@ -18,6 +18,10 @@ type ScaleType
     | Mixolydian
 
 
+type Error
+    = InvalidScale String
+
+
 default : Scale
 default =
     ( A, Chromatic )
@@ -53,7 +57,7 @@ notes ( note, scale ) =
         )
 
 
-scaleTypeFromInt : Int -> Result String ScaleType
+scaleTypeFromInt : Int -> Result Error ScaleType
 scaleTypeFromInt i =
     case i of
         0 ->
@@ -78,7 +82,7 @@ scaleTypeFromInt i =
             Ok Mixolydian
 
         _ ->
-            Err "Invalid integer representation of ScaleType"
+            Err (String.fromInt i |> InvalidScale)
 
 
 scaleTypeToString : ScaleType -> String

@@ -5611,6 +5611,7 @@ var $author$project$Solfege$fromInt = function (i) {
 			return 0;
 	}
 };
+var $author$project$Solfege$UnassignedKey = $elm$core$Basics$identity;
 var $author$project$Solfege$fromKeyboardKey = function (key) {
 	switch (key) {
 		case '`':
@@ -5692,7 +5693,7 @@ var $author$project$Solfege$fromKeyboardKey = function (key) {
 			return $elm$core$Result$Ok(
 				$author$project$Solfege$fromInt(12));
 		default:
-			return $elm$core$Result$Err('KeyboardKey Error');
+			return $elm$core$Result$Err(key);
 	}
 };
 var $author$project$Note$ASharp = 1;
@@ -6154,6 +6155,7 @@ var $elm$core$Result$map = F2(
 		}
 	});
 var $author$project$Scale$Dorian = 4;
+var $author$project$Scale$InvalidScale = $elm$core$Basics$identity;
 var $author$project$Scale$Locrian = 2;
 var $author$project$Scale$Lydian = 6;
 var $author$project$Scale$Major = 3;
@@ -6176,7 +6178,8 @@ var $author$project$Scale$scaleTypeFromInt = function (i) {
 		case 6:
 			return $elm$core$Result$Ok(7);
 		default:
-			return $elm$core$Result$Err('Invalid integer representation of ScaleType');
+			return $elm$core$Result$Err(
+				$elm$core$String$fromInt(i));
 	}
 };
 var $author$project$Scale$scaleTypeToString = function (t) {

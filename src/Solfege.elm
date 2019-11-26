@@ -1,4 +1,4 @@
-module Solfege exposing (Solfege(..), fromInt, fromKeyboardKey, toInt, toString)
+module Solfege exposing (Error(..), Solfege(..), fromInt, fromKeyboardKey, toInt, toString)
 
 import KeyboardKey exposing (KeyboardKey(..))
 
@@ -18,7 +18,11 @@ type Solfege
     | Ti
 
 
-fromKeyboardKey : KeyboardKey -> Result String Solfege
+type Error
+    = UnassignedKey KeyboardKey
+
+
+fromKeyboardKey : KeyboardKey -> Result Error Solfege
 fromKeyboardKey key =
     case key of
         CharacterKey "`" ->
@@ -100,7 +104,7 @@ fromKeyboardKey key =
             Ok (fromInt 12)
 
         _ ->
-            Err "KeyboardKey Error"
+            Err (UnassignedKey key)
 
 
 toInt : Solfege -> Int

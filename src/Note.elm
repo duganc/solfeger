@@ -1,4 +1,4 @@
-module Note exposing (Note(..), fromInt, fromString, intToAbsoluteString, toAbsoluteString, toInt, toString)
+module Note exposing (Error(..), Note(..), fromInt, fromString, intToAbsoluteString, toAbsoluteString, toInt, toString)
 
 import Solfege exposing (..)
 
@@ -16,6 +16,10 @@ type Note
     | FSharp
     | G
     | GSharp
+
+
+type Error
+    = InvalidNote String
 
 
 toString : Note -> String
@@ -78,7 +82,7 @@ toDefaultOctave note =
         3
 
 
-fromString : String -> Result String Note
+fromString : String -> Result Error Note
 fromString s =
     case s of
         "Ab" ->
@@ -145,7 +149,7 @@ fromString s =
             Ok GSharp
 
         _ ->
-            Err s
+            Err (InvalidNote s)
 
 
 toInt : Note -> Int

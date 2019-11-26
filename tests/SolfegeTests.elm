@@ -55,4 +55,4 @@ testGetSolfegeReturnsErrorForNonKey =
         \() ->
             CharacterKey "d"
                 |> fromKeyboardKey
-                |> Expect.equal (Err "KeyboardKey Error")
+                |> Expect.equal (Err (Solfege.UnassignedKey (CharacterKey "d")))

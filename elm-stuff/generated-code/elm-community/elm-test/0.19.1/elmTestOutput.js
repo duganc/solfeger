@@ -8409,6 +8409,9 @@ var $author$project$KeyboardKeyTests$stub = A2(
 var $author$project$KeyboardKey$CharacterKey = function (a) {
 	return {$: 'CharacterKey', a: a};
 };
+var $author$project$Solfege$UnassignedKey = function (a) {
+	return {$: 'UnassignedKey', a: a};
+};
 var $author$project$Solfege$Di = {$: 'Di'};
 var $author$project$Solfege$Do = {$: 'Do'};
 var $author$project$Solfege$Fa = {$: 'Fa'};
@@ -8534,7 +8537,8 @@ var $author$project$Solfege$fromKeyboardKey = function (key) {
 			return $elm$core$Result$Ok(
 				$author$project$Solfege$fromInt(12));
 		default:
-			return $elm$core$Result$Err('KeyboardKey Error');
+			return $elm$core$Result$Err(
+				$author$project$Solfege$UnassignedKey(key));
 	}
 };
 var $author$project$SolfegeTests$testGetSolfegeReturnsErrorForNonKey = A2(
@@ -8543,7 +8547,9 @@ var $author$project$SolfegeTests$testGetSolfegeReturnsErrorForNonKey = A2(
 	function (_v0) {
 		return A2(
 			$elm_explorations$test$Expect$equal,
-			$elm$core$Result$Err('KeyboardKey Error'),
+			$elm$core$Result$Err(
+				$author$project$Solfege$UnassignedKey(
+					$author$project$KeyboardKey$CharacterKey('d'))),
 			$author$project$Solfege$fromKeyboardKey(
 				$author$project$KeyboardKey$CharacterKey('d')));
 	});
@@ -12387,6 +12393,9 @@ var $author$project$Main$getAllNoteSelectors = A2(
 	$author$project$Main$renderNoteSelector,
 	A2($elm$core$List$range, 0, 11));
 var $author$project$Scale$Dorian = {$: 'Dorian'};
+var $author$project$Scale$InvalidScale = function (a) {
+	return {$: 'InvalidScale', a: a};
+};
 var $author$project$Scale$Locrian = {$: 'Locrian'};
 var $author$project$Scale$Lydian = {$: 'Lydian'};
 var $author$project$Scale$Major = {$: 'Major'};
@@ -12409,7 +12418,9 @@ var $author$project$Scale$scaleTypeFromInt = function (i) {
 		case 6:
 			return $elm$core$Result$Ok($author$project$Scale$Mixolydian);
 		default:
-			return $elm$core$Result$Err('Invalid integer representation of ScaleType');
+			return $elm$core$Result$Err(
+				$author$project$Scale$InvalidScale(
+					$elm$core$String$fromInt(i)));
 	}
 };
 var $author$project$Scale$scaleTypeToString = function (t) {
@@ -13206,7 +13217,7 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$toString),
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Test$Generated$Main3711494633$main = A2(
+var $author$project$Test$Generated$Main326886104$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13214,7 +13225,7 @@ var $author$project$Test$Generated$Main3711494633$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 216824614601322
+		seed: 210505890003733
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13245,10 +13256,10 @@ var $author$project$Test$Generated$Main3711494633$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main3711494633':{'init':$author$project$Test$Generated$Main3711494633$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main326886104':{'init':$author$project$Test$Generated$Main326886104$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-7004.sock";
+var pipeFilename = "/tmp/elm_test-7282.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

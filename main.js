@@ -5652,6 +5652,45 @@ var $author$project$Solfege$fromKeyboardKey = function (key) {
 		case '=':
 			return $elm$core$Result$Ok(
 				$author$project$Solfege$fromInt(12));
+		case 'q':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(0));
+		case 'w':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(1));
+		case 'e':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(2));
+		case 'r':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(3));
+		case 't':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(4));
+		case 'y':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(5));
+		case 'u':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(6));
+		case 'i':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(7));
+		case 'o':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(8));
+		case 'p':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(9));
+		case '[':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(10));
+		case ']':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(11));
+		case '\\':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(12));
 		default:
 			return $elm$core$Result$Err('KeyboardKey Error');
 	}

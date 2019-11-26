@@ -60,6 +60,45 @@ fromKeyboardKey key =
         CharacterKey "=" ->
             Ok (fromInt 12)
 
+        CharacterKey "q" ->
+            Ok (fromInt 0)
+
+        CharacterKey "w" ->
+            Ok (fromInt 1)
+
+        CharacterKey "e" ->
+            Ok (fromInt 2)
+
+        CharacterKey "r" ->
+            Ok (fromInt 3)
+
+        CharacterKey "t" ->
+            Ok (fromInt 4)
+
+        CharacterKey "y" ->
+            Ok (fromInt 5)
+
+        CharacterKey "u" ->
+            Ok (fromInt 6)
+
+        CharacterKey "i" ->
+            Ok (fromInt 7)
+
+        CharacterKey "o" ->
+            Ok (fromInt 8)
+
+        CharacterKey "p" ->
+            Ok (fromInt 9)
+
+        CharacterKey "[" ->
+            Ok (fromInt 10)
+
+        CharacterKey "]" ->
+            Ok (fromInt 11)
+
+        CharacterKey "\\" ->
+            Ok (fromInt 12)
+
         _ ->
             Err "KeyboardKey Error"
 

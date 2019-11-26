@@ -8494,6 +8494,45 @@ var $author$project$Solfege$fromKeyboardKey = function (key) {
 		case '=':
 			return $elm$core$Result$Ok(
 				$author$project$Solfege$fromInt(12));
+		case 'q':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(0));
+		case 'w':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(1));
+		case 'e':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(2));
+		case 'r':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(3));
+		case 't':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(4));
+		case 'y':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(5));
+		case 'u':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(6));
+		case 'i':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(7));
+		case 'o':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(8));
+		case 'p':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(9));
+		case '[':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(10));
+		case ']':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(11));
+		case '\\':
+			return $elm$core$Result$Ok(
+				$author$project$Solfege$fromInt(12));
 		default:
 			return $elm$core$Result$Err('KeyboardKey Error');
 	}
@@ -13167,7 +13206,7 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$toString),
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Test$Generated$Main4054070154$main = A2(
+var $author$project$Test$Generated$Main3711494633$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13175,7 +13214,7 @@ var $author$project$Test$Generated$Main4054070154$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 362888765224775
+		seed: 216824614601322
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13206,10 +13245,10 @@ var $author$project$Test$Generated$Main4054070154$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main4054070154':{'init':$author$project$Test$Generated$Main4054070154$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main3711494633':{'init':$author$project$Test$Generated$Main3711494633$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-6842.sock";
+var pipeFilename = "/tmp/elm_test-7004.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

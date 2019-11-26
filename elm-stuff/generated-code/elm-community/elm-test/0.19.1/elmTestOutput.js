@@ -8528,6 +8528,140 @@ var $author$project$SolfegeTests$testGetsSolfegeFromValidKeyboardKey = A2(
 			$author$project$Solfege$fromKeyboardKey(
 				$author$project$KeyboardKey$CharacterKey('7')));
 	});
+var $author$project$Note$A = {$: 'A'};
+var $author$project$Note$ASharp = {$: 'ASharp'};
+var $author$project$Note$B = {$: 'B'};
+var $author$project$Note$C = {$: 'C'};
+var $author$project$Note$CSharp = {$: 'CSharp'};
+var $author$project$Note$D = {$: 'D'};
+var $author$project$Note$DSharp = {$: 'DSharp'};
+var $author$project$Note$E = {$: 'E'};
+var $author$project$Note$F = {$: 'F'};
+var $author$project$Note$FSharp = {$: 'FSharp'};
+var $author$project$Note$G = {$: 'G'};
+var $author$project$Note$GSharp = {$: 'GSharp'};
+var $author$project$Note$fromInt = function (i) {
+	var _v0 = A2($elm$core$Basics$modBy, 12, i);
+	switch (_v0) {
+		case 0:
+			return $author$project$Note$A;
+		case 1:
+			return $author$project$Note$ASharp;
+		case 2:
+			return $author$project$Note$B;
+		case 3:
+			return $author$project$Note$C;
+		case 4:
+			return $author$project$Note$CSharp;
+		case 5:
+			return $author$project$Note$D;
+		case 6:
+			return $author$project$Note$DSharp;
+		case 7:
+			return $author$project$Note$E;
+		case 8:
+			return $author$project$Note$F;
+		case 9:
+			return $author$project$Note$FSharp;
+		case 10:
+			return $author$project$Note$G;
+		case 11:
+			return $author$project$Note$GSharp;
+		default:
+			return $author$project$Note$A;
+	}
+};
+var $author$project$Note$toInt = function (n) {
+	switch (n.$) {
+		case 'A':
+			return 0;
+		case 'ASharp':
+			return 1;
+		case 'B':
+			return 2;
+		case 'C':
+			return 3;
+		case 'CSharp':
+			return 4;
+		case 'D':
+			return 5;
+		case 'DSharp':
+			return 6;
+		case 'E':
+			return 7;
+		case 'F':
+			return 8;
+		case 'FSharp':
+			return 9;
+		case 'G':
+			return 10;
+		default:
+			return 11;
+	}
+};
+var $author$project$Note$toDefaultOctave = function (note) {
+	return (_Utils_cmp(
+		$author$project$Note$toInt(note),
+		$author$project$Note$toInt($author$project$Note$C)) > -1) ? 4 : 3;
+};
+var $author$project$Note$toString = function (note) {
+	switch (note.$) {
+		case 'A':
+			return 'A';
+		case 'ASharp':
+			return 'A#';
+		case 'B':
+			return 'B';
+		case 'C':
+			return 'C';
+		case 'CSharp':
+			return 'C#';
+		case 'D':
+			return 'D';
+		case 'DSharp':
+			return 'D#';
+		case 'E':
+			return 'E';
+		case 'F':
+			return 'F';
+		case 'FSharp':
+			return 'F#';
+		case 'G':
+			return 'G';
+		default:
+			return 'G#';
+	}
+};
+var $author$project$Note$intToAbsoluteString = function (i) {
+	return _Utils_ap(
+		$author$project$Note$toString(
+			$author$project$Note$fromInt(
+				A2($elm$core$Basics$modBy, 12, i))),
+		$elm$core$String$fromInt(
+			$author$project$Note$toDefaultOctave(
+				$author$project$Note$fromInt(
+					A2($elm$core$Basics$modBy, 12, i))) + ((i / 12) | 0)));
+};
+var $author$project$Note$toAbsoluteString = function (note) {
+	return _Utils_ap(
+		$author$project$Note$toString(note),
+		A2($elm$core$Basics$composeR, $author$project$Note$toDefaultOctave, $elm$core$String$fromInt)(note));
+};
+var $author$project$NoteTests$testIntToString = A2(
+	$elm_explorations$test$Test$test,
+	'testIntToStringIsSameAsToAbsoluteString',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			A2(
+				$elm$core$List$map,
+				A2($elm$core$Basics$composeR, $author$project$Note$fromInt, $author$project$Note$toAbsoluteString),
+				A2($elm$core$List$range, 0, 11)),
+			A2(
+				$elm$core$List$map,
+				$author$project$Note$intToAbsoluteString,
+				A2($elm$core$List$range, 0, 11)));
+	});
 var $avh4$elm_program_test$ProgramTest$ExpectFailed = F3(
 	function (a, b, c) {
 		return {$: 'ExpectFailed', a: a, b: b, c: c};
@@ -11864,7 +11998,6 @@ var $author$project$Main$Model = F2(
 	function (isKeyPressed, selectedScale) {
 		return {isKeyPressed: isKeyPressed, selectedScale: selectedScale};
 	});
-var $author$project$Note$A = {$: 'A'};
 var $author$project$Scale$Chromatic = {$: 'Chromatic'};
 var $author$project$Scale$default = _Utils_Tuple2($author$project$Note$A, $author$project$Scale$Chromatic);
 var $author$project$Main$init = F3(
@@ -11937,76 +12070,6 @@ var $avh4$elm_program_test$ProgramTest$start = F2(
 		var program = _v0.b;
 		return A3(program, options.baseUrl, flags, options);
 	});
-var $author$project$Note$ASharp = {$: 'ASharp'};
-var $author$project$Note$B = {$: 'B'};
-var $author$project$Note$C = {$: 'C'};
-var $author$project$Note$CSharp = {$: 'CSharp'};
-var $author$project$Note$D = {$: 'D'};
-var $author$project$Note$DSharp = {$: 'DSharp'};
-var $author$project$Note$E = {$: 'E'};
-var $author$project$Note$F = {$: 'F'};
-var $author$project$Note$FSharp = {$: 'FSharp'};
-var $author$project$Note$G = {$: 'G'};
-var $author$project$Note$GSharp = {$: 'GSharp'};
-var $author$project$Note$fromInt = function (i) {
-	switch (i) {
-		case 0:
-			return $elm$core$Result$Ok($author$project$Note$A);
-		case 1:
-			return $elm$core$Result$Ok($author$project$Note$ASharp);
-		case 2:
-			return $elm$core$Result$Ok($author$project$Note$B);
-		case 3:
-			return $elm$core$Result$Ok($author$project$Note$C);
-		case 4:
-			return $elm$core$Result$Ok($author$project$Note$CSharp);
-		case 5:
-			return $elm$core$Result$Ok($author$project$Note$D);
-		case 6:
-			return $elm$core$Result$Ok($author$project$Note$DSharp);
-		case 7:
-			return $elm$core$Result$Ok($author$project$Note$E);
-		case 8:
-			return $elm$core$Result$Ok($author$project$Note$F);
-		case 9:
-			return $elm$core$Result$Ok($author$project$Note$FSharp);
-		case 10:
-			return $elm$core$Result$Ok($author$project$Note$G);
-		case 11:
-			return $elm$core$Result$Ok($author$project$Note$GSharp);
-		default:
-			return $elm$core$Result$Err(
-				$elm$core$String$fromInt(i));
-	}
-};
-var $author$project$Note$toAbsoluteString = function (note) {
-	switch (note.$) {
-		case 'A':
-			return 'A3';
-		case 'ASharp':
-			return 'A#3';
-		case 'B':
-			return 'B3';
-		case 'C':
-			return 'C4';
-		case 'CSharp':
-			return 'C#4';
-		case 'D':
-			return 'D4';
-		case 'DSharp':
-			return 'D#4';
-		case 'E':
-			return 'E4';
-		case 'F':
-			return 'F4';
-		case 'FSharp':
-			return 'F#4';
-		case 'G':
-			return 'G4';
-		default:
-			return 'G#4';
-	}
-};
 var $author$project$Solfege$toInt = function (s) {
 	switch (s.$) {
 		case 'Do':
@@ -12036,18 +12099,9 @@ var $author$project$Solfege$toInt = function (s) {
 	}
 };
 var $author$project$Main$getAbsoluteNoteString = function (solfege) {
-	var _v0 = A2(
-		$elm$core$Result$map,
-		$author$project$Note$toAbsoluteString,
+	return $author$project$Note$toAbsoluteString(
 		$author$project$Note$fromInt(
 			$author$project$Solfege$toInt(solfege)));
-	if (_v0.$ === 'Ok') {
-		var s = _v0.a;
-		return s;
-	} else {
-		var s = _v0.a;
-		return s;
-	}
 };
 var $elm$browser$Browser$External = function (a) {
 	return {$: 'External', a: a};
@@ -12166,7 +12220,19 @@ var $author$project$Main$MouseUpOn = function (a) {
 var $author$project$Main$getKeyName = function (n) {
 	return 'key-' + $elm$core$String$fromInt(n);
 };
-var $author$project$Solfege$getSolfegeName = function (s) {
+var $author$project$Main$showText = F3(
+	function (ifTrue, ifFalse, _switch) {
+		if (_switch) {
+			return ifTrue;
+		} else {
+			return ifFalse;
+		}
+	});
+var $author$project$Main$showTextOrNothing = F2(
+	function (ifTrue, _switch) {
+		return A3($author$project$Main$showText, ifTrue, '', _switch);
+	});
+var $author$project$Solfege$toString = function (s) {
 	switch (s.$) {
 		case 'Do':
 			return 'Do';
@@ -12194,18 +12260,6 @@ var $author$project$Solfege$getSolfegeName = function (s) {
 			return 'Ti';
 	}
 };
-var $author$project$Main$showText = F3(
-	function (ifTrue, ifFalse, _switch) {
-		if (_switch) {
-			return ifTrue;
-		} else {
-			return ifFalse;
-		}
-	});
-var $author$project$Main$showTextOrNothing = F2(
-	function (ifTrue, _switch) {
-		return A3($author$project$Main$showText, ifTrue, '', _switch);
-	});
 var $author$project$Main$getLabelFromKey = F2(
 	function (isKeyPressed, key) {
 		var _v0 = A2($elm$core$Dict$get, key, isKeyPressed);
@@ -12215,7 +12269,7 @@ var $author$project$Main$getLabelFromKey = F2(
 			var _switch = _v0.a;
 			return A2(
 				$author$project$Main$showTextOrNothing,
-				$author$project$Solfege$getSolfegeName(
+				$author$project$Solfege$toString(
 					$author$project$Solfege$fromInt(key)),
 				_switch);
 		}
@@ -12273,43 +12327,6 @@ var $author$project$Main$renderKeys = F2(
 				$author$project$Main$renderKey(model),
 				A2($elm$core$List$range, 0, n - 1)));
 	});
-var $author$project$Note$toString = function (note) {
-	switch (note.$) {
-		case 'A':
-			return 'A';
-		case 'ASharp':
-			return 'A#';
-		case 'B':
-			return 'B';
-		case 'C':
-			return 'C';
-		case 'CSharp':
-			return 'C#';
-		case 'D':
-			return 'D';
-		case 'DSharp':
-			return 'D#';
-		case 'E':
-			return 'E';
-		case 'F':
-			return 'F';
-		case 'FSharp':
-			return 'F#';
-		case 'G':
-			return 'G';
-		default:
-			return 'G#';
-	}
-};
-var $elm$core$Result$withDefault = F2(
-	function (def, result) {
-		if (result.$ === 'Ok') {
-			var a = result.a;
-			return a;
-		} else {
-			return def;
-		}
-	});
 var $author$project$Main$renderNoteSelector = function (i) {
 	return A2(
 		$elm$html$Html$div,
@@ -12322,13 +12339,8 @@ var $author$project$Main$renderNoteSelector = function (i) {
 		_List_fromArray(
 			[
 				$elm$html$Html$text(
-				A2(
-					$elm$core$Result$withDefault,
-					'ERROR!',
-					A2(
-						$elm$core$Result$map,
-						$author$project$Note$toString,
-						$author$project$Note$fromInt(i))))
+				$author$project$Note$toString(
+					$author$project$Note$fromInt(i)))
 			]));
 };
 var $author$project$Main$getAllNoteSelectors = A2(
@@ -12381,6 +12393,15 @@ var $author$project$Scale$scaleTypeToString = function (t) {
 			return 'Mixolydian';
 	}
 };
+var $elm$core$Result$withDefault = F2(
+	function (def, result) {
+		if (result.$ === 'Ok') {
+			var a = result.a;
+			return a;
+		} else {
+			return def;
+		}
+	});
 var $author$project$Main$renderScaleTypeSelector = function (i) {
 	return A2(
 		$elm$html$Html$div,
@@ -12843,34 +12864,6 @@ var $author$project$MainTests$testRenderKeysRendersTheCorrectNumberOfKeys = A2(
 						3))));
 	});
 var $author$project$Scale$Minor = {$: 'Minor'};
-var $author$project$Note$toInt = function (n) {
-	switch (n.$) {
-		case 'A':
-			return 0;
-		case 'ASharp':
-			return 1;
-		case 'B':
-			return 2;
-		case 'C':
-			return 3;
-		case 'CSharp':
-			return 4;
-		case 'D':
-			return 5;
-		case 'DSharp':
-			return 6;
-		case 'E':
-			return 7;
-		case 'F':
-			return 8;
-		case 'FSharp':
-			return 9;
-		case 'G':
-			return 10;
-		default:
-			return 11;
-	}
-};
 var $author$project$Scale$notes = function (_v0) {
 	var note = _v0.a;
 	var scale = _v0.b;
@@ -13171,18 +13164,18 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				['Do', 'Di', 'Re', 'Me', 'Mi', 'Fa', 'Fi', 'Sol', 'Le', 'La', 'Te', 'Ti', 'Do', 'Di', 'Re', 'Me']),
 			A2(
 				$elm$core$List$map,
-				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$getSolfegeName),
+				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$toString),
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Test$Generated$Main2511901033$main = A2(
+var $author$project$Test$Generated$Main4054070154$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
-			['/Users/christopherdugan/elm_projects/solfeger/tests/KeyboardKeyTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/MainTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/ScaleTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/SolfegeTests.elm']),
+			['/Users/christopherdugan/elm_projects/solfeger/tests/KeyboardKeyTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/MainTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/NoteTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/ScaleTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/SolfegeTests.elm']),
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 373323546106283
+		seed: 362888765224775
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13206,12 +13199,17 @@ var $author$project$Test$Generated$Main2511901033$main = A2(
 				$elm_explorations$test$Test$describe,
 				'ScaleTests',
 				_List_fromArray(
-					[$author$project$ScaleTests$testScaleGetsCorrectNotes]))
+					[$author$project$ScaleTests$testScaleGetsCorrectNotes])),
+				A2(
+				$elm_explorations$test$Test$describe,
+				'NoteTests',
+				_List_fromArray(
+					[$author$project$NoteTests$testIntToString]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main2511901033':{'init':$author$project$Test$Generated$Main2511901033$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main4054070154':{'init':$author$project$Test$Generated$Main4054070154$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-3669.sock";
+var pipeFilename = "/tmp/elm_test-6842.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

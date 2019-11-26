@@ -1,4 +1,6 @@
-module Note exposing (Note(..), fromInt, fromString, toAbsoluteString, toInt, toString)
+module Note exposing (Note(..), fromInt, fromString, intToAbsoluteString, toAbsoluteString, toInt, toString)
+
+import Solfege exposing (..)
 
 
 type Note
@@ -56,44 +58,24 @@ toString note =
             "G#"
 
 
+intToAbsoluteString : Int -> String
+intToAbsoluteString i =
+    (modBy 12 i |> fromInt |> toString)
+        ++ (i // 12 |> (+) (modBy 12 i |> fromInt |> toDefaultOctave) |> String.fromInt)
+
+
 toAbsoluteString : Note -> String
 toAbsoluteString note =
-    case note of
-        A ->
-            "A3"
+    toString note ++ (toDefaultOctave >> String.fromInt) note
 
-        ASharp ->
-            "A#3"
 
-        B ->
-            "B3"
+toDefaultOctave : Note -> Int
+toDefaultOctave note =
+    if toInt note >= toInt C then
+        4
 
-        C ->
-            "C4"
-
-        CSharp ->
-            "C#4"
-
-        D ->
-            "D4"
-
-        DSharp ->
-            "D#4"
-
-        E ->
-            "E4"
-
-        F ->
-            "F4"
-
-        FSharp ->
-            "F#4"
-
-        G ->
-            "G4"
-
-        GSharp ->
-            "G#4"
+    else
+        3
 
 
 fromString : String -> Result String Note
@@ -206,44 +188,48 @@ toInt n =
             11
 
 
-fromInt : Int -> Result String Note
+fromInt : Int -> Note
 fromInt i =
-    case i of
+    case modBy 12 i of
         0 ->
-            Ok A
+            A
 
         1 ->
-            Ok ASharp
+            ASharp
 
         2 ->
-            Ok B
+            B
 
         3 ->
-            Ok C
+            C
 
         4 ->
-            Ok CSharp
+            CSharp
 
         5 ->
-            Ok D
+            D
 
         6 ->
-            Ok DSharp
+            DSharp
 
         7 ->
-            Ok E
+            E
 
         8 ->
-            Ok F
+            F
 
         9 ->
-            Ok FSharp
+            FSharp
 
         10 ->
-            Ok G
+            G
 
         11 ->
-            Ok GSharp
+            GSharp
 
         _ ->
-            Err (String.fromInt i)
+            A
+
+
+
+--Unreachable

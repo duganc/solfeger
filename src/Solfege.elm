@@ -1,4 +1,4 @@
-module Solfege exposing (Solfege(..), fromInt, fromKeyboardKey, getSolfegeName, toInt)
+module Solfege exposing (Solfege(..), fromInt, fromKeyboardKey, toInt, toString)
 
 import KeyboardKey exposing (KeyboardKey(..))
 
@@ -147,8 +147,8 @@ fromInt i =
             Do
 
 
-getSolfegeName : Solfege -> String
-getSolfegeName s =
+toString : Solfege -> String
+toString s =
     case s of
         Do ->
             "Do"

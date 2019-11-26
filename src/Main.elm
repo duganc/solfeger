@@ -91,12 +91,7 @@ update msg model =
 
 getAbsoluteNoteString : Solfege -> String
 getAbsoluteNoteString solfege =
-    case Solfege.toInt solfege |> Note.fromInt |> Result.map Note.toAbsoluteString of
-        Ok s ->
-            s
-
-        Err s ->
-            s
+    Solfege.toInt solfege |> Note.fromInt |> Note.toAbsoluteString
 
 
 pressKeyOnModel : Model -> Solfege -> Model
@@ -215,7 +210,7 @@ getLabelFromKey isKeyPressed key =
             "Error!"
 
         Just switch ->
-            showTextOrNothing (Solfege.fromInt key |> getSolfegeName) switch
+            showTextOrNothing (Solfege.fromInt key |> Solfege.toString) switch
 
 
 showTextOrNothing : String -> Bool -> String
@@ -247,7 +242,7 @@ getAllNoteSelectors =
 
 renderNoteSelector : Int -> Html Msg
 renderNoteSelector i =
-    div [ class "scale-selector", id ("scale-note-" ++ String.fromInt i) ] [ i |> Note.fromInt |> Result.map Note.toString |> Result.withDefault "ERROR!" |> text ]
+    div [ class "scale-selector", id ("scale-note-" ++ String.fromInt i) ] [ i |> Note.fromInt |> Note.toString |> text ]
 
 
 getAllScaleTypeSelectors : List (Html Msg)

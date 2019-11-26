@@ -1858,8 +1858,8 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 		flagDecoder,
 		args,
 		impl.bt,
-		impl.bU,
-		impl.bQ,
+		impl.bV,
+		impl.bR,
 		function() { return function() {} }
 	);
 });
@@ -3884,10 +3884,10 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 		flagDecoder,
 		args,
 		impl.bt,
-		impl.bU,
-		impl.bQ,
+		impl.bV,
+		impl.bR,
 		function(sendToApp, initialModel) {
-			var view = impl.bV;
+			var view = impl.bW;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3920,11 +3920,11 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 		flagDecoder,
 		args,
 		impl.bt,
-		impl.bU,
-		impl.bQ,
+		impl.bV,
+		impl.bR,
 		function(sendToApp, initialModel) {
 			var divertHrefToApp = impl.an && impl.an(sendToApp)
-			var view = impl.bV;
+			var view = impl.bW;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3937,7 +3937,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.bT) && (_VirtualDom_doc.title = title = doc.bT);
+				(title !== doc.bU) && (_VirtualDom_doc.title = title = doc.bU);
 			});
 		}
 	);
@@ -4028,9 +4028,9 @@ function _Browser_application(impl)
 		{
 			return A3(impl.bt, flags, _Browser_getUrl(), key);
 		},
+		bW: impl.bW,
 		bV: impl.bV,
-		bU: impl.bU,
-		bQ: impl.bQ
+		bR: impl.bR
 	});
 }
 
@@ -5096,9 +5096,13 @@ var $elm$core$Task$perform = F2(
 			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$application = _Browser_application;
-var $author$project$Main$Model = function (isKeyPressed) {
-	return {H: isKeyPressed};
-};
+var $author$project$Main$Model = F2(
+	function (isKeyPressed, selectedScale) {
+		return {H: isKeyPressed, bN: selectedScale};
+	});
+var $author$project$Note$A = 0;
+var $author$project$Scale$Chromatic = 0;
+var $author$project$Scale$default = _Utils_Tuple2(0, 0);
 var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
 var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
 var $elm$core$Dict$Black = 1;
@@ -5227,14 +5231,16 @@ var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$init = F3(
 	function (_v0, _v1, _v2) {
 		return _Utils_Tuple2(
-			$author$project$Main$Model(
+			A2(
+				$author$project$Main$Model,
 				$elm$core$Dict$fromList(
 					A2(
 						$elm$core$List$map,
 						function (i) {
 							return _Utils_Tuple2(i, false);
 						},
-						A2($elm$core$List$range, 0, 11)))),
+						A2($elm$core$List$range, 0, 11))),
+				$author$project$Scale$default),
 			$elm$core$Platform$Cmd$none);
 	});
 var $elm$core$Basics$composeR = F3(
@@ -5650,7 +5656,6 @@ var $author$project$Solfege$fromKeyboardKey = function (key) {
 			return $elm$core$Result$Err('KeyboardKey Error');
 	}
 };
-var $author$project$Note$A = 0;
 var $author$project$Note$ASharp = 1;
 var $author$project$Note$B = 2;
 var $author$project$Note$C = 3;
@@ -5663,74 +5668,102 @@ var $author$project$Note$FSharp = 9;
 var $author$project$Note$G = 10;
 var $author$project$Note$GSharp = 11;
 var $author$project$Note$fromInt = function (i) {
-	switch (i) {
+	var _v0 = A2($elm$core$Basics$modBy, 12, i);
+	switch (_v0) {
 		case 0:
-			return $elm$core$Result$Ok(0);
+			return 0;
 		case 1:
-			return $elm$core$Result$Ok(1);
+			return 1;
 		case 2:
-			return $elm$core$Result$Ok(2);
+			return 2;
 		case 3:
-			return $elm$core$Result$Ok(3);
+			return 3;
 		case 4:
-			return $elm$core$Result$Ok(4);
+			return 4;
 		case 5:
-			return $elm$core$Result$Ok(5);
+			return 5;
 		case 6:
-			return $elm$core$Result$Ok(6);
+			return 6;
 		case 7:
-			return $elm$core$Result$Ok(7);
+			return 7;
 		case 8:
-			return $elm$core$Result$Ok(8);
+			return 8;
 		case 9:
-			return $elm$core$Result$Ok(9);
+			return 9;
 		case 10:
-			return $elm$core$Result$Ok(10);
+			return 10;
 		case 11:
-			return $elm$core$Result$Ok(11);
+			return 11;
 		default:
-			return $elm$core$Result$Err(
-				$elm$core$String$fromInt(i));
+			return 0;
 	}
 };
-var $elm$core$Result$map = F2(
-	function (func, ra) {
-		if (!ra.$) {
-			var a = ra.a;
-			return $elm$core$Result$Ok(
-				func(a));
-		} else {
-			var e = ra.a;
-			return $elm$core$Result$Err(e);
-		}
-	});
-var $author$project$Note$toAbsoluteString = function (note) {
+var $elm$core$Basics$ge = _Utils_ge;
+var $author$project$Note$toInt = function (n) {
+	switch (n) {
+		case 0:
+			return 0;
+		case 1:
+			return 1;
+		case 2:
+			return 2;
+		case 3:
+			return 3;
+		case 4:
+			return 4;
+		case 5:
+			return 5;
+		case 6:
+			return 6;
+		case 7:
+			return 7;
+		case 8:
+			return 8;
+		case 9:
+			return 9;
+		case 10:
+			return 10;
+		default:
+			return 11;
+	}
+};
+var $author$project$Note$toDefaultOctave = function (note) {
+	return (_Utils_cmp(
+		$author$project$Note$toInt(note),
+		$author$project$Note$toInt(3)) > -1) ? 4 : 3;
+};
+var $author$project$Note$toString = function (note) {
 	switch (note) {
 		case 0:
-			return 'A3';
+			return 'A';
 		case 1:
-			return 'A#3';
+			return 'A#';
 		case 2:
-			return 'B3';
+			return 'B';
 		case 3:
-			return 'C4';
+			return 'C';
 		case 4:
-			return 'C#4';
+			return 'C#';
 		case 5:
-			return 'D4';
+			return 'D';
 		case 6:
-			return 'D#4';
+			return 'D#';
 		case 7:
-			return 'E4';
+			return 'E';
 		case 8:
-			return 'F4';
+			return 'F';
 		case 9:
-			return 'F#4';
+			return 'F#';
 		case 10:
-			return 'G4';
+			return 'G';
 		default:
-			return 'G#4';
+			return 'G#';
 	}
+};
+var $author$project$Note$toAbsoluteString = function (note) {
+	return _Utils_ap(
+		$author$project$Note$toString(note),
+		A2($elm$core$Basics$composeR, $author$project$Note$toDefaultOctave, $elm$core$String$fromInt)(note));
 };
 var $author$project$Solfege$toInt = function (s) {
 	switch (s) {
@@ -5761,18 +5794,9 @@ var $author$project$Solfege$toInt = function (s) {
 	}
 };
 var $author$project$Main$getAbsoluteNoteString = function (solfege) {
-	var _v0 = A2(
-		$elm$core$Result$map,
-		$author$project$Note$toAbsoluteString,
+	return $author$project$Note$toAbsoluteString(
 		$author$project$Note$fromInt(
 			$author$project$Solfege$toInt(solfege)));
-	if (!_v0.$) {
-		var s = _v0.a;
-		return s;
-	} else {
-		var s = _v0.a;
-		return s;
-	}
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $elm$json$Json$Encode$string = _Json_wrap;
@@ -5898,7 +5922,7 @@ var $author$project$Main$update = F2(
 	});
 var $elm$browser$Browser$Document = F2(
 	function (title, body) {
-		return {ac: body, bT: title};
+		return {ac: body, bU: title};
 	});
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -5949,7 +5973,19 @@ var $elm$core$Dict$get = F2(
 			}
 		}
 	});
-var $author$project$Solfege$getSolfegeName = function (s) {
+var $author$project$Main$showText = F3(
+	function (ifTrue, ifFalse, _switch) {
+		if (_switch) {
+			return ifTrue;
+		} else {
+			return ifFalse;
+		}
+	});
+var $author$project$Main$showTextOrNothing = F2(
+	function (ifTrue, _switch) {
+		return A3($author$project$Main$showText, ifTrue, '', _switch);
+	});
+var $author$project$Solfege$toString = function (s) {
 	switch (s) {
 		case 0:
 			return 'Do';
@@ -5977,18 +6013,6 @@ var $author$project$Solfege$getSolfegeName = function (s) {
 			return 'Ti';
 	}
 };
-var $author$project$Main$showText = F3(
-	function (ifTrue, ifFalse, _switch) {
-		if (_switch) {
-			return ifTrue;
-		} else {
-			return ifFalse;
-		}
-	});
-var $author$project$Main$showTextOrNothing = F2(
-	function (ifTrue, _switch) {
-		return A3($author$project$Main$showText, ifTrue, '', _switch);
-	});
 var $author$project$Main$getLabelFromKey = F2(
 	function (isKeyPressed, key) {
 		var _v0 = A2($elm$core$Dict$get, key, isKeyPressed);
@@ -5998,7 +6022,7 @@ var $author$project$Main$getLabelFromKey = F2(
 			var _switch = _v0.a;
 			return A2(
 				$author$project$Main$showTextOrNothing,
-				$author$project$Solfege$getSolfegeName(
+				$author$project$Solfege$toString(
 					$author$project$Solfege$fromInt(key)),
 				_switch);
 		}
@@ -6059,43 +6083,6 @@ var $author$project$Main$renderKeys = F2(
 				$author$project$Main$renderKey(model),
 				A2($elm$core$List$range, 0, n - 1)));
 	});
-var $author$project$Note$toString = function (note) {
-	switch (note) {
-		case 0:
-			return 'A';
-		case 1:
-			return 'A#';
-		case 2:
-			return 'B';
-		case 3:
-			return 'C';
-		case 4:
-			return 'C#';
-		case 5:
-			return 'D';
-		case 6:
-			return 'D#';
-		case 7:
-			return 'E';
-		case 8:
-			return 'F';
-		case 9:
-			return 'F#';
-		case 10:
-			return 'G';
-		default:
-			return 'G#';
-	}
-};
-var $elm$core$Result$withDefault = F2(
-	function (def, result) {
-		if (!result.$) {
-			var a = result.a;
-			return a;
-		} else {
-			return def;
-		}
-	});
 var $author$project$Main$renderNoteSelector = function (i) {
 	return A2(
 		$elm$html$Html$div,
@@ -6108,20 +6095,25 @@ var $author$project$Main$renderNoteSelector = function (i) {
 		_List_fromArray(
 			[
 				$elm$html$Html$text(
-				A2(
-					$elm$core$Result$withDefault,
-					'ERROR!',
-					A2(
-						$elm$core$Result$map,
-						$author$project$Note$toString,
-						$author$project$Note$fromInt(i))))
+				$author$project$Note$toString(
+					$author$project$Note$fromInt(i)))
 			]));
 };
 var $author$project$Main$getAllNoteSelectors = A2(
 	$elm$core$List$map,
 	$author$project$Main$renderNoteSelector,
 	A2($elm$core$List$range, 0, 11));
-var $author$project$Scale$Chromatic = 0;
+var $elm$core$Result$map = F2(
+	function (func, ra) {
+		if (!ra.$) {
+			var a = ra.a;
+			return $elm$core$Result$Ok(
+				func(a));
+		} else {
+			var e = ra.a;
+			return $elm$core$Result$Err(e);
+		}
+	});
 var $author$project$Scale$Dorian = 4;
 var $author$project$Scale$Locrian = 2;
 var $author$project$Scale$Lydian = 6;
@@ -6168,6 +6160,15 @@ var $author$project$Scale$scaleTypeToString = function (t) {
 			return 'Mixolydian';
 	}
 };
+var $elm$core$Result$withDefault = F2(
+	function (def, result) {
+		if (!result.$) {
+			var a = result.a;
+			return a;
+		} else {
+			return def;
+		}
+	});
 var $author$project$Main$renderScaleTypeSelector = function (i) {
 	return A2(
 		$elm$html$Html$div,
@@ -6268,6 +6269,6 @@ var $author$project$Main$view = function (model) {
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
-	{bt: $author$project$Main$init, bF: $author$project$Main$ChangeUrl, bG: $author$project$Main$loadUrlFromUrlRequest, bQ: $author$project$Main$subscriptions, bU: $author$project$Main$update, bV: $author$project$Main$view});
+	{bt: $author$project$Main$init, bF: $author$project$Main$ChangeUrl, bG: $author$project$Main$loadUrlFromUrlRequest, bR: $author$project$Main$subscriptions, bV: $author$project$Main$update, bW: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));

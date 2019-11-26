@@ -11,8 +11,27 @@ import Test.Html.Selector as Selector
 
 testIntToString : Test
 testIntToString =
-    test "testIntToStringIsSameAsToAbsoluteString" <|
+    test "testPitchClassFromIntAndFromIntAgree" <|
         \() ->
             List.range 0 11
-                |> List.map Note.intToAbsoluteString
-                |> Expect.equal (List.range 0 11 |> List.map (Note.fromInt >> Note.toAbsoluteString))
+                |> List.map Note.fromInt
+                |> Expect.equal (List.range 0 11 |> List.map (Note.pitchClassFromInt >> Note.fromPitchClass))
+
+
+testToIntHandlesOctaves : Test
+testToIntHandlesOctaves =
+    test "testToIntHandlesOctaves" <|
+        \() ->
+            [ ( A, 3 ), ( C, 4 ) ]
+                |> List.map Note.toInt
+                |> Expect.equal [ 0, 3 ]
+
+
+testToIntAndFromIntAreInverses : Test
+testToIntAndFromIntAreInverses =
+    test "toIntAndFromIntAreInverses" <|
+        \() ->
+            List.range 0 30
+                |> List.map Note.fromInt
+                |> List.map Note.toInt
+                |> Expect.equal (List.range 0 30)

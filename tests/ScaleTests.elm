@@ -2,6 +2,7 @@ module ScaleTests exposing (..)
 
 import Expect exposing (..)
 import Html exposing (..)
+import KeyboardKey exposing (..)
 import Note exposing (..)
 import Scale exposing (..)
 import Test exposing (..)
@@ -32,3 +33,30 @@ testScaleGetsCorrectNotes =
             -- Minor 7th == 10, CSharp == 5 => 15
             \() -> Scale.notes ( D, Mixolydian ) |> List.take 7 |> List.reverse |> List.head |> Expect.equal (Just 15)
         ]
+
+
+testGetsAbsoluteStringFromValidKeyboardKey : Test
+testGetsAbsoluteStringFromValidKeyboardKey =
+    test "getsAbsoluteStringFromValidKeyboardKey" <|
+        \() ->
+            CharacterKey "7"
+                |> fromKeyboardKey ( C, Phrygian )
+                |> Expect.equal (Ok ( G, 4 ))
+
+
+testGetsAbsoluteStringFromHighDo : Test
+testGetsAbsoluteStringFromHighDo =
+    test "getsAbsoluteStringFromHighDo" <|
+        \() ->
+            CharacterKey "="
+                |> fromKeyboardKey ( CSharp, Minor )
+                |> Expect.equal (Ok ( CSharp, 5 ))
+
+
+testGetsAbsoluteStringReturnsErrorForNonKey : Test
+testGetsAbsoluteStringReturnsErrorForNonKey =
+    test "getSolfegeReturnsErrorForNonKey" <|
+        \() ->
+            CharacterKey "d"
+                |> fromKeyboardKey ( A, Chromatic )
+                |> Expect.equal (Err (Scale.UnassignedKey (CharacterKey "d")))

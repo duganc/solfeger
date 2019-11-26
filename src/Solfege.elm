@@ -1,6 +1,4 @@
-module Solfege exposing (Error(..), Solfege(..), fromInt, fromKeyboardKey, toInt, toString)
-
-import KeyboardKey exposing (KeyboardKey(..))
+module Solfege exposing (Solfege(..), fromInt, toInt, toString)
 
 
 type Solfege
@@ -16,95 +14,6 @@ type Solfege
     | La
     | Te
     | Ti
-
-
-type Error
-    = UnassignedKey KeyboardKey
-
-
-fromKeyboardKey : KeyboardKey -> Result Error Solfege
-fromKeyboardKey key =
-    case key of
-        CharacterKey "`" ->
-            Ok (fromInt 0)
-
-        CharacterKey "1" ->
-            Ok (fromInt 1)
-
-        CharacterKey "2" ->
-            Ok (fromInt 2)
-
-        CharacterKey "3" ->
-            Ok (fromInt 3)
-
-        CharacterKey "4" ->
-            Ok (fromInt 4)
-
-        CharacterKey "5" ->
-            Ok (fromInt 5)
-
-        CharacterKey "6" ->
-            Ok (fromInt 6)
-
-        CharacterKey "7" ->
-            Ok (fromInt 7)
-
-        CharacterKey "8" ->
-            Ok (fromInt 8)
-
-        CharacterKey "9" ->
-            Ok (fromInt 9)
-
-        CharacterKey "0" ->
-            Ok (fromInt 10)
-
-        CharacterKey "-" ->
-            Ok (fromInt 11)
-
-        CharacterKey "=" ->
-            Ok (fromInt 12)
-
-        CharacterKey "q" ->
-            Ok (fromInt 0)
-
-        CharacterKey "w" ->
-            Ok (fromInt 1)
-
-        CharacterKey "e" ->
-            Ok (fromInt 2)
-
-        CharacterKey "r" ->
-            Ok (fromInt 3)
-
-        CharacterKey "t" ->
-            Ok (fromInt 4)
-
-        CharacterKey "y" ->
-            Ok (fromInt 5)
-
-        CharacterKey "u" ->
-            Ok (fromInt 6)
-
-        CharacterKey "i" ->
-            Ok (fromInt 7)
-
-        CharacterKey "o" ->
-            Ok (fromInt 8)
-
-        CharacterKey "p" ->
-            Ok (fromInt 9)
-
-        CharacterKey "[" ->
-            Ok (fromInt 10)
-
-        CharacterKey "]" ->
-            Ok (fromInt 11)
-
-        CharacterKey "\\" ->
-            Ok (fromInt 12)
-
-        _ ->
-            Err (UnassignedKey key)
 
 
 toInt : Solfege -> Int

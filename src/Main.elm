@@ -63,45 +63,41 @@ update msg model =
             ( model, Url.toString url |> load )
 
         MouseDownOn i ->
-            case Solfege.fromInt i of
-                key ->
-                    ( pressKeyOnModel model key, playTone (getAbsoluteNoteString key) )
+            ( pressKeyOnModel model (Note.fromInt i), playTone (fromKeyClick model.selectedScale i |> Note.toString) )
 
         MouseUpOn i ->
-            case Solfege.fromInt i of
-                key ->
-                    ( releaseKeyOnModel model key, Cmd.none )
+            ( releaseKeyOnModel model (Note.fromInt i), Cmd.none )
 
         KeyDownOn keyboardKey ->
-            case fromKeyboardKey keyboardKey of
-                Ok key ->
-                    ( pressKeyOnModel model key, playTone (getAbsoluteNoteString key) )
+            case fromKeyboardKey model.selectedScale keyboardKey of
+                Ok note ->
+                    ( pressKeyOnModel model note, playTone (Note.toString note) )
 
                 Err s ->
                     ( model, Cmd.none )
 
         KeyUpOn keyboardKey ->
-            case fromKeyboardKey keyboardKey of
-                Ok key ->
-                    ( releaseKeyOnModel model key, Cmd.none )
+            case fromKeyboardKey model.selectedScale keyboardKey of
+                Ok note ->
+                    ( releaseKeyOnModel model note, Cmd.none )
 
                 Err s ->
                     ( model, Cmd.none )
 
 
-getAbsoluteNoteString : Solfege -> String
-getAbsoluteNoteString solfege =
-    Solfege.toInt solfege |> Note.fromInt |> Note.toAbsoluteString
+pressKeyOnModel : Model -> Note -> Model
+pressKeyOnModel =
+    pressOrReleaseKeyOnModel True
 
 
-pressKeyOnModel : Model -> Solfege -> Model
-pressKeyOnModel model solfege =
-    { model | isKeyPressed = Dict.insert (Solfege.toInt solfege) True model.isKeyPressed }
+releaseKeyOnModel : Model -> Note -> Model
+releaseKeyOnModel =
+    pressOrReleaseKeyOnModel False
 
 
-releaseKeyOnModel : Model -> Solfege -> Model
-releaseKeyOnModel model solfege =
-    { model | isKeyPressed = Dict.insert (Solfege.toInt solfege) False model.isKeyPressed }
+pressOrReleaseKeyOnModel : Bool -> Model -> Note -> Model
+pressOrReleaseKeyOnModel isPress model note =
+    { model | isKeyPressed = Dict.insert (Note.pitchClass note |> Note.pitchClassToInt) isPress model.isKeyPressed }
 
 
 urlRequestToUrl : UrlRequest -> Url

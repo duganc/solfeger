@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.ao.P === region.az.P)
+	if (region.ap.O === region.aA.O)
 	{
-		return 'on line ' + region.ao.P;
+		return 'on line ' + region.ap.O;
 	}
-	return 'on lines ' + region.ao.P + ' through ' + region.az.P;
+	return 'on lines ' + region.ap.O + ' through ' + region.aA.O;
 }
 
 
@@ -1857,7 +1857,7 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bt,
+		impl.bu,
 		impl.bV,
 		impl.bR,
 		function() { return function() {} }
@@ -2660,8 +2660,8 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
 		x: func(record.x),
-		ap: record.ap,
-		am: record.am
+		aq: record.aq,
+		an: record.an
 	}
 });
 
@@ -2930,10 +2930,10 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 
 		var value = result.a;
 		var message = !tag ? value : tag < 3 ? value.a : value.x;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.ap;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.aq;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.am) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.an) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3883,7 +3883,7 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bt,
+		impl.bu,
 		impl.bV,
 		impl.bR,
 		function(sendToApp, initialModel) {
@@ -3919,11 +3919,11 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bt,
+		impl.bu,
 		impl.bV,
 		impl.bR,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.an && impl.an(sendToApp)
+			var divertHrefToApp = impl.ao && impl.ao(sendToApp)
 			var view = impl.bW;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
@@ -3932,7 +3932,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ac);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ad);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
@@ -3993,12 +3993,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.bF;
-	var onUrlRequest = impl.bG;
+	var onUrlChange = impl.bG;
+	var onUrlRequest = impl.bH;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		an: function(sendToApp)
+		ao: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4014,9 +4014,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.aT === next.aT
-							&& curr.aF === next.aF
-							&& curr.aQ.a === next.aQ.a
+							&& curr.aU === next.aU
+							&& curr.aG === next.aG
+							&& curr.aR.a === next.aR.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4024,9 +4024,9 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		bt: function(flags)
+		bu: function(flags)
 		{
-			return A3(impl.bt, flags, _Browser_getUrl(), key);
+			return A3(impl.bu, flags, _Browser_getUrl(), key);
 		},
 		bW: impl.bW,
 		bV: impl.bV,
@@ -4096,17 +4096,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { br: 'hidden', bg: 'visibilitychange' }
+		? { bs: 'hidden', bh: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { br: 'mozHidden', bg: 'mozvisibilitychange' }
+		? { bs: 'mozHidden', bh: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { br: 'msHidden', bg: 'msvisibilitychange' }
+		? { bs: 'msHidden', bh: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { br: 'webkitHidden', bg: 'webkitvisibilitychange' }
-		: { br: 'hidden', bg: 'visibilitychange' };
+		? { bs: 'webkitHidden', bh: 'webkitvisibilitychange' }
+		: { bs: 'hidden', bh: 'visibilitychange' };
 }
 
 
@@ -4187,12 +4187,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		a_: _Browser_getScene(),
-		a7: {
-			a9: _Browser_window.pageXOffset,
-			ba: _Browser_window.pageYOffset,
-			a8: _Browser_doc.documentElement.clientWidth,
-			aE: _Browser_doc.documentElement.clientHeight
+		a$: _Browser_getScene(),
+		a8: {
+			ba: _Browser_window.pageXOffset,
+			bb: _Browser_window.pageYOffset,
+			a9: _Browser_doc.documentElement.clientWidth,
+			aF: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4202,8 +4202,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		a8: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		aE: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		a9: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		aF: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4226,15 +4226,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			a_: {
-				a8: node.scrollWidth,
-				aE: node.scrollHeight
+			a$: {
+				a9: node.scrollWidth,
+				aF: node.scrollHeight
 			},
-			a7: {
-				a9: node.scrollLeft,
-				ba: node.scrollTop,
-				a8: node.clientWidth,
-				aE: node.clientHeight
+			a8: {
+				ba: node.scrollLeft,
+				bb: node.scrollTop,
+				a9: node.clientWidth,
+				aF: node.clientHeight
 			}
 		};
 	});
@@ -4264,18 +4264,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			a_: _Browser_getScene(),
-			a7: {
-				a9: x,
-				ba: y,
-				a8: _Browser_doc.documentElement.clientWidth,
-				aE: _Browser_doc.documentElement.clientHeight
+			a$: _Browser_getScene(),
+			a8: {
+				ba: x,
+				bb: y,
+				a9: _Browser_doc.documentElement.clientWidth,
+				aF: _Browser_doc.documentElement.clientHeight
 			},
-			bk: {
-				a9: x + rect.left,
-				ba: y + rect.top,
-				a8: rect.width,
-				aE: rect.height
+			bl: {
+				ba: x + rect.left,
+				bb: y + rect.top,
+				a9: rect.width,
+				aF: rect.height
 			}
 		};
 	});
@@ -4817,7 +4817,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {aB: fragment, aF: host, aO: path, aQ: port_, aT: protocol, aU: query};
+		return {aC: fragment, aG: host, aP: path, aR: port_, aU: protocol, aV: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5098,7 +5098,7 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Main$Model = F2(
 	function (isKeyPressed, selectedScale) {
-		return {H: isKeyPressed, bN: selectedScale};
+		return {X: isKeyPressed, ac: selectedScale};
 	});
 var $author$project$Note$A = 0;
 var $author$project$Scale$Chromatic = 0;
@@ -5287,7 +5287,7 @@ var $elm$browser$Browser$Events$MySub = F3(
 	});
 var $elm$browser$Browser$Events$State = F2(
 	function (subs, pids) {
-		return {aP: pids, a3: subs};
+		return {aQ: pids, a4: subs};
 	});
 var $elm$browser$Browser$Events$init = $elm$core$Task$succeed(
 	A2($elm$browser$Browser$Events$State, _List_Nil, $elm$core$Dict$empty));
@@ -5396,7 +5396,7 @@ var $elm$core$Dict$merge = F6(
 	});
 var $elm$browser$Browser$Events$Event = F2(
 	function (key, event) {
-		return {aA: event, aG: key};
+		return {aB: event, aH: key};
 	});
 var $elm$core$Platform$sendToSelf = _Platform_sendToSelf;
 var $elm$browser$Browser$Events$spawn = F3(
@@ -5471,7 +5471,7 @@ var $elm$browser$Browser$Events$onEffects = F3(
 			stepLeft,
 			stepBoth,
 			stepRight,
-			state.aP,
+			state.aQ,
 			$elm$core$Dict$fromList(newSubs),
 			_Utils_Tuple3(_List_Nil, $elm$core$Dict$empty, _List_Nil));
 		var deadPids = _v0.a;
@@ -5517,8 +5517,8 @@ var $elm$core$List$filterMap = F2(
 	});
 var $elm$browser$Browser$Events$onSelfMsg = F3(
 	function (router, _v0, state) {
-		var key = _v0.aG;
-		var event = _v0.aA;
+		var key = _v0.aH;
+		var event = _v0.aB;
 		var toMessage = function (_v2) {
 			var subKey = _v2.a;
 			var _v3 = _v2.b;
@@ -5527,7 +5527,7 @@ var $elm$browser$Browser$Events$onSelfMsg = F3(
 			var decoder = _v3.c;
 			return _Utils_eq(subKey, key) ? A2(_Browser_decodeEvent, decoder, event) : $elm$core$Maybe$Nothing;
 		};
-		var messages = A2($elm$core$List$filterMap, toMessage, state.a3);
+		var messages = A2($elm$core$List$filterMap, toMessage, state.a4);
 		return A2(
 			$elm$core$Task$andThen,
 			function (_v1) {
@@ -5567,6 +5567,355 @@ var $author$project$Main$subscriptions = function (model) {
 				$elm$browser$Browser$Events$onKeyUp($author$project$Main$keyUpDecoder)
 			]));
 };
+var $author$project$Note$C = 3;
+var $elm$core$Basics$ge = _Utils_ge;
+var $author$project$Note$pitchClassToInt = function (n) {
+	switch (n) {
+		case 0:
+			return 0;
+		case 1:
+			return 1;
+		case 2:
+			return 2;
+		case 3:
+			return 3;
+		case 4:
+			return 4;
+		case 5:
+			return 5;
+		case 6:
+			return 6;
+		case 7:
+			return 7;
+		case 8:
+			return 8;
+		case 9:
+			return 9;
+		case 10:
+			return 10;
+		default:
+			return 11;
+	}
+};
+var $author$project$Note$defaultOctave = function (pc) {
+	return (_Utils_cmp(
+		$author$project$Note$pitchClassToInt(pc),
+		$author$project$Note$pitchClassToInt(3)) > -1) ? 4 : 3;
+};
+var $elm$core$Basics$modBy = _Basics_modBy;
+var $author$project$Note$ASharp = 1;
+var $author$project$Note$B = 2;
+var $author$project$Note$CSharp = 4;
+var $author$project$Note$D = 5;
+var $author$project$Note$DSharp = 6;
+var $author$project$Note$E = 7;
+var $author$project$Note$F = 8;
+var $author$project$Note$FSharp = 9;
+var $author$project$Note$G = 10;
+var $author$project$Note$GSharp = 11;
+var $author$project$Note$pitchClassFromInt = function (i) {
+	var _v0 = A2($elm$core$Basics$modBy, 12, i);
+	switch (_v0) {
+		case 0:
+			return 0;
+		case 1:
+			return 1;
+		case 2:
+			return 2;
+		case 3:
+			return 3;
+		case 4:
+			return 4;
+		case 5:
+			return 5;
+		case 6:
+			return 6;
+		case 7:
+			return 7;
+		case 8:
+			return 8;
+		case 9:
+			return 9;
+		case 10:
+			return 10;
+		case 11:
+			return 11;
+		default:
+			return 0;
+	}
+};
+var $author$project$Note$octaveFromInt = function (i) {
+	return $author$project$Note$defaultOctave(
+		$author$project$Note$pitchClassFromInt(
+			A2($elm$core$Basics$modBy, 12, i))) + ((i / 12) | 0);
+};
+var $author$project$Note$fromInt = function (i) {
+	return _Utils_Tuple2(
+		$author$project$Note$pitchClassFromInt(i),
+		$author$project$Note$octaveFromInt(i));
+};
+var $author$project$Scale$adjustForScale = A2($elm$core$Basics$composeR, $elm$core$Tuple$first, $author$project$Note$pitchClassToInt);
+var $author$project$Scale$fromKeyClick = F2(
+	function (scale, i) {
+		return $author$project$Note$fromInt(
+			i + $author$project$Scale$adjustForScale(scale));
+	});
+var $author$project$Scale$UnassignedKey = function (a) {
+	return {$: 1, a: a};
+};
+var $author$project$Scale$keyboardKeyToInt = function (key) {
+	switch (key) {
+		case '`':
+			return $elm$core$Result$Ok(0);
+		case '1':
+			return $elm$core$Result$Ok(1);
+		case '2':
+			return $elm$core$Result$Ok(2);
+		case '3':
+			return $elm$core$Result$Ok(3);
+		case '4':
+			return $elm$core$Result$Ok(4);
+		case '5':
+			return $elm$core$Result$Ok(5);
+		case '6':
+			return $elm$core$Result$Ok(6);
+		case '7':
+			return $elm$core$Result$Ok(7);
+		case '8':
+			return $elm$core$Result$Ok(8);
+		case '9':
+			return $elm$core$Result$Ok(9);
+		case '0':
+			return $elm$core$Result$Ok(10);
+		case '-':
+			return $elm$core$Result$Ok(11);
+		case '=':
+			return $elm$core$Result$Ok(12);
+		case 'q':
+			return $elm$core$Result$Ok(0);
+		case 'w':
+			return $elm$core$Result$Ok(1);
+		case 'e':
+			return $elm$core$Result$Ok(2);
+		case 'r':
+			return $elm$core$Result$Ok(3);
+		case 't':
+			return $elm$core$Result$Ok(4);
+		case 'y':
+			return $elm$core$Result$Ok(5);
+		case 'u':
+			return $elm$core$Result$Ok(6);
+		case 'i':
+			return $elm$core$Result$Ok(7);
+		case 'o':
+			return $elm$core$Result$Ok(8);
+		case 'p':
+			return $elm$core$Result$Ok(9);
+		case '[':
+			return $elm$core$Result$Ok(10);
+		case ']':
+			return $elm$core$Result$Ok(11);
+		case '\\':
+			return $elm$core$Result$Ok(12);
+		default:
+			return $elm$core$Result$Err(
+				$author$project$Scale$UnassignedKey(key));
+	}
+};
+var $elm$core$Result$map = F2(
+	function (func, ra) {
+		if (!ra.$) {
+			var a = ra.a;
+			return $elm$core$Result$Ok(
+				func(a));
+		} else {
+			var e = ra.a;
+			return $elm$core$Result$Err(e);
+		}
+	});
+var $author$project$Scale$fromKeyboardKey = F2(
+	function (scale, key) {
+		return A2(
+			$elm$core$Result$map,
+			$author$project$Scale$fromKeyClick(scale),
+			$author$project$Scale$keyboardKeyToInt(key));
+	});
+var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $author$project$Main$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
+var $author$project$Note$pitchClass = $elm$core$Tuple$first;
+var $author$project$Main$pressOrReleaseKeyOnModel = F3(
+	function (isPress, model, note) {
+		return _Utils_update(
+			model,
+			{
+				X: A3(
+					$elm$core$Dict$insert,
+					$author$project$Note$pitchClassToInt(
+						$author$project$Note$pitchClass(note)),
+					isPress,
+					model.X)
+			});
+	});
+var $author$project$Main$pressKeyOnModel = $author$project$Main$pressOrReleaseKeyOnModel(true);
+var $author$project$Main$releaseKeyOnModel = $author$project$Main$pressOrReleaseKeyOnModel(false);
+var $author$project$Note$pitchClassToString = function (pc) {
+	switch (pc) {
+		case 0:
+			return 'A';
+		case 1:
+			return 'A#';
+		case 2:
+			return 'B';
+		case 3:
+			return 'C';
+		case 4:
+			return 'C#';
+		case 5:
+			return 'D';
+		case 6:
+			return 'D#';
+		case 7:
+			return 'E';
+		case 8:
+			return 'F';
+		case 9:
+			return 'F#';
+		case 10:
+			return 'G';
+		default:
+			return 'G#';
+	}
+};
+var $elm$core$Tuple$second = function (_v0) {
+	var y = _v0.b;
+	return y;
+};
+var $author$project$Note$toString = function (note) {
+	return _Utils_ap(
+		$author$project$Note$pitchClassToString(note.a),
+		$elm$core$String$fromInt(note.b));
+};
+var $elm$url$Url$addPort = F2(
+	function (maybePort, starter) {
+		if (maybePort.$ === 1) {
+			return starter;
+		} else {
+			var port_ = maybePort.a;
+			return starter + (':' + $elm$core$String$fromInt(port_));
+		}
+	});
+var $elm$url$Url$addPrefixed = F3(
+	function (prefix, maybeSegment, starter) {
+		if (maybeSegment.$ === 1) {
+			return starter;
+		} else {
+			var segment = maybeSegment.a;
+			return _Utils_ap(
+				starter,
+				_Utils_ap(prefix, segment));
+		}
+	});
+var $elm$url$Url$toString = function (url) {
+	var http = function () {
+		var _v0 = url.aU;
+		if (!_v0) {
+			return 'http://';
+		} else {
+			return 'https://';
+		}
+	}();
+	return A3(
+		$elm$url$Url$addPrefixed,
+		'#',
+		url.aC,
+		A3(
+			$elm$url$Url$addPrefixed,
+			'?',
+			url.aV,
+			_Utils_ap(
+				A2(
+					$elm$url$Url$addPort,
+					url.aR,
+					_Utils_ap(http, url.aG)),
+				url.aP)));
+};
+var $author$project$Main$update = F2(
+	function (msg, model) {
+		switch (msg.$) {
+			case 0:
+				var url = msg.a;
+				return _Utils_Tuple2(
+					model,
+					$elm$browser$Browser$Navigation$load(
+						$elm$url$Url$toString(url)));
+			case 1:
+				var i = msg.a;
+				return _Utils_Tuple2(
+					A2(
+						$author$project$Main$pressKeyOnModel,
+						model,
+						$author$project$Note$fromInt(i)),
+					$author$project$Main$playTone(
+						$author$project$Note$toString(
+							A2($author$project$Scale$fromKeyClick, model.ac, i))));
+			case 2:
+				var i = msg.a;
+				return _Utils_Tuple2(
+					A2(
+						$author$project$Main$releaseKeyOnModel,
+						model,
+						$author$project$Note$fromInt(i)),
+					$elm$core$Platform$Cmd$none);
+			case 3:
+				var keyboardKey = msg.a;
+				var _v1 = A2($author$project$Scale$fromKeyboardKey, model.ac, keyboardKey);
+				if (!_v1.$) {
+					var note = _v1.a;
+					return _Utils_Tuple2(
+						A2($author$project$Main$pressKeyOnModel, model, note),
+						$author$project$Main$playTone(
+							$author$project$Note$toString(note)));
+				} else {
+					var s = _v1.a;
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
+			default:
+				var keyboardKey = msg.a;
+				var _v2 = A2($author$project$Scale$fromKeyboardKey, model.ac, keyboardKey);
+				if (!_v2.$) {
+					var note = _v2.a;
+					return _Utils_Tuple2(
+						A2($author$project$Main$releaseKeyOnModel, model, note),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					var s = _v2.a;
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
+		}
+	});
+var $elm$browser$Browser$Document = F2(
+	function (title, body) {
+		return {ad: body, bU: title};
+	});
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $elm$html$Html$div = _VirtualDom_node('div');
+var $author$project$Main$MouseDownOn = function (a) {
+	return {$: 1, a: a};
+};
+var $author$project$Main$MouseUpOn = function (a) {
+	return {$: 2, a: a};
+};
+var $author$project$Main$getKeyName = function (n) {
+	return 'key-' + $elm$core$String$fromInt(n);
+};
 var $author$project$Solfege$Di = 1;
 var $author$project$Solfege$Do = 0;
 var $author$project$Solfege$Fa = 5;
@@ -5579,7 +5928,6 @@ var $author$project$Solfege$Re = 2;
 var $author$project$Solfege$Sol = 7;
 var $author$project$Solfege$Te = 10;
 var $author$project$Solfege$Ti = 11;
-var $elm$core$Basics$modBy = _Basics_modBy;
 var $author$project$Solfege$fromInt = function (i) {
 	var _v0 = A2($elm$core$Basics$modBy, 12, i);
 	switch (_v0) {
@@ -5610,377 +5958,6 @@ var $author$project$Solfege$fromInt = function (i) {
 		default:
 			return 0;
 	}
-};
-var $author$project$Solfege$UnassignedKey = $elm$core$Basics$identity;
-var $author$project$Solfege$fromKeyboardKey = function (key) {
-	switch (key) {
-		case '`':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(0));
-		case '1':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(1));
-		case '2':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(2));
-		case '3':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(3));
-		case '4':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(4));
-		case '5':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(5));
-		case '6':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(6));
-		case '7':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(7));
-		case '8':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(8));
-		case '9':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(9));
-		case '0':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(10));
-		case '-':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(11));
-		case '=':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(12));
-		case 'q':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(0));
-		case 'w':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(1));
-		case 'e':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(2));
-		case 'r':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(3));
-		case 't':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(4));
-		case 'y':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(5));
-		case 'u':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(6));
-		case 'i':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(7));
-		case 'o':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(8));
-		case 'p':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(9));
-		case '[':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(10));
-		case ']':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(11));
-		case '\\':
-			return $elm$core$Result$Ok(
-				$author$project$Solfege$fromInt(12));
-		default:
-			return $elm$core$Result$Err(key);
-	}
-};
-var $author$project$Note$ASharp = 1;
-var $author$project$Note$B = 2;
-var $author$project$Note$C = 3;
-var $author$project$Note$CSharp = 4;
-var $author$project$Note$D = 5;
-var $author$project$Note$DSharp = 6;
-var $author$project$Note$E = 7;
-var $author$project$Note$F = 8;
-var $author$project$Note$FSharp = 9;
-var $author$project$Note$G = 10;
-var $author$project$Note$GSharp = 11;
-var $author$project$Note$fromInt = function (i) {
-	var _v0 = A2($elm$core$Basics$modBy, 12, i);
-	switch (_v0) {
-		case 0:
-			return 0;
-		case 1:
-			return 1;
-		case 2:
-			return 2;
-		case 3:
-			return 3;
-		case 4:
-			return 4;
-		case 5:
-			return 5;
-		case 6:
-			return 6;
-		case 7:
-			return 7;
-		case 8:
-			return 8;
-		case 9:
-			return 9;
-		case 10:
-			return 10;
-		case 11:
-			return 11;
-		default:
-			return 0;
-	}
-};
-var $elm$core$Basics$ge = _Utils_ge;
-var $author$project$Note$toInt = function (n) {
-	switch (n) {
-		case 0:
-			return 0;
-		case 1:
-			return 1;
-		case 2:
-			return 2;
-		case 3:
-			return 3;
-		case 4:
-			return 4;
-		case 5:
-			return 5;
-		case 6:
-			return 6;
-		case 7:
-			return 7;
-		case 8:
-			return 8;
-		case 9:
-			return 9;
-		case 10:
-			return 10;
-		default:
-			return 11;
-	}
-};
-var $author$project$Note$toDefaultOctave = function (note) {
-	return (_Utils_cmp(
-		$author$project$Note$toInt(note),
-		$author$project$Note$toInt(3)) > -1) ? 4 : 3;
-};
-var $author$project$Note$toString = function (note) {
-	switch (note) {
-		case 0:
-			return 'A';
-		case 1:
-			return 'A#';
-		case 2:
-			return 'B';
-		case 3:
-			return 'C';
-		case 4:
-			return 'C#';
-		case 5:
-			return 'D';
-		case 6:
-			return 'D#';
-		case 7:
-			return 'E';
-		case 8:
-			return 'F';
-		case 9:
-			return 'F#';
-		case 10:
-			return 'G';
-		default:
-			return 'G#';
-	}
-};
-var $author$project$Note$toAbsoluteString = function (note) {
-	return _Utils_ap(
-		$author$project$Note$toString(note),
-		A2($elm$core$Basics$composeR, $author$project$Note$toDefaultOctave, $elm$core$String$fromInt)(note));
-};
-var $author$project$Solfege$toInt = function (s) {
-	switch (s) {
-		case 0:
-			return 0;
-		case 1:
-			return 1;
-		case 2:
-			return 2;
-		case 3:
-			return 3;
-		case 4:
-			return 4;
-		case 5:
-			return 5;
-		case 6:
-			return 6;
-		case 7:
-			return 7;
-		case 8:
-			return 8;
-		case 9:
-			return 9;
-		case 10:
-			return 10;
-		default:
-			return 11;
-	}
-};
-var $author$project$Main$getAbsoluteNoteString = function (solfege) {
-	return $author$project$Note$toAbsoluteString(
-		$author$project$Note$fromInt(
-			$author$project$Solfege$toInt(solfege)));
-};
-var $elm$browser$Browser$Navigation$load = _Browser_load;
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $author$project$Main$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
-var $author$project$Main$pressKeyOnModel = F2(
-	function (model, solfege) {
-		return _Utils_update(
-			model,
-			{
-				H: A3(
-					$elm$core$Dict$insert,
-					$author$project$Solfege$toInt(solfege),
-					true,
-					model.H)
-			});
-	});
-var $author$project$Main$releaseKeyOnModel = F2(
-	function (model, solfege) {
-		return _Utils_update(
-			model,
-			{
-				H: A3(
-					$elm$core$Dict$insert,
-					$author$project$Solfege$toInt(solfege),
-					false,
-					model.H)
-			});
-	});
-var $elm$url$Url$addPort = F2(
-	function (maybePort, starter) {
-		if (maybePort.$ === 1) {
-			return starter;
-		} else {
-			var port_ = maybePort.a;
-			return starter + (':' + $elm$core$String$fromInt(port_));
-		}
-	});
-var $elm$url$Url$addPrefixed = F3(
-	function (prefix, maybeSegment, starter) {
-		if (maybeSegment.$ === 1) {
-			return starter;
-		} else {
-			var segment = maybeSegment.a;
-			return _Utils_ap(
-				starter,
-				_Utils_ap(prefix, segment));
-		}
-	});
-var $elm$url$Url$toString = function (url) {
-	var http = function () {
-		var _v0 = url.aT;
-		if (!_v0) {
-			return 'http://';
-		} else {
-			return 'https://';
-		}
-	}();
-	return A3(
-		$elm$url$Url$addPrefixed,
-		'#',
-		url.aB,
-		A3(
-			$elm$url$Url$addPrefixed,
-			'?',
-			url.aU,
-			_Utils_ap(
-				A2(
-					$elm$url$Url$addPort,
-					url.aQ,
-					_Utils_ap(http, url.aF)),
-				url.aO)));
-};
-var $author$project$Main$update = F2(
-	function (msg, model) {
-		switch (msg.$) {
-			case 0:
-				var url = msg.a;
-				return _Utils_Tuple2(
-					model,
-					$elm$browser$Browser$Navigation$load(
-						$elm$url$Url$toString(url)));
-			case 1:
-				var i = msg.a;
-				var _v1 = $author$project$Solfege$fromInt(i);
-				var key = _v1;
-				return _Utils_Tuple2(
-					A2($author$project$Main$pressKeyOnModel, model, key),
-					$author$project$Main$playTone(
-						$author$project$Main$getAbsoluteNoteString(key)));
-			case 2:
-				var i = msg.a;
-				var _v2 = $author$project$Solfege$fromInt(i);
-				var key = _v2;
-				return _Utils_Tuple2(
-					A2($author$project$Main$releaseKeyOnModel, model, key),
-					$elm$core$Platform$Cmd$none);
-			case 3:
-				var keyboardKey = msg.a;
-				var _v3 = $author$project$Solfege$fromKeyboardKey(keyboardKey);
-				if (!_v3.$) {
-					var key = _v3.a;
-					return _Utils_Tuple2(
-						A2($author$project$Main$pressKeyOnModel, model, key),
-						$author$project$Main$playTone(
-							$author$project$Main$getAbsoluteNoteString(key)));
-				} else {
-					var s = _v3.a;
-					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-				}
-			default:
-				var keyboardKey = msg.a;
-				var _v4 = $author$project$Solfege$fromKeyboardKey(keyboardKey);
-				if (!_v4.$) {
-					var key = _v4.a;
-					return _Utils_Tuple2(
-						A2($author$project$Main$releaseKeyOnModel, model, key),
-						$elm$core$Platform$Cmd$none);
-				} else {
-					var s = _v4.a;
-					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-				}
-		}
-	});
-var $elm$browser$Browser$Document = F2(
-	function (title, body) {
-		return {ac: body, bU: title};
-	});
-var $elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$string(string));
-	});
-var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
-var $elm$html$Html$div = _VirtualDom_node('div');
-var $author$project$Main$MouseDownOn = function (a) {
-	return {$: 1, a: a};
-};
-var $author$project$Main$MouseUpOn = function (a) {
-	return {$: 2, a: a};
-};
-var $author$project$Main$getKeyName = function (n) {
-	return 'key-' + $elm$core$String$fromInt(n);
 };
 var $elm$core$Dict$get = F2(
 	function (targetKey, dict) {
@@ -6110,7 +6087,7 @@ var $author$project$Main$renderKey = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$text(
-					A2($author$project$Main$getLabelFromKey, model.H, n))
+					A2($author$project$Main$getLabelFromKey, model.X, n))
 				]));
 	});
 var $author$project$Main$renderKeys = F2(
@@ -6143,19 +6120,10 @@ var $author$project$Main$getAllNoteSelectors = A2(
 	$elm$core$List$map,
 	$author$project$Main$renderNoteSelector,
 	A2($elm$core$List$range, 0, 11));
-var $elm$core$Result$map = F2(
-	function (func, ra) {
-		if (!ra.$) {
-			var a = ra.a;
-			return $elm$core$Result$Ok(
-				func(a));
-		} else {
-			var e = ra.a;
-			return $elm$core$Result$Err(e);
-		}
-	});
 var $author$project$Scale$Dorian = 4;
-var $author$project$Scale$InvalidScale = $elm$core$Basics$identity;
+var $author$project$Scale$InvalidScale = function (a) {
+	return {$: 0, a: a};
+};
 var $author$project$Scale$Locrian = 2;
 var $author$project$Scale$Lydian = 6;
 var $author$project$Scale$Major = 3;
@@ -6179,7 +6147,8 @@ var $author$project$Scale$scaleTypeFromInt = function (i) {
 			return $elm$core$Result$Ok(7);
 		default:
 			return $elm$core$Result$Err(
-				$elm$core$String$fromInt(i));
+				$author$project$Scale$InvalidScale(
+					$elm$core$String$fromInt(i)));
 	}
 };
 var $author$project$Scale$scaleTypeToString = function (t) {
@@ -6311,6 +6280,6 @@ var $author$project$Main$view = function (model) {
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
-	{bt: $author$project$Main$init, bF: $author$project$Main$ChangeUrl, bG: $author$project$Main$loadUrlFromUrlRequest, bR: $author$project$Main$subscriptions, bV: $author$project$Main$update, bW: $author$project$Main$view});
+	{bu: $author$project$Main$init, bG: $author$project$Main$ChangeUrl, bH: $author$project$Main$loadUrlFromUrlRequest, bR: $author$project$Main$subscriptions, bV: $author$project$Main$update, bW: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));

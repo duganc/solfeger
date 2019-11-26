@@ -8,7 +8,7 @@ import Json.Encode as Encode exposing (Value)
 import KeyboardKey exposing (..)
 import List exposing (range)
 import Main exposing (Flags, Model, Msg(..), init, loadUrlFromUrlRequest, pressKeyOnModel, releaseKeyOnModel, renderKey, renderKeys, showText, subscriptions, update, view)
-import Note exposing (Note(..), fromInt, toString)
+import Note exposing (..)
 import ProgramTest exposing (ProgramTest, SimulatedSub, clickButton, ensureViewHas, expectViewHas, simulateDomEvent, start)
 import Scale exposing (Scale, ScaleType(..), default, scaleTypeFromInt, scaleTypeToString)
 import SimulatedEffect.Ports
@@ -105,7 +105,7 @@ testPressKeyOnModel : Test
 testPressKeyOnModel =
     test "pressesKeyOnModel" <|
         \() ->
-            pressKeyOnModel (stubInitModel |> first) Fa
+            pressKeyOnModel (stubInitModel |> first) ( D, 4 )
                 |> .isKeyPressed
                 |> Dict.get 5
                 |> Expect.equal (Just True)

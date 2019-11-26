@@ -1,9 +1,14 @@
-module Note exposing (Error(..), Note(..), fromInt, fromString, intToAbsoluteString, toAbsoluteString, toInt, toString)
+module Note exposing (Error(..), Note, Octave, PitchClass(..), fromInt, fromPitchClass, octave, pitchClass, pitchClassFromInt, pitchClassFromString, pitchClassToInt, pitchClassToString, toInt, toString)
 
 import Solfege exposing (..)
+import Tuple exposing (..)
 
 
-type Note
+type alias Note =
+    ( PitchClass, Octave )
+
+
+type PitchClass
     = A
     | ASharp
     | B
@@ -18,13 +23,37 @@ type Note
     | GSharp
 
 
+type alias Octave =
+    Int
+
+
 type Error
     = InvalidNote String
 
 
+pitchClass : Note -> PitchClass
+pitchClass =
+    Tuple.first
+
+
+octave : Note -> Octave
+octave =
+    Tuple.second
+
+
 toString : Note -> String
 toString note =
-    case note of
+    (Tuple.first note |> pitchClassToString) ++ (Tuple.second note |> String.fromInt)
+
+
+toInt : Note -> Int
+toInt note =
+    (pitchClass note |> pitchClassToInt) + ((octave note - defaultOctave (pitchClass note)) * 12)
+
+
+pitchClassToString : PitchClass -> String
+pitchClassToString pc =
+    case pc of
         A ->
             "A"
 
@@ -62,28 +91,32 @@ toString note =
             "G#"
 
 
-intToAbsoluteString : Int -> String
-intToAbsoluteString i =
-    (modBy 12 i |> fromInt |> toString)
-        ++ (i // 12 |> (+) (modBy 12 i |> fromInt |> toDefaultOctave) |> String.fromInt)
+fromInt : Int -> Note
+fromInt i =
+    ( pitchClassFromInt i, octaveFromInt i )
 
 
-toAbsoluteString : Note -> String
-toAbsoluteString note =
-    toString note ++ (toDefaultOctave >> String.fromInt) note
+octaveFromInt : Int -> Octave
+octaveFromInt i =
+    i // 12 |> (+) (modBy 12 i |> pitchClassFromInt |> defaultOctave)
 
 
-toDefaultOctave : Note -> Int
-toDefaultOctave note =
-    if toInt note >= toInt C then
+fromPitchClass : PitchClass -> Note
+fromPitchClass pc =
+    ( pc, defaultOctave pc )
+
+
+defaultOctave : PitchClass -> Octave
+defaultOctave pc =
+    if pitchClassToInt pc >= pitchClassToInt C then
         4
 
     else
         3
 
 
-fromString : String -> Result Error Note
-fromString s =
+pitchClassFromString : String -> Result Error PitchClass
+pitchClassFromString s =
     case s of
         "Ab" ->
             Ok GSharp
@@ -152,8 +185,8 @@ fromString s =
             Err (InvalidNote s)
 
 
-toInt : Note -> Int
-toInt n =
+pitchClassToInt : PitchClass -> Int
+pitchClassToInt n =
     case n of
         A ->
             0
@@ -192,8 +225,8 @@ toInt n =
             11
 
 
-fromInt : Int -> Note
-fromInt i =
+pitchClassFromInt : Int -> PitchClass
+pitchClassFromInt i =
     case modBy 12 i of
         0 ->
             A

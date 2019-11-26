@@ -1,10 +1,12 @@
-module Scale exposing (Scale, ScaleType(..), default, notes, scaleTypeFromInt, scaleTypeToString)
+module Scale exposing (Error(..), Scale, ScaleType(..), default, fromKeyClick, fromKeyboardKey, notes, scaleTypeFromInt, scaleTypeToString)
 
-import Note exposing (Note(..), toInt)
+import KeyboardKey exposing (..)
+import Note exposing (Note, PitchClass(..), fromInt, pitchClassFromInt, pitchClassToInt, toInt)
+import Tuple exposing (first)
 
 
 type alias Scale =
-    ( Note, ScaleType )
+    ( PitchClass, ScaleType )
 
 
 type ScaleType
@@ -20,6 +22,7 @@ type ScaleType
 
 type Error
     = InvalidScale String
+    | UnassignedKey KeyboardKey
 
 
 default : Scale
@@ -29,7 +32,7 @@ default =
 
 notes : Scale -> List Int
 notes ( note, scale ) =
-    List.map ((+) (Note.toInt note))
+    List.map ((+) (Note.pitchClassToInt note))
         (case scale of
             Chromatic ->
                 List.range 0 12
@@ -111,3 +114,103 @@ scaleTypeToString t =
 
         Mixolydian ->
             "Mixolydian"
+
+
+fromKeyClick : Scale -> Int -> Note
+fromKeyClick scale i =
+    i + adjustForScale scale |> Note.fromInt
+
+
+fromKeyboardKey : Scale -> KeyboardKey -> Result Error Note
+fromKeyboardKey scale key =
+    keyboardKeyToInt key |> Result.map (fromKeyClick scale)
+
+
+adjustForScale : Scale -> Int
+adjustForScale =
+    Tuple.first >> Note.pitchClassToInt
+
+
+keyboardKeyToInt : KeyboardKey -> Result Error Int
+keyboardKeyToInt key =
+    case key of
+        CharacterKey "`" ->
+            Ok 0
+
+        CharacterKey "1" ->
+            Ok 1
+
+        CharacterKey "2" ->
+            Ok 2
+
+        CharacterKey "3" ->
+            Ok 3
+
+        CharacterKey "4" ->
+            Ok 4
+
+        CharacterKey "5" ->
+            Ok 5
+
+        CharacterKey "6" ->
+            Ok 6
+
+        CharacterKey "7" ->
+            Ok 7
+
+        CharacterKey "8" ->
+            Ok 8
+
+        CharacterKey "9" ->
+            Ok 9
+
+        CharacterKey "0" ->
+            Ok 10
+
+        CharacterKey "-" ->
+            Ok 11
+
+        CharacterKey "=" ->
+            Ok 12
+
+        CharacterKey "q" ->
+            Ok 0
+
+        CharacterKey "w" ->
+            Ok 1
+
+        CharacterKey "e" ->
+            Ok 2
+
+        CharacterKey "r" ->
+            Ok 3
+
+        CharacterKey "t" ->
+            Ok 4
+
+        CharacterKey "y" ->
+            Ok 5
+
+        CharacterKey "u" ->
+            Ok 6
+
+        CharacterKey "i" ->
+            Ok 7
+
+        CharacterKey "o" ->
+            Ok 8
+
+        CharacterKey "p" ->
+            Ok 9
+
+        CharacterKey "[" ->
+            Ok 10
+
+        CharacterKey "]" ->
+            Ok 11
+
+        CharacterKey "\\" ->
+            Ok 12
+
+        _ ->
+            Err (UnassignedKey key)

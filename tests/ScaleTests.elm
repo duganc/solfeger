@@ -35,6 +35,15 @@ testScaleGetsCorrectNotes =
         ]
 
 
+testKeyClickHandlesHighDo : Test
+testKeyClickHandlesHighDo =
+    test "keyClickHandlesHighDo" <|
+        \() ->
+            12
+                |> fromKeyClick ( A, Chromatic )
+                |> Expect.equal ( A, 4 )
+
+
 testGetsAbsoluteStringFromValidKeyboardKey : Test
 testGetsAbsoluteStringFromValidKeyboardKey =
     test "getsAbsoluteStringFromValidKeyboardKey" <|

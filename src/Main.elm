@@ -97,7 +97,7 @@ releaseKeyOnModel =
 
 pressOrReleaseKeyOnModel : Bool -> Model -> Note -> Model
 pressOrReleaseKeyOnModel isPress model note =
-    { model | isKeyPressed = Dict.insert (Note.pitchClass note |> Note.pitchClassToInt) isPress model.isKeyPressed }
+    { model | isKeyPressed = Dict.insert (Note.toInt note) isPress model.isKeyPressed }
 
 
 urlRequestToUrl : UrlRequest -> Url
@@ -158,7 +158,7 @@ view : Model -> Document Msg
 view model =
     Document "Solfeger"
         [ viewHeader
-        , div [ class "table" ] [ renderKeys model 12 ]
+        , div [ class "table" ] [ renderKeys model 13 ]
         , div [ class "table" ] renderScaleSelector
         , viewFooter
         ]

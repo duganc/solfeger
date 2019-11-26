@@ -12061,7 +12061,17 @@ var $elm$core$Basics$never = function (_v0) {
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $author$project$Main$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
+var $elm$core$Tuple$second = function (_v0) {
+	var y = _v0.b;
+	return y;
+};
+var $author$project$Note$octave = $elm$core$Tuple$second;
 var $author$project$Note$pitchClass = $elm$core$Tuple$first;
+var $author$project$Note$toInt = function (note) {
+	return $author$project$Note$pitchClassToInt(
+		$author$project$Note$pitchClass(note)) + (($author$project$Note$octave(note) - $author$project$Note$defaultOctave(
+		$author$project$Note$pitchClass(note))) * 12);
+};
 var $author$project$Main$pressOrReleaseKeyOnModel = F3(
 	function (isPress, model, note) {
 		return _Utils_update(
@@ -12069,8 +12079,7 @@ var $author$project$Main$pressOrReleaseKeyOnModel = F3(
 			{
 				isKeyPressed: A3(
 					$elm$core$Dict$insert,
-					$author$project$Note$pitchClassToInt(
-						$author$project$Note$pitchClass(note)),
+					$author$project$Note$toInt(note),
 					isPress,
 					model.isKeyPressed)
 			});
@@ -12104,10 +12113,6 @@ var $author$project$Note$pitchClassToString = function (pc) {
 		default:
 			return 'G#';
 	}
-};
-var $elm$core$Tuple$second = function (_v0) {
-	var y = _v0.b;
-	return y;
 };
 var $author$project$Note$toString = function (note) {
 	return _Utils_ap(
@@ -12506,7 +12511,7 @@ var $author$project$Main$view = function (model) {
 					]),
 				_List_fromArray(
 					[
-						A2($author$project$Main$renderKeys, model, 12)
+						A2($author$project$Main$renderKeys, model, 13)
 					])),
 				A2(
 				$elm$html$Html$div,
@@ -12612,6 +12617,18 @@ var $author$project$MainTests$testKeyClickDisplaysSolfege = A2(
 									$elm_explorations$test$Test$Html$Selector$id('key-11')
 								])),
 						A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0)))));
+	});
+var $author$project$ScaleTests$testKeyClickHandlesHighDo = A2(
+	$elm_explorations$test$Test$test,
+	'keyClickHandlesHighDo',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			_Utils_Tuple2($author$project$Note$A, 4),
+			A2(
+				$author$project$Scale$fromKeyClick,
+				_Utils_Tuple2($author$project$Note$A, $author$project$Scale$Chromatic),
+				12));
 	});
 var $author$project$MainTests$testKeyRenders = A2(
 	$elm_explorations$test$Test$test,
@@ -13186,12 +13203,6 @@ var $author$project$SolfegeTests$testSolfegeGetsNames = A2(
 				A2($elm$core$Basics$composeR, $author$project$Solfege$fromInt, $author$project$Solfege$toString),
 				A2($elm$core$List$range, 0, 15)));
 	});
-var $author$project$Note$octave = $elm$core$Tuple$second;
-var $author$project$Note$toInt = function (note) {
-	return $author$project$Note$pitchClassToInt(
-		$author$project$Note$pitchClass(note)) + (($author$project$Note$octave(note) - $author$project$Note$defaultOctave(
-		$author$project$Note$pitchClass(note))) * 12);
-};
 var $author$project$NoteTests$testToIntAndFromIntAreInverses = A2(
 	$elm_explorations$test$Test$test,
 	'toIntAndFromIntAreInverses',
@@ -13224,7 +13235,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main394037612$main = A2(
+var $author$project$Test$Generated$Main713667775$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13232,7 +13243,7 @@ var $author$project$Test$Generated$Main394037612$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 92810361808592
+		seed: 83949297851401
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13256,17 +13267,17 @@ var $author$project$Test$Generated$Main394037612$main = A2(
 				$elm_explorations$test$Test$describe,
 				'ScaleTests',
 				_List_fromArray(
-					[$author$project$ScaleTests$testGetsAbsoluteStringFromHighDo, $author$project$ScaleTests$testGetsAbsoluteStringReturnsErrorForNonKey, $author$project$ScaleTests$testScaleGetsCorrectNotes, $author$project$ScaleTests$testGetsAbsoluteStringFromValidKeyboardKey])),
+					[$author$project$ScaleTests$testGetsAbsoluteStringFromHighDo, $author$project$ScaleTests$testGetsAbsoluteStringReturnsErrorForNonKey, $author$project$ScaleTests$testScaleGetsCorrectNotes, $author$project$ScaleTests$testGetsAbsoluteStringFromValidKeyboardKey, $author$project$ScaleTests$testKeyClickHandlesHighDo])),
 				A2(
 				$elm_explorations$test$Test$describe,
 				'NoteTests',
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main394037612':{'init':$author$project$Test$Generated$Main394037612$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main713667775':{'init':$author$project$Test$Generated$Main713667775$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-9076.sock";
+var pipeFilename = "/tmp/elm_test-9254.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

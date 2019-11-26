@@ -5743,7 +5743,17 @@ var $author$project$Scale$fromKeyboardKey = F2(
 var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Main$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
+var $elm$core$Tuple$second = function (_v0) {
+	var y = _v0.b;
+	return y;
+};
+var $author$project$Note$octave = $elm$core$Tuple$second;
 var $author$project$Note$pitchClass = $elm$core$Tuple$first;
+var $author$project$Note$toInt = function (note) {
+	return $author$project$Note$pitchClassToInt(
+		$author$project$Note$pitchClass(note)) + (($author$project$Note$octave(note) - $author$project$Note$defaultOctave(
+		$author$project$Note$pitchClass(note))) * 12);
+};
 var $author$project$Main$pressOrReleaseKeyOnModel = F3(
 	function (isPress, model, note) {
 		return _Utils_update(
@@ -5751,8 +5761,7 @@ var $author$project$Main$pressOrReleaseKeyOnModel = F3(
 			{
 				X: A3(
 					$elm$core$Dict$insert,
-					$author$project$Note$pitchClassToInt(
-						$author$project$Note$pitchClass(note)),
+					$author$project$Note$toInt(note),
 					isPress,
 					model.X)
 			});
@@ -5786,10 +5795,6 @@ var $author$project$Note$pitchClassToString = function (pc) {
 		default:
 			return 'G#';
 	}
-};
-var $elm$core$Tuple$second = function (_v0) {
-	var y = _v0.b;
-	return y;
 };
 var $author$project$Note$toString = function (note) {
 	return _Utils_ap(
@@ -6267,7 +6272,7 @@ var $author$project$Main$view = function (model) {
 					]),
 				_List_fromArray(
 					[
-						A2($author$project$Main$renderKeys, model, 12)
+						A2($author$project$Main$renderKeys, model, 13)
 					])),
 				A2(
 				$elm$html$Html$div,

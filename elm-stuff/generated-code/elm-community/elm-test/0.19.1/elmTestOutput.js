@@ -12345,26 +12345,29 @@ var $author$project$Main$renderKeys = F2(
 				$author$project$Main$renderKey(model),
 				A2($elm$core$List$range, 0, n - 1)));
 	});
-var $author$project$Main$renderNoteSelector = function (i) {
+var $author$project$Main$renderNoteSelector = F2(
+	function (pc, i) {
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('scale-selector'),
+					$elm$html$Html$Attributes$id(
+					'scale-note-' + $elm$core$String$fromInt(i))
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text(
+					$author$project$Note$toString(
+						$author$project$Note$fromInt(i)))
+				]));
+	});
+var $author$project$Main$getAllNoteSelectors = function (pc) {
 	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('scale-selector'),
-				$elm$html$Html$Attributes$id(
-				'scale-note-' + $elm$core$String$fromInt(i))
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text(
-				$author$project$Note$toString(
-					$author$project$Note$fromInt(i)))
-			]));
+		$elm$core$List$map,
+		$author$project$Main$renderNoteSelector(pc),
+		A2($elm$core$List$range, 0, 11));
 };
-var $author$project$Main$getAllNoteSelectors = A2(
-	$elm$core$List$map,
-	$author$project$Main$renderNoteSelector,
-	A2($elm$core$List$range, 0, 11));
 var $author$project$Scale$Dorian = {$: 'Dorian'};
 var $author$project$Scale$InvalidScale = function (a) {
 	return {$: 'InvalidScale', a: a};
@@ -12424,48 +12427,57 @@ var $elm$core$Result$withDefault = F2(
 			return def;
 		}
 	});
-var $author$project$Main$renderScaleTypeSelector = function (i) {
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('scale-selector'),
-				$elm$html$Html$Attributes$id(
-				'scale-type-' + $elm$core$String$fromInt(i))
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text(
-				A2(
-					$elm$core$Result$withDefault,
-					'ERROR!',
+var $author$project$Main$renderScaleTypeSelector = F2(
+	function (t, i) {
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('scale-selector'),
+					$elm$html$Html$Attributes$id(
+					'scale-type-' + $elm$core$String$fromInt(i))
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text(
 					A2(
-						$elm$core$Result$map,
-						$author$project$Scale$scaleTypeToString,
-						$author$project$Scale$scaleTypeFromInt(i))))
-			]));
+						$elm$core$Result$withDefault,
+						'ERROR!',
+						A2(
+							$elm$core$Result$map,
+							$author$project$Scale$scaleTypeToString,
+							$author$project$Scale$scaleTypeFromInt(i))))
+				]));
+	});
+var $author$project$Main$getAllScaleTypeSelectors = function (t) {
+	return A2(
+		$elm$core$List$map,
+		$author$project$Main$renderScaleTypeSelector(t),
+		A2($elm$core$List$range, 0, 6));
 };
-var $author$project$Main$getAllScaleTypeSelectors = A2(
-	$elm$core$List$map,
-	$author$project$Main$renderScaleTypeSelector,
-	A2($elm$core$List$range, 0, 6));
-var $author$project$Main$renderScaleSelector = _List_fromArray(
-	[
-		A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('table')
-			]),
-		$author$project$Main$getAllNoteSelectors),
-		A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('table')
-			]),
-		$author$project$Main$getAllScaleTypeSelectors)
-	]);
+var $author$project$Scale$pitchClass = $elm$core$Tuple$first;
+var $author$project$Scale$scaleType = $elm$core$Tuple$second;
+var $author$project$Main$renderScaleSelector = function (scale) {
+	return _List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('table')
+				]),
+			$author$project$Main$getAllNoteSelectors(
+				$author$project$Scale$pitchClass(scale))),
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('table')
+				]),
+			$author$project$Main$getAllScaleTypeSelectors(
+				$author$project$Scale$scaleType(scale)))
+		]);
+};
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
@@ -12519,7 +12531,7 @@ var $author$project$Main$view = function (model) {
 					[
 						$elm$html$Html$Attributes$class('table')
 					]),
-				$author$project$Main$renderScaleSelector),
+				$author$project$Main$renderScaleSelector(model.selectedScale)),
 				$author$project$Main$viewFooter
 			]));
 };
@@ -13235,7 +13247,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main713667775$main = A2(
+var $author$project$Test$Generated$Main1872664774$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13243,7 +13255,7 @@ var $author$project$Test$Generated$Main713667775$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 83949297851401
+		seed: 377142029663003
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13274,10 +13286,10 @@ var $author$project$Test$Generated$Main713667775$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main713667775':{'init':$author$project$Test$Generated$Main713667775$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main1872664774':{'init':$author$project$Test$Generated$Main1872664774$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-9254.sock";
+var pipeFilename = "/tmp/elm_test-9357.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

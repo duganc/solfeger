@@ -36,6 +36,10 @@ To play notes, either click them or use the number row on your keyboard from the
 	 - [ ] Nice-to-haves
 	 	 - [ ] Logo
 		 - [ ] Hold note and key display for some minimum time to keep it from being too fast to see
+		 - [ ] Holding multiple notes has weird behavior
+		 - [ ] Right clicking keeps the text showing
+		 - [ ] Toggle for piano keys
+		 - [ ] Sustain
 
 - [ ] Design
 	- [ ] Page Structure

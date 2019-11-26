@@ -159,7 +159,7 @@ view model =
     Document "Solfeger"
         [ viewHeader
         , div [ class "table" ] [ renderKeys model 13 ]
-        , div [ class "table" ] renderScaleSelector
+        , div [ class "table" ] (renderScaleSelector model.selectedScale)
         , viewFooter
         ]
 
@@ -224,28 +224,28 @@ showText ifTrue ifFalse switch =
             ifFalse
 
 
-renderScaleSelector : List (Html Msg)
-renderScaleSelector =
-    [ div [ class "table" ] getAllNoteSelectors
-    , div [ class "table" ] getAllScaleTypeSelectors
+renderScaleSelector : Scale -> List (Html Msg)
+renderScaleSelector scale =
+    [ div [ class "table" ] (getAllNoteSelectors (Scale.pitchClass scale))
+    , div [ class "table" ] (getAllScaleTypeSelectors (Scale.scaleType scale))
     ]
 
 
-getAllNoteSelectors : List (Html Msg)
-getAllNoteSelectors =
-    range 0 11 |> List.map renderNoteSelector
+getAllNoteSelectors : PitchClass -> List (Html Msg)
+getAllNoteSelectors pc =
+    range 0 11 |> List.map (renderNoteSelector pc)
 
 
-renderNoteSelector : Int -> Html Msg
-renderNoteSelector i =
+renderNoteSelector : PitchClass -> Int -> Html Msg
+renderNoteSelector pc i =
     div [ class "scale-selector", id ("scale-note-" ++ String.fromInt i) ] [ i |> Note.fromInt |> Note.toString |> text ]
 
 
-getAllScaleTypeSelectors : List (Html Msg)
-getAllScaleTypeSelectors =
-    range 0 6 |> List.map renderScaleTypeSelector
+getAllScaleTypeSelectors : ScaleType -> List (Html Msg)
+getAllScaleTypeSelectors t =
+    range 0 6 |> List.map (renderScaleTypeSelector t)
 
 
-renderScaleTypeSelector : Int -> Html Msg
-renderScaleTypeSelector i =
+renderScaleTypeSelector : ScaleType -> Int -> Html Msg
+renderScaleTypeSelector t i =
     div [ class "scale-selector", id ("scale-type-" ++ String.fromInt i) ] [ i |> Scale.scaleTypeFromInt |> Result.map Scale.scaleTypeToString |> Result.withDefault "ERROR!" |> text ]

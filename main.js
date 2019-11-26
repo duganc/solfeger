@@ -5098,7 +5098,7 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Main$Model = F2(
 	function (isKeyPressed, selectedScale) {
-		return {X: isKeyPressed, ac: selectedScale};
+		return {Y: isKeyPressed, S: selectedScale};
 	});
 var $author$project$Note$A = 0;
 var $author$project$Scale$Chromatic = 0;
@@ -5759,11 +5759,11 @@ var $author$project$Main$pressOrReleaseKeyOnModel = F3(
 		return _Utils_update(
 			model,
 			{
-				X: A3(
+				Y: A3(
 					$elm$core$Dict$insert,
 					$author$project$Note$toInt(note),
 					isPress,
-					model.X)
+					model.Y)
 			});
 	});
 var $author$project$Main$pressKeyOnModel = $author$project$Main$pressOrReleaseKeyOnModel(true);
@@ -5863,7 +5863,7 @@ var $author$project$Main$update = F2(
 						$author$project$Note$fromInt(i)),
 					$author$project$Main$playTone(
 						$author$project$Note$toString(
-							A2($author$project$Scale$fromKeyClick, model.ac, i))));
+							A2($author$project$Scale$fromKeyClick, model.S, i))));
 			case 2:
 				var i = msg.a;
 				return _Utils_Tuple2(
@@ -5874,7 +5874,7 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 			case 3:
 				var keyboardKey = msg.a;
-				var _v1 = A2($author$project$Scale$fromKeyboardKey, model.ac, keyboardKey);
+				var _v1 = A2($author$project$Scale$fromKeyboardKey, model.S, keyboardKey);
 				if (!_v1.$) {
 					var note = _v1.a;
 					return _Utils_Tuple2(
@@ -5887,7 +5887,7 @@ var $author$project$Main$update = F2(
 				}
 			default:
 				var keyboardKey = msg.a;
-				var _v2 = A2($author$project$Scale$fromKeyboardKey, model.ac, keyboardKey);
+				var _v2 = A2($author$project$Scale$fromKeyboardKey, model.S, keyboardKey);
 				if (!_v2.$) {
 					var note = _v2.a;
 					return _Utils_Tuple2(
@@ -6092,7 +6092,7 @@ var $author$project$Main$renderKey = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$text(
-					A2($author$project$Main$getLabelFromKey, model.X, n))
+					A2($author$project$Main$getLabelFromKey, model.Y, n))
 				]));
 	});
 var $author$project$Main$renderKeys = F2(
@@ -6105,26 +6105,29 @@ var $author$project$Main$renderKeys = F2(
 				$author$project$Main$renderKey(model),
 				A2($elm$core$List$range, 0, n - 1)));
 	});
-var $author$project$Main$renderNoteSelector = function (i) {
+var $author$project$Main$renderNoteSelector = F2(
+	function (pc, i) {
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('scale-selector'),
+					$elm$html$Html$Attributes$id(
+					'scale-note-' + $elm$core$String$fromInt(i))
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text(
+					$author$project$Note$toString(
+						$author$project$Note$fromInt(i)))
+				]));
+	});
+var $author$project$Main$getAllNoteSelectors = function (pc) {
 	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('scale-selector'),
-				$elm$html$Html$Attributes$id(
-				'scale-note-' + $elm$core$String$fromInt(i))
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text(
-				$author$project$Note$toString(
-					$author$project$Note$fromInt(i)))
-			]));
+		$elm$core$List$map,
+		$author$project$Main$renderNoteSelector(pc),
+		A2($elm$core$List$range, 0, 11));
 };
-var $author$project$Main$getAllNoteSelectors = A2(
-	$elm$core$List$map,
-	$author$project$Main$renderNoteSelector,
-	A2($elm$core$List$range, 0, 11));
 var $author$project$Scale$Dorian = 4;
 var $author$project$Scale$InvalidScale = function (a) {
 	return {$: 0, a: a};
@@ -6185,48 +6188,57 @@ var $elm$core$Result$withDefault = F2(
 			return def;
 		}
 	});
-var $author$project$Main$renderScaleTypeSelector = function (i) {
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('scale-selector'),
-				$elm$html$Html$Attributes$id(
-				'scale-type-' + $elm$core$String$fromInt(i))
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text(
-				A2(
-					$elm$core$Result$withDefault,
-					'ERROR!',
+var $author$project$Main$renderScaleTypeSelector = F2(
+	function (t, i) {
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('scale-selector'),
+					$elm$html$Html$Attributes$id(
+					'scale-type-' + $elm$core$String$fromInt(i))
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text(
 					A2(
-						$elm$core$Result$map,
-						$author$project$Scale$scaleTypeToString,
-						$author$project$Scale$scaleTypeFromInt(i))))
-			]));
+						$elm$core$Result$withDefault,
+						'ERROR!',
+						A2(
+							$elm$core$Result$map,
+							$author$project$Scale$scaleTypeToString,
+							$author$project$Scale$scaleTypeFromInt(i))))
+				]));
+	});
+var $author$project$Main$getAllScaleTypeSelectors = function (t) {
+	return A2(
+		$elm$core$List$map,
+		$author$project$Main$renderScaleTypeSelector(t),
+		A2($elm$core$List$range, 0, 6));
 };
-var $author$project$Main$getAllScaleTypeSelectors = A2(
-	$elm$core$List$map,
-	$author$project$Main$renderScaleTypeSelector,
-	A2($elm$core$List$range, 0, 6));
-var $author$project$Main$renderScaleSelector = _List_fromArray(
-	[
-		A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('table')
-			]),
-		$author$project$Main$getAllNoteSelectors),
-		A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('table')
-			]),
-		$author$project$Main$getAllScaleTypeSelectors)
-	]);
+var $author$project$Scale$pitchClass = $elm$core$Tuple$first;
+var $author$project$Scale$scaleType = $elm$core$Tuple$second;
+var $author$project$Main$renderScaleSelector = function (scale) {
+	return _List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('table')
+				]),
+			$author$project$Main$getAllNoteSelectors(
+				$author$project$Scale$pitchClass(scale))),
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('table')
+				]),
+			$author$project$Main$getAllScaleTypeSelectors(
+				$author$project$Scale$scaleType(scale)))
+		]);
+};
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
@@ -6280,7 +6292,7 @@ var $author$project$Main$view = function (model) {
 					[
 						$elm$html$Html$Attributes$class('table')
 					]),
-				$author$project$Main$renderScaleSelector),
+				$author$project$Main$renderScaleSelector(model.S)),
 				$author$project$Main$viewFooter
 			]));
 };

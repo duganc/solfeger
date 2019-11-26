@@ -1,4 +1,4 @@
-module Scale exposing (Error(..), Scale, ScaleType(..), default, fromKeyClick, fromKeyboardKey, notes, scaleTypeFromInt, scaleTypeToString)
+module Scale exposing (Error(..), Scale, ScaleType(..), default, fromKeyClick, fromKeyboardKey, notes, pitchClass, scaleType, scaleTypeFromInt, scaleTypeToString)
 
 import KeyboardKey exposing (..)
 import Note exposing (Note, PitchClass(..), fromInt, pitchClassFromInt, pitchClassToInt, toInt)
@@ -28,6 +28,16 @@ type Error
 default : Scale
 default =
     ( A, Chromatic )
+
+
+pitchClass : Scale -> PitchClass
+pitchClass =
+    Tuple.first
+
+
+scaleType : Scale -> ScaleType
+scaleType =
+    Tuple.second
 
 
 notes : Scale -> List Int

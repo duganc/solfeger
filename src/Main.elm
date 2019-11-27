@@ -83,20 +83,51 @@ update msg model =
                     ( model, Cmd.none )
 
         KeyDownOn keyboardKey ->
-            case fromKeyboardKey model.selectedScale keyboardKey of
-                Ok note ->
-                    ( pressKeyOnModel model note, playTone (Note.toString note) )
+            case keyboardKey of
+                CharacterKey _ ->
+                    case fromKeyboardKey model.selectedScale keyboardKey of
+                        Ok note ->
+                            ( pressKeyOnModel model note, playTone (note |> adjustOctave model.octaveAdjustment |> Note.toString) )
 
-                Err s ->
+                        Err s ->
+                            ( model, Cmd.none )
+
+                Shift ->
+                    ( setOctaveAdjustment 1 model, Cmd.none )
+
+                Control ->
+                    ( setOctaveAdjustment -1 model, Cmd.none )
+
+                _ ->
                     ( model, Cmd.none )
 
         KeyUpOn keyboardKey ->
-            case fromKeyboardKey model.selectedScale keyboardKey of
-                Ok note ->
-                    ( releaseKeyOnModel model note, Cmd.none )
+            case keyboardKey of
+                CharacterKey _ ->
+                    case fromKeyboardKey model.selectedScale keyboardKey of
+                        Ok note ->
+                            ( releaseKeyOnModel model note, Cmd.none )
 
-                Err s ->
-                    ( model, Cmd.none )
+                        Err s ->
+                            ( model, Cmd.none )
+
+                _ ->
+                    ( resetOctaveAdjustment model, Cmd.none )
+
+
+adjustOctave : Int -> Note -> Note
+adjustOctave adjustment note =
+    ( Note.pitchClass note, Note.octave note + adjustment )
+
+
+resetOctaveAdjustment : Model -> Model
+resetOctaveAdjustment =
+    setOctaveAdjustment 0
+
+
+setOctaveAdjustment : Int -> Model -> Model
+setOctaveAdjustment i model =
+    { model | octaveAdjustment = i }
 
 
 pressKeyOnModel : Model -> Note -> Model

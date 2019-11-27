@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.ap.P === region.aA.P)
+	if (region.aq.P === region.aB.P)
 	{
-		return 'on line ' + region.ap.P;
+		return 'on line ' + region.aq.P;
 	}
-	return 'on lines ' + region.ap.P + ' through ' + region.aA.P;
+	return 'on lines ' + region.aq.P + ' through ' + region.aB.P;
 }
 
 
@@ -1857,7 +1857,7 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bu,
+		impl.bv,
 		impl.bW,
 		impl.bS,
 		function() { return function() {} }
@@ -2660,8 +2660,8 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
 		y: func(record.y),
-		aq: record.aq,
-		an: record.an
+		ar: record.ar,
+		ao: record.ao
 	}
 });
 
@@ -2930,10 +2930,10 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 
 		var value = result.a;
 		var message = !tag ? value : tag < 3 ? value.a : value.y;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.aq;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.ar;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.an) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.ao) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3883,7 +3883,7 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bu,
+		impl.bv,
 		impl.bW,
 		impl.bS,
 		function(sendToApp, initialModel) {
@@ -3919,11 +3919,11 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bu,
+		impl.bv,
 		impl.bW,
 		impl.bS,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.ao && impl.ao(sendToApp)
+			var divertHrefToApp = impl.ap && impl.ap(sendToApp)
 			var view = impl.bX;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
@@ -3998,7 +3998,7 @@ function _Browser_application(impl)
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		ao: function(sendToApp)
+		ap: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4014,9 +4014,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.aU === next.aU
-							&& curr.aG === next.aG
-							&& curr.aR.a === next.aR.a
+							&& curr.aV === next.aV
+							&& curr.aH === next.aH
+							&& curr.aS.a === next.aS.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4024,9 +4024,9 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		bu: function(flags)
+		bv: function(flags)
 		{
-			return A3(impl.bu, flags, _Browser_getUrl(), key);
+			return A3(impl.bv, flags, _Browser_getUrl(), key);
 		},
 		bX: impl.bX,
 		bW: impl.bW,
@@ -4096,17 +4096,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { bs: 'hidden', bh: 'visibilitychange' }
+		? { bt: 'hidden', bi: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { bs: 'mozHidden', bh: 'mozvisibilitychange' }
+		? { bt: 'mozHidden', bi: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { bs: 'msHidden', bh: 'msvisibilitychange' }
+		? { bt: 'msHidden', bi: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { bs: 'webkitHidden', bh: 'webkitvisibilitychange' }
-		: { bs: 'hidden', bh: 'visibilitychange' };
+		? { bt: 'webkitHidden', bi: 'webkitvisibilitychange' }
+		: { bt: 'hidden', bi: 'visibilitychange' };
 }
 
 
@@ -4187,12 +4187,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		a$: _Browser_getScene(),
-		a8: {
-			ba: _Browser_window.pageXOffset,
-			bb: _Browser_window.pageYOffset,
-			a9: _Browser_doc.documentElement.clientWidth,
-			aF: _Browser_doc.documentElement.clientHeight
+		a0: _Browser_getScene(),
+		a9: {
+			bb: _Browser_window.pageXOffset,
+			bc: _Browser_window.pageYOffset,
+			ba: _Browser_doc.documentElement.clientWidth,
+			aG: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4202,8 +4202,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		a9: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		aF: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		ba: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		aG: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4226,15 +4226,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			a$: {
-				a9: node.scrollWidth,
-				aF: node.scrollHeight
+			a0: {
+				ba: node.scrollWidth,
+				aG: node.scrollHeight
 			},
-			a8: {
-				ba: node.scrollLeft,
-				bb: node.scrollTop,
-				a9: node.clientWidth,
-				aF: node.clientHeight
+			a9: {
+				bb: node.scrollLeft,
+				bc: node.scrollTop,
+				ba: node.clientWidth,
+				aG: node.clientHeight
 			}
 		};
 	});
@@ -4264,18 +4264,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			a$: _Browser_getScene(),
-			a8: {
-				ba: x,
-				bb: y,
-				a9: _Browser_doc.documentElement.clientWidth,
-				aF: _Browser_doc.documentElement.clientHeight
+			a0: _Browser_getScene(),
+			a9: {
+				bb: x,
+				bc: y,
+				ba: _Browser_doc.documentElement.clientWidth,
+				aG: _Browser_doc.documentElement.clientHeight
 			},
-			bl: {
-				ba: x + rect.left,
-				bb: y + rect.top,
-				a9: rect.width,
-				aF: rect.height
+			bm: {
+				bb: x + rect.left,
+				bc: y + rect.top,
+				ba: rect.width,
+				aG: rect.height
 			}
 		};
 	});
@@ -4817,7 +4817,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {aC: fragment, aG: host, aP: path, aR: port_, aU: protocol, aV: query};
+		return {aD: fragment, aH: host, aQ: path, aS: port_, aV: protocol, aW: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5098,7 +5098,7 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Main$Model = F3(
 	function (isKeyPressed, octaveAdjustment, selectedScale) {
-		return {Y: isKeyPressed, bF: octaveAdjustment, j: selectedScale};
+		return {Y: isKeyPressed, am: octaveAdjustment, j: selectedScale};
 	});
 var $author$project$Note$A = 0;
 var $author$project$Scale$Chromatic = 0;
@@ -5308,7 +5308,7 @@ var $elm$browser$Browser$Events$MySub = F3(
 	});
 var $elm$browser$Browser$Events$State = F2(
 	function (subs, pids) {
-		return {aQ: pids, a4: subs};
+		return {aR: pids, a5: subs};
 	});
 var $elm$browser$Browser$Events$init = $elm$core$Task$succeed(
 	A2($elm$browser$Browser$Events$State, _List_Nil, $elm$core$Dict$empty));
@@ -5417,7 +5417,7 @@ var $elm$core$Dict$merge = F6(
 	});
 var $elm$browser$Browser$Events$Event = F2(
 	function (key, event) {
-		return {aB: event, aH: key};
+		return {aC: event, aI: key};
 	});
 var $elm$core$Platform$sendToSelf = _Platform_sendToSelf;
 var $elm$browser$Browser$Events$spawn = F3(
@@ -5492,7 +5492,7 @@ var $elm$browser$Browser$Events$onEffects = F3(
 			stepLeft,
 			stepBoth,
 			stepRight,
-			state.aQ,
+			state.aR,
 			$elm$core$Dict$fromList(newSubs),
 			_Utils_Tuple3(_List_Nil, $elm$core$Dict$empty, _List_Nil));
 		var deadPids = _v0.a;
@@ -5538,8 +5538,8 @@ var $elm$core$List$filterMap = F2(
 	});
 var $elm$browser$Browser$Events$onSelfMsg = F3(
 	function (router, _v0, state) {
-		var key = _v0.aH;
-		var event = _v0.aB;
+		var key = _v0.aI;
+		var event = _v0.aC;
 		var toMessage = function (_v2) {
 			var subKey = _v2.a;
 			var _v3 = _v2.b;
@@ -5548,7 +5548,7 @@ var $elm$browser$Browser$Events$onSelfMsg = F3(
 			var decoder = _v3.c;
 			return _Utils_eq(subKey, key) ? A2(_Browser_decodeEvent, decoder, event) : $elm$core$Maybe$Nothing;
 		};
-		var messages = A2($elm$core$List$filterMap, toMessage, state.a4);
+		var messages = A2($elm$core$List$filterMap, toMessage, state.a5);
 		return A2(
 			$elm$core$Task$andThen,
 			function (_v1) {
@@ -5588,6 +5588,18 @@ var $author$project$Main$subscriptions = function (model) {
 				$elm$browser$Browser$Events$onKeyUp($author$project$Main$keyUpDecoder)
 			]));
 };
+var $elm$core$Tuple$second = function (_v0) {
+	var y = _v0.b;
+	return y;
+};
+var $author$project$Note$octave = $elm$core$Tuple$second;
+var $author$project$Note$pitchClass = $elm$core$Tuple$first;
+var $author$project$Main$adjustOctave = F2(
+	function (adjustment, note) {
+		return _Utils_Tuple2(
+			$author$project$Note$pitchClass(note),
+			$author$project$Note$octave(note) + adjustment);
+	});
 var $author$project$Note$C = 3;
 var $elm$core$Basics$ge = _Utils_ge;
 var $author$project$Note$pitchClassToInt = function (n) {
@@ -5685,7 +5697,7 @@ var $author$project$Scale$UnassignedKey = function (a) {
 	return {$: 1, a: a};
 };
 var $author$project$Scale$keyboardKeyToInt = function (key) {
-	_v0$26:
+	_v0$52:
 	while (true) {
 		if (!key.$) {
 			switch (key.a) {
@@ -5715,6 +5727,32 @@ var $author$project$Scale$keyboardKeyToInt = function (key) {
 					return $elm$core$Result$Ok(11);
 				case '=':
 					return $elm$core$Result$Ok(12);
+				case '~':
+					return $elm$core$Result$Ok(0);
+				case '!':
+					return $elm$core$Result$Ok(1);
+				case '@':
+					return $elm$core$Result$Ok(2);
+				case '#':
+					return $elm$core$Result$Ok(3);
+				case '$':
+					return $elm$core$Result$Ok(4);
+				case '%':
+					return $elm$core$Result$Ok(5);
+				case '^':
+					return $elm$core$Result$Ok(6);
+				case '&':
+					return $elm$core$Result$Ok(7);
+				case '*':
+					return $elm$core$Result$Ok(8);
+				case '(':
+					return $elm$core$Result$Ok(9);
+				case ')':
+					return $elm$core$Result$Ok(10);
+				case '_':
+					return $elm$core$Result$Ok(11);
+				case '+':
+					return $elm$core$Result$Ok(12);
 				case 'q':
 					return $elm$core$Result$Ok(0);
 				case 'w':
@@ -5741,11 +5779,37 @@ var $author$project$Scale$keyboardKeyToInt = function (key) {
 					return $elm$core$Result$Ok(11);
 				case '\\':
 					return $elm$core$Result$Ok(12);
+				case 'Q':
+					return $elm$core$Result$Ok(0);
+				case 'W':
+					return $elm$core$Result$Ok(1);
+				case 'E':
+					return $elm$core$Result$Ok(2);
+				case 'R':
+					return $elm$core$Result$Ok(3);
+				case 'T':
+					return $elm$core$Result$Ok(4);
+				case 'Y':
+					return $elm$core$Result$Ok(5);
+				case 'U':
+					return $elm$core$Result$Ok(6);
+				case 'I':
+					return $elm$core$Result$Ok(7);
+				case 'O':
+					return $elm$core$Result$Ok(8);
+				case 'P':
+					return $elm$core$Result$Ok(9);
+				case '{':
+					return $elm$core$Result$Ok(10);
+				case '}':
+					return $elm$core$Result$Ok(11);
+				case '|':
+					return $elm$core$Result$Ok(12);
 				default:
-					break _v0$26;
+					break _v0$52;
 			}
 		} else {
-			break _v0$26;
+			break _v0$52;
 		}
 	}
 	return $elm$core$Result$Err(
@@ -5770,15 +5834,12 @@ var $author$project$Scale$fromKeyboardKey = F2(
 			$author$project$Scale$keyboardKeyToInt(key));
 	});
 var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $elm$core$Basics$negate = function (n) {
+	return -n;
+};
 var $author$project$Scale$pitchClass = $elm$core$Tuple$first;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Main$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
-var $elm$core$Tuple$second = function (_v0) {
-	var y = _v0.b;
-	return y;
-};
-var $author$project$Note$octave = $elm$core$Tuple$second;
-var $author$project$Note$pitchClass = $elm$core$Tuple$first;
 var $author$project$Note$toInt = function (note) {
 	return $author$project$Note$pitchClassToInt(
 		$author$project$Note$pitchClass(note)) + (($author$project$Note$octave(note) - $author$project$Note$defaultOctave(
@@ -5799,6 +5860,13 @@ var $author$project$Main$pressOrReleaseKeyOnModel = F3(
 	});
 var $author$project$Main$pressKeyOnModel = $author$project$Main$pressOrReleaseKeyOnModel(true);
 var $author$project$Main$releaseKeyOnModel = $author$project$Main$pressOrReleaseKeyOnModel(false);
+var $author$project$Main$setOctaveAdjustment = F2(
+	function (i, model) {
+		return _Utils_update(
+			model,
+			{am: i});
+	});
+var $author$project$Main$resetOctaveAdjustment = $author$project$Main$setOctaveAdjustment(0);
 var $author$project$Scale$scaleType = $elm$core$Tuple$second;
 var $author$project$Scale$Dorian = 4;
 var $author$project$Scale$InvalidScale = function (a) {
@@ -5889,7 +5957,7 @@ var $elm$url$Url$addPrefixed = F3(
 	});
 var $elm$url$Url$toString = function (url) {
 	var http = function () {
-		var _v0 = url.aU;
+		var _v0 = url.aV;
 		if (!_v0) {
 			return 'http://';
 		} else {
@@ -5899,17 +5967,17 @@ var $elm$url$Url$toString = function (url) {
 	return A3(
 		$elm$url$Url$addPrefixed,
 		'#',
-		url.aC,
+		url.aD,
 		A3(
 			$elm$url$Url$addPrefixed,
 			'?',
-			url.aV,
+			url.aW,
 			_Utils_ap(
 				A2(
 					$elm$url$Url$addPort,
-					url.aR,
-					_Utils_ap(http, url.aG)),
-				url.aP)));
+					url.aS,
+					_Utils_ap(http, url.aH)),
+				url.aQ)));
 };
 var $elm$core$Result$withDefault = F2(
 	function (def, result) {
@@ -5983,28 +6051,48 @@ var $author$project$Main$update = F2(
 				}
 			case 3:
 				var keyboardKey = msg.a;
-				var _v3 = A2($author$project$Scale$fromKeyboardKey, model.j, keyboardKey);
-				if (!_v3.$) {
-					var note = _v3.a;
-					return _Utils_Tuple2(
-						A2($author$project$Main$pressKeyOnModel, model, note),
-						$author$project$Main$playTone(
-							$author$project$Note$toString(note)));
-				} else {
-					var s = _v3.a;
-					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				switch (keyboardKey.$) {
+					case 0:
+						var _v4 = A2($author$project$Scale$fromKeyboardKey, model.j, keyboardKey);
+						if (!_v4.$) {
+							var note = _v4.a;
+							return _Utils_Tuple2(
+								A2($author$project$Main$pressKeyOnModel, model, note),
+								$author$project$Main$playTone(
+									$author$project$Note$toString(
+										A2($author$project$Main$adjustOctave, model.am, note))));
+						} else {
+							var s = _v4.a;
+							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+						}
+					case 1:
+						return _Utils_Tuple2(
+							A2($author$project$Main$setOctaveAdjustment, 1, model),
+							$elm$core$Platform$Cmd$none);
+					case 4:
+						return _Utils_Tuple2(
+							A2($author$project$Main$setOctaveAdjustment, -1, model),
+							$elm$core$Platform$Cmd$none);
+					default:
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
 			default:
 				var keyboardKey = msg.a;
-				var _v4 = A2($author$project$Scale$fromKeyboardKey, model.j, keyboardKey);
-				if (!_v4.$) {
-					var note = _v4.a;
-					return _Utils_Tuple2(
-						A2($author$project$Main$releaseKeyOnModel, model, note),
-						$elm$core$Platform$Cmd$none);
+				if (!keyboardKey.$) {
+					var _v6 = A2($author$project$Scale$fromKeyboardKey, model.j, keyboardKey);
+					if (!_v6.$) {
+						var note = _v6.a;
+						return _Utils_Tuple2(
+							A2($author$project$Main$releaseKeyOnModel, model, note),
+							$elm$core$Platform$Cmd$none);
+					} else {
+						var s = _v6.a;
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					}
 				} else {
-					var s = _v4.a;
-					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					return _Utils_Tuple2(
+						$author$project$Main$resetOctaveAdjustment(model),
+						$elm$core$Platform$Cmd$none);
 				}
 		}
 	});
@@ -6498,6 +6586,6 @@ var $author$project$Main$view = function (model) {
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
-	{bu: $author$project$Main$init, bH: $author$project$Main$ChangeUrl, bI: $author$project$Main$loadUrlFromUrlRequest, bS: $author$project$Main$subscriptions, bW: $author$project$Main$update, bX: $author$project$Main$view});
+	{bv: $author$project$Main$init, bH: $author$project$Main$ChangeUrl, bI: $author$project$Main$loadUrlFromUrlRequest, bS: $author$project$Main$subscriptions, bW: $author$project$Main$update, bX: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));

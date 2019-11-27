@@ -8507,7 +8507,7 @@ var $author$project$Scale$UnassignedKey = function (a) {
 	return {$: 'UnassignedKey', a: a};
 };
 var $author$project$Scale$keyboardKeyToInt = function (key) {
-	_v0$26:
+	_v0$52:
 	while (true) {
 		if (key.$ === 'CharacterKey') {
 			switch (key.a) {
@@ -8537,6 +8537,32 @@ var $author$project$Scale$keyboardKeyToInt = function (key) {
 					return $elm$core$Result$Ok(11);
 				case '=':
 					return $elm$core$Result$Ok(12);
+				case '~':
+					return $elm$core$Result$Ok(0);
+				case '!':
+					return $elm$core$Result$Ok(1);
+				case '@':
+					return $elm$core$Result$Ok(2);
+				case '#':
+					return $elm$core$Result$Ok(3);
+				case '$':
+					return $elm$core$Result$Ok(4);
+				case '%':
+					return $elm$core$Result$Ok(5);
+				case '^':
+					return $elm$core$Result$Ok(6);
+				case '&':
+					return $elm$core$Result$Ok(7);
+				case '*':
+					return $elm$core$Result$Ok(8);
+				case '(':
+					return $elm$core$Result$Ok(9);
+				case ')':
+					return $elm$core$Result$Ok(10);
+				case '_':
+					return $elm$core$Result$Ok(11);
+				case '+':
+					return $elm$core$Result$Ok(12);
 				case 'q':
 					return $elm$core$Result$Ok(0);
 				case 'w':
@@ -8563,11 +8589,37 @@ var $author$project$Scale$keyboardKeyToInt = function (key) {
 					return $elm$core$Result$Ok(11);
 				case '\\':
 					return $elm$core$Result$Ok(12);
+				case 'Q':
+					return $elm$core$Result$Ok(0);
+				case 'W':
+					return $elm$core$Result$Ok(1);
+				case 'E':
+					return $elm$core$Result$Ok(2);
+				case 'R':
+					return $elm$core$Result$Ok(3);
+				case 'T':
+					return $elm$core$Result$Ok(4);
+				case 'Y':
+					return $elm$core$Result$Ok(5);
+				case 'U':
+					return $elm$core$Result$Ok(6);
+				case 'I':
+					return $elm$core$Result$Ok(7);
+				case 'O':
+					return $elm$core$Result$Ok(8);
+				case 'P':
+					return $elm$core$Result$Ok(9);
+				case '{':
+					return $elm$core$Result$Ok(10);
+				case '}':
+					return $elm$core$Result$Ok(11);
+				case '|':
+					return $elm$core$Result$Ok(12);
 				default:
-					break _v0$26;
+					break _v0$52;
 			}
 		} else {
-			break _v0$26;
+			break _v0$52;
 		}
 	}
 	return $elm$core$Result$Err(
@@ -12151,6 +12203,17 @@ var $avh4$elm_program_test$ProgramTest$start = F2(
 		var program = _v0.b;
 		return A3(program, options.baseUrl, flags, options);
 	});
+var $elm$core$Tuple$second = function (_v0) {
+	var y = _v0.b;
+	return y;
+};
+var $author$project$Note$octave = $elm$core$Tuple$second;
+var $author$project$Main$adjustOctave = F2(
+	function (adjustment, note) {
+		return _Utils_Tuple2(
+			$author$project$Note$pitchClass(note),
+			$author$project$Note$octave(note) + adjustment);
+	});
 var $elm$browser$Browser$External = function (a) {
 	return {$: 'External', a: a};
 };
@@ -12171,11 +12234,6 @@ var $elm$core$Basics$never = function (_v0) {
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $author$project$Main$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
-var $elm$core$Tuple$second = function (_v0) {
-	var y = _v0.b;
-	return y;
-};
-var $author$project$Note$octave = $elm$core$Tuple$second;
 var $author$project$Note$toInt = function (note) {
 	return $author$project$Note$pitchClassToInt(
 		$author$project$Note$pitchClass(note)) + (($author$project$Note$octave(note) - $author$project$Note$defaultOctave(
@@ -12196,6 +12254,13 @@ var $author$project$Main$pressOrReleaseKeyOnModel = F3(
 	});
 var $author$project$Main$pressKeyOnModel = $author$project$Main$pressOrReleaseKeyOnModel(true);
 var $author$project$Main$releaseKeyOnModel = $author$project$Main$pressOrReleaseKeyOnModel(false);
+var $author$project$Main$setOctaveAdjustment = F2(
+	function (i, model) {
+		return _Utils_update(
+			model,
+			{octaveAdjustment: i});
+	});
+var $author$project$Main$resetOctaveAdjustment = $author$project$Main$setOctaveAdjustment(0);
 var $author$project$Scale$scaleType = $elm$core$Tuple$second;
 var $author$project$Scale$Dorian = {$: 'Dorian'};
 var $author$project$Scale$InvalidScale = function (a) {
@@ -12334,28 +12399,48 @@ var $author$project$Main$update = F2(
 				}
 			case 'KeyDownOn':
 				var keyboardKey = msg.a;
-				var _v3 = A2($author$project$Scale$fromKeyboardKey, model.selectedScale, keyboardKey);
-				if (_v3.$ === 'Ok') {
-					var note = _v3.a;
-					return _Utils_Tuple2(
-						A2($author$project$Main$pressKeyOnModel, model, note),
-						$author$project$Main$playTone(
-							$author$project$Note$toString(note)));
-				} else {
-					var s = _v3.a;
-					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				switch (keyboardKey.$) {
+					case 'CharacterKey':
+						var _v4 = A2($author$project$Scale$fromKeyboardKey, model.selectedScale, keyboardKey);
+						if (_v4.$ === 'Ok') {
+							var note = _v4.a;
+							return _Utils_Tuple2(
+								A2($author$project$Main$pressKeyOnModel, model, note),
+								$author$project$Main$playTone(
+									$author$project$Note$toString(
+										A2($author$project$Main$adjustOctave, model.octaveAdjustment, note))));
+						} else {
+							var s = _v4.a;
+							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+						}
+					case 'Shift':
+						return _Utils_Tuple2(
+							A2($author$project$Main$setOctaveAdjustment, 1, model),
+							$elm$core$Platform$Cmd$none);
+					case 'Control':
+						return _Utils_Tuple2(
+							A2($author$project$Main$setOctaveAdjustment, -1, model),
+							$elm$core$Platform$Cmd$none);
+					default:
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
 			default:
 				var keyboardKey = msg.a;
-				var _v4 = A2($author$project$Scale$fromKeyboardKey, model.selectedScale, keyboardKey);
-				if (_v4.$ === 'Ok') {
-					var note = _v4.a;
-					return _Utils_Tuple2(
-						A2($author$project$Main$releaseKeyOnModel, model, note),
-						$elm$core$Platform$Cmd$none);
+				if (keyboardKey.$ === 'CharacterKey') {
+					var _v6 = A2($author$project$Scale$fromKeyboardKey, model.selectedScale, keyboardKey);
+					if (_v6.$ === 'Ok') {
+						var note = _v6.a;
+						return _Utils_Tuple2(
+							A2($author$project$Main$releaseKeyOnModel, model, note),
+							$elm$core$Platform$Cmd$none);
+					} else {
+						var s = _v6.a;
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					}
 				} else {
-					var s = _v4.a;
-					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					return _Utils_Tuple2(
+						$author$project$Main$resetOctaveAdjustment(model),
+						$elm$core$Platform$Cmd$none);
 				}
 		}
 	});
@@ -13429,7 +13514,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main578510223$main = A2(
+var $author$project$Test$Generated$Main3168847376$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13437,7 +13522,7 @@ var $author$project$Test$Generated$Main578510223$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 339429073713957
+		seed: 247576548929981
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13468,10 +13553,10 @@ var $author$project$Test$Generated$Main578510223$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main578510223':{'init':$author$project$Test$Generated$Main578510223$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main3168847376':{'init':$author$project$Test$Generated$Main3168847376$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-11087.sock";
+var pipeFilename = "/tmp/elm_test-11441.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

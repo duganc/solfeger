@@ -45,7 +45,7 @@ type alias Model =
 
 init : Flags -> Url -> key -> ( Model, Cmd Msg )
 init _ _ _ =
-    ( Model (Dict.fromList (range 0 11 |> List.map (\i -> ( i, False )))) Scale.default, Cmd.none )
+    ( Model (Dict.fromList (range 0 12 |> List.map (\i -> ( i, False )))) Scale.default, Cmd.none )
 
 
 type alias Flags =
@@ -62,11 +62,24 @@ update msg model =
         ChangeUrl url ->
             ( model, Url.toString url |> load )
 
-        MouseDownOn i ->
-            ( pressKeyOnModel model (Note.fromInt i), playTone (fromKeyClick model.selectedScale i |> Note.toString) )
+        MouseDownOn b ->
+            case b of
+                Key i ->
+                    ( pressKeyOnModel model (Note.fromInt i), playTone (fromKeyClick model.selectedScale i |> Note.toString) )
 
-        MouseUpOn i ->
-            ( releaseKeyOnModel model (Note.fromInt i), Cmd.none )
+                ScaleSelector i ->
+                    ( { model | selectedScale = ( Scale.pitchClass model.selectedScale, scaleTypeFromInt i |> Result.withDefault (Scale.scaleType model.selectedScale) ) }, Cmd.none )
+
+                NoteSelector i ->
+                    ( { model | selectedScale = ( pitchClassFromInt i, Scale.scaleType model.selectedScale ) }, Cmd.none )
+
+        MouseUpOn b ->
+            case b of
+                Key i ->
+                    ( releaseKeyOnModel model (Note.fromInt i), Cmd.none )
+
+                _ ->
+                    ( model, Cmd.none )
 
         KeyDownOn keyboardKey ->
             case fromKeyboardKey model.selectedScale keyboardKey of
@@ -97,7 +110,7 @@ releaseKeyOnModel =
 
 pressOrReleaseKeyOnModel : Bool -> Model -> Note -> Model
 pressOrReleaseKeyOnModel isPress model note =
-    { model | isKeyPressed = Dict.insert (Note.toInt note) isPress model.isKeyPressed }
+    { model | isKeyPressed = Dict.insert (Note.toInt note - (Scale.pitchClass model.selectedScale |> pitchClassToInt)) isPress model.isKeyPressed }
 
 
 urlRequestToUrl : UrlRequest -> Url
@@ -148,10 +161,16 @@ keyUpDecoder =
 
 type Msg
     = ChangeUrl Url
-    | MouseDownOn Int
-    | MouseUpOn Int
+    | MouseDownOn Button
+    | MouseUpOn Button
     | KeyDownOn KeyboardKey
     | KeyUpOn KeyboardKey
+
+
+type Button
+    = Key Int
+    | ScaleSelector Int
+    | NoteSelector Int
 
 
 view : Model -> Document Msg
@@ -188,8 +207,8 @@ renderKey model n =
     div
         [ class "key"
         , id (getKeyName n)
-        , onMouseDown (MouseDownOn n)
-        , onMouseUp (MouseUpOn n)
+        , onMouseDown (MouseDownOn (Key n))
+        , onMouseUp (MouseUpOn (Key n))
         ]
         [ text (getLabelFromKey model.isKeyPressed n) ]
 
@@ -238,7 +257,35 @@ getAllNoteSelectors pc =
 
 renderNoteSelector : PitchClass -> Int -> Html Msg
 renderNoteSelector pc i =
-    div [ class "scale-selector", id ("scale-note-" ++ String.fromInt i) ] [ i |> Note.fromInt |> Note.toString |> text ]
+    div
+        [ class "scale-selector"
+        , activeBackgroundFromPitchClass pc i
+        , id ("scale-note-" ++ String.fromInt i)
+        , onClick (MouseDownOn (NoteSelector i))
+        ]
+        [ i
+            |> Note.fromInt
+            |> Note.toString
+            |> text
+        ]
+
+
+activeBackgroundFromPitchClass : PitchClass -> Int -> Attribute Msg
+activeBackgroundFromPitchClass pc i =
+    if pc == (i |> Note.pitchClassFromInt) then
+        class "bg-white"
+
+    else
+        class "bg-medium"
+
+
+activeBackgroundFromScaleType : ScaleType -> Int -> Attribute Msg
+activeBackgroundFromScaleType t i =
+    if t == (i |> Scale.scaleTypeFromInt |> Result.withDefault Chromatic) then
+        class "bg-white"
+
+    else
+        class "bg-medium"
 
 
 getAllScaleTypeSelectors : ScaleType -> List (Html Msg)
@@ -248,4 +295,15 @@ getAllScaleTypeSelectors t =
 
 renderScaleTypeSelector : ScaleType -> Int -> Html Msg
 renderScaleTypeSelector t i =
-    div [ class "scale-selector", id ("scale-type-" ++ String.fromInt i) ] [ i |> Scale.scaleTypeFromInt |> Result.map Scale.scaleTypeToString |> Result.withDefault "ERROR!" |> text ]
+    div
+        [ class "scale-selector"
+        , activeBackgroundFromScaleType t i
+        , id ("scale-type-" ++ String.fromInt i)
+        , onClick (MouseDownOn (ScaleSelector i))
+        ]
+        [ i
+            |> Scale.scaleTypeFromInt
+            |> Result.map Scale.scaleTypeToString
+            |> Result.withDefault "ERROR!"
+            |> text
+        ]

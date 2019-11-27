@@ -8625,6 +8625,89 @@ var $author$project$ScaleTests$testGetsAbsoluteStringReturnsErrorForNonKey = A2(
 				_Utils_Tuple2($author$project$Note$A, $author$project$Scale$Chromatic),
 				$author$project$KeyboardKey$CharacterKey('d')));
 	});
+var $author$project$Solfege$Di = {$: 'Di'};
+var $author$project$Solfege$Do = {$: 'Do'};
+var $author$project$Solfege$Fa = {$: 'Fa'};
+var $author$project$Solfege$Fi = {$: 'Fi'};
+var $author$project$Solfege$La = {$: 'La'};
+var $author$project$Solfege$Le = {$: 'Le'};
+var $author$project$Solfege$Me = {$: 'Me'};
+var $author$project$Solfege$Mi = {$: 'Mi'};
+var $author$project$Solfege$Re = {$: 'Re'};
+var $author$project$Solfege$Sol = {$: 'Sol'};
+var $author$project$Solfege$Te = {$: 'Te'};
+var $author$project$Solfege$Ti = {$: 'Ti'};
+var $author$project$Solfege$fromInt = function (i) {
+	var _v0 = A2($elm$core$Basics$modBy, 12, i);
+	switch (_v0) {
+		case 0:
+			return $author$project$Solfege$Do;
+		case 1:
+			return $author$project$Solfege$Di;
+		case 2:
+			return $author$project$Solfege$Re;
+		case 3:
+			return $author$project$Solfege$Me;
+		case 4:
+			return $author$project$Solfege$Mi;
+		case 5:
+			return $author$project$Solfege$Fa;
+		case 6:
+			return $author$project$Solfege$Fi;
+		case 7:
+			return $author$project$Solfege$Sol;
+		case 8:
+			return $author$project$Solfege$Le;
+		case 9:
+			return $author$project$Solfege$La;
+		case 10:
+			return $author$project$Solfege$Te;
+		case 11:
+			return $author$project$Solfege$Ti;
+		default:
+			return $author$project$Solfege$Do;
+	}
+};
+var $author$project$Note$pitchClass = $elm$core$Tuple$first;
+var $author$project$Scale$pitchClass = $elm$core$Tuple$first;
+var $author$project$Scale$toSolfege = F2(
+	function (scale, note) {
+		return $author$project$Solfege$fromInt(
+			$author$project$Note$pitchClassToInt(
+				$author$project$Note$pitchClass(note)) - $author$project$Note$pitchClassToInt(
+				$author$project$Scale$pitchClass(scale)));
+	});
+var $author$project$ScaleTests$testGetsSolfegeAgreesWithFromInt = A2(
+	$elm_explorations$test$Test$test,
+	'getsSolfegeAgreesWithFromInt',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			A2(
+				$elm$core$List$map,
+				$author$project$Solfege$fromInt,
+				A2($elm$core$List$range, 0, 12)),
+			A2(
+				$elm$core$List$map,
+				$author$project$Scale$toSolfege(
+					_Utils_Tuple2($author$project$Note$A, $author$project$Scale$Chromatic)),
+				A2(
+					$elm$core$List$map,
+					$author$project$Note$fromInt,
+					A2($elm$core$List$range, 0, 12))));
+	});
+var $author$project$ScaleTests$testGetsSolfegeFromNoteAndScale = A2(
+	$elm_explorations$test$Test$test,
+	'getsSolfegeFromNoteAndScale',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			$author$project$Solfege$Di,
+			A2(
+				$author$project$Scale$toSolfege,
+				_Utils_Tuple2($author$project$Note$D, $author$project$Scale$Minor),
+				_Utils_Tuple2($author$project$Note$DSharp, 4)));
+	});
 var $author$project$Note$fromPitchClass = function (pc) {
 	return _Utils_Tuple2(
 		pc,
@@ -11982,7 +12065,7 @@ var $author$project$Main$init = F3(
 						function (i) {
 							return _Utils_Tuple2(i, false);
 						},
-						A2($elm$core$List$range, 0, 11))),
+						A2($elm$core$List$range, 0, 12))),
 				$author$project$Scale$default),
 			$elm$core$Platform$Cmd$none);
 	});
@@ -12066,7 +12149,6 @@ var $elm$core$Tuple$second = function (_v0) {
 	return y;
 };
 var $author$project$Note$octave = $elm$core$Tuple$second;
-var $author$project$Note$pitchClass = $elm$core$Tuple$first;
 var $author$project$Note$toInt = function (note) {
 	return $author$project$Note$pitchClassToInt(
 		$author$project$Note$pitchClass(note)) + (($author$project$Note$octave(note) - $author$project$Note$defaultOctave(
@@ -12079,13 +12161,45 @@ var $author$project$Main$pressOrReleaseKeyOnModel = F3(
 			{
 				isKeyPressed: A3(
 					$elm$core$Dict$insert,
-					$author$project$Note$toInt(note),
+					$author$project$Note$toInt(note) - $author$project$Note$pitchClassToInt(
+						$author$project$Scale$pitchClass(model.selectedScale)),
 					isPress,
 					model.isKeyPressed)
 			});
 	});
 var $author$project$Main$pressKeyOnModel = $author$project$Main$pressOrReleaseKeyOnModel(true);
 var $author$project$Main$releaseKeyOnModel = $author$project$Main$pressOrReleaseKeyOnModel(false);
+var $author$project$Scale$scaleType = $elm$core$Tuple$second;
+var $author$project$Scale$Dorian = {$: 'Dorian'};
+var $author$project$Scale$InvalidScale = function (a) {
+	return {$: 'InvalidScale', a: a};
+};
+var $author$project$Scale$Locrian = {$: 'Locrian'};
+var $author$project$Scale$Lydian = {$: 'Lydian'};
+var $author$project$Scale$Major = {$: 'Major'};
+var $author$project$Scale$Mixolydian = {$: 'Mixolydian'};
+var $author$project$Scale$scaleTypeFromInt = function (i) {
+	switch (i) {
+		case 0:
+			return $elm$core$Result$Ok($author$project$Scale$Chromatic);
+		case 1:
+			return $elm$core$Result$Ok($author$project$Scale$Locrian);
+		case 2:
+			return $elm$core$Result$Ok($author$project$Scale$Major);
+		case 3:
+			return $elm$core$Result$Ok($author$project$Scale$Dorian);
+		case 4:
+			return $elm$core$Result$Ok($author$project$Scale$Phrygian);
+		case 5:
+			return $elm$core$Result$Ok($author$project$Scale$Lydian);
+		case 6:
+			return $elm$core$Result$Ok($author$project$Scale$Mixolydian);
+		default:
+			return $elm$core$Result$Err(
+				$author$project$Scale$InvalidScale(
+					$elm$core$String$fromInt(i)));
+	}
+};
 var $author$project$Note$pitchClassToString = function (pc) {
 	switch (pc.$) {
 		case 'A':
@@ -12119,6 +12233,15 @@ var $author$project$Note$toString = function (note) {
 		$author$project$Note$pitchClassToString(note.a),
 		$elm$core$String$fromInt(note.b));
 };
+var $elm$core$Result$withDefault = F2(
+	function (def, result) {
+		if (result.$ === 'Ok') {
+			var a = result.a;
+			return a;
+		} else {
+			return def;
+		}
+	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -12129,46 +12252,80 @@ var $author$project$Main$update = F2(
 					$elm$browser$Browser$Navigation$load(
 						$elm$url$Url$toString(url)));
 			case 'MouseDownOn':
-				var i = msg.a;
-				return _Utils_Tuple2(
-					A2(
-						$author$project$Main$pressKeyOnModel,
-						model,
-						$author$project$Note$fromInt(i)),
-					$author$project$Main$playTone(
-						$author$project$Note$toString(
-							A2($author$project$Scale$fromKeyClick, model.selectedScale, i))));
+				var b = msg.a;
+				switch (b.$) {
+					case 'Key':
+						var i = b.a;
+						return _Utils_Tuple2(
+							A2(
+								$author$project$Main$pressKeyOnModel,
+								model,
+								$author$project$Note$fromInt(i)),
+							$author$project$Main$playTone(
+								$author$project$Note$toString(
+									A2($author$project$Scale$fromKeyClick, model.selectedScale, i))));
+					case 'ScaleSelector':
+						var i = b.a;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									selectedScale: _Utils_Tuple2(
+										$author$project$Scale$pitchClass(model.selectedScale),
+										A2(
+											$elm$core$Result$withDefault,
+											$author$project$Scale$scaleType(model.selectedScale),
+											$author$project$Scale$scaleTypeFromInt(i)))
+								}),
+							$elm$core$Platform$Cmd$none);
+					default:
+						var i = b.a;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									selectedScale: _Utils_Tuple2(
+										$author$project$Note$pitchClassFromInt(i),
+										$author$project$Scale$scaleType(model.selectedScale))
+								}),
+							$elm$core$Platform$Cmd$none);
+				}
 			case 'MouseUpOn':
-				var i = msg.a;
-				return _Utils_Tuple2(
-					A2(
-						$author$project$Main$releaseKeyOnModel,
-						model,
-						$author$project$Note$fromInt(i)),
-					$elm$core$Platform$Cmd$none);
+				var b = msg.a;
+				if (b.$ === 'Key') {
+					var i = b.a;
+					return _Utils_Tuple2(
+						A2(
+							$author$project$Main$releaseKeyOnModel,
+							model,
+							$author$project$Note$fromInt(i)),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
 			case 'KeyDownOn':
 				var keyboardKey = msg.a;
-				var _v1 = A2($author$project$Scale$fromKeyboardKey, model.selectedScale, keyboardKey);
-				if (_v1.$ === 'Ok') {
-					var note = _v1.a;
+				var _v3 = A2($author$project$Scale$fromKeyboardKey, model.selectedScale, keyboardKey);
+				if (_v3.$ === 'Ok') {
+					var note = _v3.a;
 					return _Utils_Tuple2(
 						A2($author$project$Main$pressKeyOnModel, model, note),
 						$author$project$Main$playTone(
 							$author$project$Note$toString(note)));
 				} else {
-					var s = _v1.a;
+					var s = _v3.a;
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
 			default:
 				var keyboardKey = msg.a;
-				var _v2 = A2($author$project$Scale$fromKeyboardKey, model.selectedScale, keyboardKey);
-				if (_v2.$ === 'Ok') {
-					var note = _v2.a;
+				var _v4 = A2($author$project$Scale$fromKeyboardKey, model.selectedScale, keyboardKey);
+				if (_v4.$ === 'Ok') {
+					var note = _v4.a;
 					return _Utils_Tuple2(
 						A2($author$project$Main$releaseKeyOnModel, model, note),
 						$elm$core$Platform$Cmd$none);
 				} else {
-					var s = _v2.a;
+					var s = _v4.a;
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
 		}
@@ -12186,6 +12343,9 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $author$project$Main$Key = function (a) {
+	return {$: 'Key', a: a};
+};
 var $author$project$Main$MouseDownOn = function (a) {
 	return {$: 'MouseDownOn', a: a};
 };
@@ -12194,49 +12354,6 @@ var $author$project$Main$MouseUpOn = function (a) {
 };
 var $author$project$Main$getKeyName = function (n) {
 	return 'key-' + $elm$core$String$fromInt(n);
-};
-var $author$project$Solfege$Di = {$: 'Di'};
-var $author$project$Solfege$Do = {$: 'Do'};
-var $author$project$Solfege$Fa = {$: 'Fa'};
-var $author$project$Solfege$Fi = {$: 'Fi'};
-var $author$project$Solfege$La = {$: 'La'};
-var $author$project$Solfege$Le = {$: 'Le'};
-var $author$project$Solfege$Me = {$: 'Me'};
-var $author$project$Solfege$Mi = {$: 'Mi'};
-var $author$project$Solfege$Re = {$: 'Re'};
-var $author$project$Solfege$Sol = {$: 'Sol'};
-var $author$project$Solfege$Te = {$: 'Te'};
-var $author$project$Solfege$Ti = {$: 'Ti'};
-var $author$project$Solfege$fromInt = function (i) {
-	var _v0 = A2($elm$core$Basics$modBy, 12, i);
-	switch (_v0) {
-		case 0:
-			return $author$project$Solfege$Do;
-		case 1:
-			return $author$project$Solfege$Di;
-		case 2:
-			return $author$project$Solfege$Re;
-		case 3:
-			return $author$project$Solfege$Me;
-		case 4:
-			return $author$project$Solfege$Mi;
-		case 5:
-			return $author$project$Solfege$Fa;
-		case 6:
-			return $author$project$Solfege$Fi;
-		case 7:
-			return $author$project$Solfege$Sol;
-		case 8:
-			return $author$project$Solfege$Le;
-		case 9:
-			return $author$project$Solfege$La;
-		case 10:
-			return $author$project$Solfege$Te;
-		case 11:
-			return $author$project$Solfege$Ti;
-		default:
-			return $author$project$Solfege$Do;
-	}
 };
 var $author$project$Main$showText = F3(
 	function (ifTrue, ifFalse, _switch) {
@@ -12325,9 +12442,11 @@ var $author$project$Main$renderKey = F2(
 					$elm$html$Html$Attributes$id(
 					$author$project$Main$getKeyName(n)),
 					$elm$html$Html$Events$onMouseDown(
-					$author$project$Main$MouseDownOn(n)),
+					$author$project$Main$MouseDownOn(
+						$author$project$Main$Key(n))),
 					$elm$html$Html$Events$onMouseUp(
-					$author$project$Main$MouseUpOn(n))
+					$author$project$Main$MouseUpOn(
+						$author$project$Main$Key(n)))
 				]),
 			_List_fromArray(
 				[
@@ -12345,6 +12464,21 @@ var $author$project$Main$renderKeys = F2(
 				$author$project$Main$renderKey(model),
 				A2($elm$core$List$range, 0, n - 1)));
 	});
+var $author$project$Main$NoteSelector = function (a) {
+	return {$: 'NoteSelector', a: a};
+};
+var $author$project$Main$activeBackgroundFromPitchClass = F2(
+	function (pc, i) {
+		return _Utils_eq(
+			pc,
+			$author$project$Note$pitchClassFromInt(i)) ? $elm$html$Html$Attributes$class('bg-white') : $elm$html$Html$Attributes$class('bg-medium');
+	});
+var $elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
+};
 var $author$project$Main$renderNoteSelector = F2(
 	function (pc, i) {
 		return A2(
@@ -12352,8 +12486,12 @@ var $author$project$Main$renderNoteSelector = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$class('scale-selector'),
+					A2($author$project$Main$activeBackgroundFromPitchClass, pc, i),
 					$elm$html$Html$Attributes$id(
-					'scale-note-' + $elm$core$String$fromInt(i))
+					'scale-note-' + $elm$core$String$fromInt(i)),
+					$elm$html$Html$Events$onClick(
+					$author$project$Main$MouseDownOn(
+						$author$project$Main$NoteSelector(i)))
 				]),
 			_List_fromArray(
 				[
@@ -12368,36 +12506,18 @@ var $author$project$Main$getAllNoteSelectors = function (pc) {
 		$author$project$Main$renderNoteSelector(pc),
 		A2($elm$core$List$range, 0, 11));
 };
-var $author$project$Scale$Dorian = {$: 'Dorian'};
-var $author$project$Scale$InvalidScale = function (a) {
-	return {$: 'InvalidScale', a: a};
+var $author$project$Main$ScaleSelector = function (a) {
+	return {$: 'ScaleSelector', a: a};
 };
-var $author$project$Scale$Locrian = {$: 'Locrian'};
-var $author$project$Scale$Lydian = {$: 'Lydian'};
-var $author$project$Scale$Major = {$: 'Major'};
-var $author$project$Scale$Mixolydian = {$: 'Mixolydian'};
-var $author$project$Scale$scaleTypeFromInt = function (i) {
-	switch (i) {
-		case 0:
-			return $elm$core$Result$Ok($author$project$Scale$Chromatic);
-		case 1:
-			return $elm$core$Result$Ok($author$project$Scale$Locrian);
-		case 2:
-			return $elm$core$Result$Ok($author$project$Scale$Major);
-		case 3:
-			return $elm$core$Result$Ok($author$project$Scale$Dorian);
-		case 4:
-			return $elm$core$Result$Ok($author$project$Scale$Phrygian);
-		case 5:
-			return $elm$core$Result$Ok($author$project$Scale$Lydian);
-		case 6:
-			return $elm$core$Result$Ok($author$project$Scale$Mixolydian);
-		default:
-			return $elm$core$Result$Err(
-				$author$project$Scale$InvalidScale(
-					$elm$core$String$fromInt(i)));
-	}
-};
+var $author$project$Main$activeBackgroundFromScaleType = F2(
+	function (t, i) {
+		return _Utils_eq(
+			t,
+			A2(
+				$elm$core$Result$withDefault,
+				$author$project$Scale$Chromatic,
+				$author$project$Scale$scaleTypeFromInt(i))) ? $elm$html$Html$Attributes$class('bg-white') : $elm$html$Html$Attributes$class('bg-medium');
+	});
 var $author$project$Scale$scaleTypeToString = function (t) {
 	switch (t.$) {
 		case 'Chromatic':
@@ -12418,15 +12538,6 @@ var $author$project$Scale$scaleTypeToString = function (t) {
 			return 'Mixolydian';
 	}
 };
-var $elm$core$Result$withDefault = F2(
-	function (def, result) {
-		if (result.$ === 'Ok') {
-			var a = result.a;
-			return a;
-		} else {
-			return def;
-		}
-	});
 var $author$project$Main$renderScaleTypeSelector = F2(
 	function (t, i) {
 		return A2(
@@ -12434,8 +12545,12 @@ var $author$project$Main$renderScaleTypeSelector = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$class('scale-selector'),
+					A2($author$project$Main$activeBackgroundFromScaleType, t, i),
 					$elm$html$Html$Attributes$id(
-					'scale-type-' + $elm$core$String$fromInt(i))
+					'scale-type-' + $elm$core$String$fromInt(i)),
+					$elm$html$Html$Events$onClick(
+					$author$project$Main$MouseDownOn(
+						$author$project$Main$ScaleSelector(i)))
 				]),
 			_List_fromArray(
 				[
@@ -12455,8 +12570,6 @@ var $author$project$Main$getAllScaleTypeSelectors = function (t) {
 		$author$project$Main$renderScaleTypeSelector(t),
 		A2($elm$core$List$range, 0, 6));
 };
-var $author$project$Scale$pitchClass = $elm$core$Tuple$first;
-var $author$project$Scale$scaleType = $elm$core$Tuple$second;
 var $author$project$Main$renderScaleSelector = function (scale) {
 	return _List_fromArray(
 		[
@@ -13247,7 +13360,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main1872664774$main = A2(
+var $author$project$Test$Generated$Main981773943$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13255,7 +13368,7 @@ var $author$project$Test$Generated$Main1872664774$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 377142029663003
+		seed: 357319005056436
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13279,17 +13392,17 @@ var $author$project$Test$Generated$Main1872664774$main = A2(
 				$elm_explorations$test$Test$describe,
 				'ScaleTests',
 				_List_fromArray(
-					[$author$project$ScaleTests$testGetsAbsoluteStringFromHighDo, $author$project$ScaleTests$testGetsAbsoluteStringReturnsErrorForNonKey, $author$project$ScaleTests$testScaleGetsCorrectNotes, $author$project$ScaleTests$testGetsAbsoluteStringFromValidKeyboardKey, $author$project$ScaleTests$testKeyClickHandlesHighDo])),
+					[$author$project$ScaleTests$testGetsSolfegeFromNoteAndScale, $author$project$ScaleTests$testGetsAbsoluteStringFromHighDo, $author$project$ScaleTests$testGetsAbsoluteStringReturnsErrorForNonKey, $author$project$ScaleTests$testScaleGetsCorrectNotes, $author$project$ScaleTests$testGetsSolfegeAgreesWithFromInt, $author$project$ScaleTests$testGetsAbsoluteStringFromValidKeyboardKey, $author$project$ScaleTests$testKeyClickHandlesHighDo])),
 				A2(
 				$elm_explorations$test$Test$describe,
 				'NoteTests',
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main1872664774':{'init':$author$project$Test$Generated$Main1872664774$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main981773943':{'init':$author$project$Test$Generated$Main981773943$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-9357.sock";
+var pipeFilename = "/tmp/elm_test-10272.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

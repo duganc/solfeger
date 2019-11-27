@@ -1,7 +1,8 @@
-module Scale exposing (Error(..), Scale, ScaleType(..), default, fromKeyClick, fromKeyboardKey, notes, pitchClass, scaleType, scaleTypeFromInt, scaleTypeToString)
+module Scale exposing (Error(..), Scale, ScaleType(..), default, fromKeyClick, fromKeyboardKey, notes, pitchClass, scaleType, scaleTypeFromInt, scaleTypeToString, toSolfege)
 
 import KeyboardKey exposing (..)
-import Note exposing (Note, PitchClass(..), fromInt, pitchClassFromInt, pitchClassToInt, toInt)
+import Note exposing (..)
+import Solfege exposing (..)
 import Tuple exposing (first)
 
 
@@ -224,3 +225,10 @@ keyboardKeyToInt key =
 
         _ ->
             Err (UnassignedKey key)
+
+
+toSolfege : Scale -> Note -> Solfege
+toSolfege scale note =
+    (Note.pitchClass note |> pitchClassToInt)
+        - (pitchClass scale |> pitchClassToInt)
+        |> Solfege.fromInt

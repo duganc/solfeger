@@ -5,6 +5,7 @@ import Html exposing (..)
 import KeyboardKey exposing (..)
 import Note exposing (..)
 import Scale exposing (..)
+import Solfege exposing (..)
 import Test exposing (..)
 import Test.Html.Event as Event
 import Test.Html.Query as Query
@@ -69,3 +70,21 @@ testGetsAbsoluteStringReturnsErrorForNonKey =
             CharacterKey "d"
                 |> fromKeyboardKey ( A, Chromatic )
                 |> Expect.equal (Err (Scale.UnassignedKey (CharacterKey "d")))
+
+
+testGetsSolfegeFromNoteAndScale : Test
+testGetsSolfegeFromNoteAndScale =
+    test "getsSolfegeFromNoteAndScale" <|
+        \() ->
+            Scale.toSolfege ( D, Minor ) ( DSharp, 4 )
+                |> Expect.equal Di
+
+
+testGetsSolfegeAgreesWithFromInt : Test
+testGetsSolfegeAgreesWithFromInt =
+    test "getsSolfegeAgreesWithFromInt" <|
+        \() ->
+            List.range 0 12
+                |> List.map Note.fromInt
+                |> List.map (Scale.toSolfege ( A, Chromatic ))
+                |> Expect.equal (List.range 0 12 |> List.map Solfege.fromInt)

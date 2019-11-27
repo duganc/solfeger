@@ -25,7 +25,6 @@ p, a, div, button {
 }
 
 .scale-selector {
-	background-color: #808080;
 	display: table-cell;
 	height: 20px;
 	width: 20px;

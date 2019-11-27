@@ -66,7 +66,9 @@ update msg model =
         MouseDownOn b ->
             case b of
                 Key i ->
-                    ( pressKeyOnModel model (Note.fromInt i), playTone (fromKeyClick model.selectedScale i |> Note.toString) )
+                    ( pressKeyOnModel model (Note.fromInt (i + (Scale.pitchClass model.selectedScale |> pitchClassToInt)))
+                    , playTone (fromKeyClick model.selectedScale i |> Note.toString)
+                    )
 
                 ScaleSelector i ->
                     ( { model | selectedScale = ( Scale.pitchClass model.selectedScale, scaleTypeFromInt i |> Result.withDefault (Scale.scaleType model.selectedScale) ) }, Cmd.none )
@@ -77,7 +79,7 @@ update msg model =
         MouseUpOn b ->
             case b of
                 Key i ->
-                    ( releaseKeyOnModel model (Note.fromInt i), Cmd.none )
+                    ( releaseKeyOnModel model (Note.fromInt (i + (Scale.pitchClass model.selectedScale |> pitchClassToInt))), Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )
@@ -318,7 +320,8 @@ renderNoteSelector pc i =
         [ class "scale-selector"
         , activeBackgroundFromPitchClass pc i
         , id ("scale-note-" ++ String.fromInt i)
-        , onClick (MouseDownOn (NoteSelector i))
+        , onMouseDown (MouseDownOn (NoteSelector i))
+        , onMouseUp (MouseUpOn (NoteSelector i))
         ]
         [ i
             |> Note.fromInt
@@ -356,7 +359,8 @@ renderScaleTypeSelector t i =
         [ class "scale-selector"
         , activeBackgroundFromScaleType t i
         , id ("scale-type-" ++ String.fromInt i)
-        , onClick (MouseDownOn (ScaleSelector i))
+        , onMouseDown (MouseDownOn (ScaleSelector i))
+        , onMouseUp (MouseUpOn (ScaleSelector i))
         ]
         [ i
             |> Scale.scaleTypeFromInt

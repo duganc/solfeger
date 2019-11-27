@@ -68,8 +68,15 @@ testKeyClickDisplaysSolfege =
             startProgramForTesting "http://www.mysolfegeapp.com" ()
                 |> mouseDown (Query.find [ Selector.id "key-11" ])
                 |> ensureViewHas [ Selector.id "key-11", Selector.text "Ti" ]
-                |> mouseUp (Query.find [ Selector.id "key-4" ])
-                |> expectViewHas [ Selector.id "key-4", Selector.text "" ]
+                |> mouseUp (Query.find [ Selector.id "key-11" ])
+                |> ensureViewHas [ Selector.id "key-11", Selector.text "" ]
+                |> mouseDown (Query.find [ Selector.id "scale-note-6" ])
+                |> mouseUp (Query.find [ Selector.id "scale-note-6" ])
+                |> ensureViewHas [ Selector.id "scale-note-6", Selector.class "bg-white" ]
+                |> mouseDown (Query.find [ Selector.id "key-10" ])
+                |> ensureViewHas [ Selector.id "key-10", Selector.text "Te" ]
+                |> mouseUp (Query.find [ Selector.id "key-10" ])
+                |> expectViewHas [ Selector.id "key-10", Selector.text "" ]
 
 
 testKeyboardKeyPressDisplaysSolfege : Test

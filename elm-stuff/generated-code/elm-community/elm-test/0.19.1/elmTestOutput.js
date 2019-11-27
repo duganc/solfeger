@@ -8788,6 +8788,10 @@ var $author$project$NoteTests$testIntToString = A2(
 				$author$project$Note$fromInt,
 				A2($elm$core$List$range, 0, 11)));
 	});
+var $elm_explorations$test$Test$Html$Selector$Internal$Class = function (a) {
+	return {$: 'Class', a: a};
+};
+var $elm_explorations$test$Test$Html$Selector$class = $elm_explorations$test$Test$Html$Selector$Internal$Class;
 var $avh4$elm_program_test$ProgramTest$ExpectFailed = F3(
 	function (a, b, c) {
 		return {$: 'ExpectFailed', a: a, b: b, c: c};
@@ -12354,7 +12358,9 @@ var $author$project$Main$update = F2(
 							A2(
 								$author$project$Main$pressKeyOnModel,
 								model,
-								$author$project$Note$fromInt(i)),
+								$author$project$Note$fromInt(
+									i + $author$project$Note$pitchClassToInt(
+										$author$project$Scale$pitchClass(model.selectedScale)))),
 							$author$project$Main$playTone(
 								$author$project$Note$toString(
 									A2($author$project$Scale$fromKeyClick, model.selectedScale, i))));
@@ -12392,7 +12398,9 @@ var $author$project$Main$update = F2(
 						A2(
 							$author$project$Main$releaseKeyOnModel,
 							model,
-							$author$project$Note$fromInt(i)),
+							$author$project$Note$fromInt(
+								i + $author$project$Note$pitchClassToInt(
+									$author$project$Scale$pitchClass(model.selectedScale)))),
 						$elm$core$Platform$Cmd$none);
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -12651,12 +12659,6 @@ var $author$project$Main$activeBackgroundFromPitchClass = F2(
 			pc,
 			$author$project$Note$pitchClassFromInt(i)) ? $elm$html$Html$Attributes$class('bg-white') : $elm$html$Html$Attributes$class('bg-medium');
 	});
-var $elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
-};
 var $author$project$Main$renderNoteSelector = F2(
 	function (pc, i) {
 		return A2(
@@ -12667,8 +12669,11 @@ var $author$project$Main$renderNoteSelector = F2(
 					A2($author$project$Main$activeBackgroundFromPitchClass, pc, i),
 					$elm$html$Html$Attributes$id(
 					'scale-note-' + $elm$core$String$fromInt(i)),
-					$elm$html$Html$Events$onClick(
+					$elm$html$Html$Events$onMouseDown(
 					$author$project$Main$MouseDownOn(
+						$author$project$Main$NoteSelector(i))),
+					$elm$html$Html$Events$onMouseUp(
+					$author$project$Main$MouseUpOn(
 						$author$project$Main$NoteSelector(i)))
 				]),
 			_List_fromArray(
@@ -12726,8 +12731,11 @@ var $author$project$Main$renderScaleTypeSelector = F2(
 					A2($author$project$Main$activeBackgroundFromScaleType, t, i),
 					$elm$html$Html$Attributes$id(
 					'scale-type-' + $elm$core$String$fromInt(i)),
-					$elm$html$Html$Events$onClick(
+					$elm$html$Html$Events$onMouseDown(
 					$author$project$Main$MouseDownOn(
+						$author$project$Main$ScaleSelector(i))),
+					$elm$html$Html$Events$onMouseUp(
+					$author$project$Main$MouseUpOn(
 						$author$project$Main$ScaleSelector(i)))
 				]),
 			_List_fromArray(
@@ -12895,7 +12903,7 @@ var $author$project$MainTests$testKeyClickDisplaysSolfege = A2(
 			$avh4$elm_program_test$ProgramTest$expectViewHas,
 			_List_fromArray(
 				[
-					$elm_explorations$test$Test$Html$Selector$id('key-4'),
+					$elm_explorations$test$Test$Html$Selector$id('key-10'),
 					$elm_explorations$test$Test$Html$Selector$text('')
 				]),
 			A2(
@@ -12903,23 +12911,72 @@ var $author$project$MainTests$testKeyClickDisplaysSolfege = A2(
 				$elm_explorations$test$Test$Html$Query$find(
 					_List_fromArray(
 						[
-							$elm_explorations$test$Test$Html$Selector$id('key-4')
+							$elm_explorations$test$Test$Html$Selector$id('key-10')
 						])),
 				A2(
 					$avh4$elm_program_test$ProgramTest$ensureViewHas,
 					_List_fromArray(
 						[
-							$elm_explorations$test$Test$Html$Selector$id('key-11'),
-							$elm_explorations$test$Test$Html$Selector$text('Ti')
+							$elm_explorations$test$Test$Html$Selector$id('key-10'),
+							$elm_explorations$test$Test$Html$Selector$text('Te')
 						]),
 					A2(
 						$author$project$MainTests$mouseDown,
 						$elm_explorations$test$Test$Html$Query$find(
 							_List_fromArray(
 								[
-									$elm_explorations$test$Test$Html$Selector$id('key-11')
+									$elm_explorations$test$Test$Html$Selector$id('key-10')
 								])),
-						A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0)))));
+						A2(
+							$avh4$elm_program_test$ProgramTest$ensureViewHas,
+							_List_fromArray(
+								[
+									$elm_explorations$test$Test$Html$Selector$id('scale-note-6'),
+									$elm_explorations$test$Test$Html$Selector$class('bg-white')
+								]),
+							A2(
+								$author$project$MainTests$mouseUp,
+								$elm_explorations$test$Test$Html$Query$find(
+									_List_fromArray(
+										[
+											$elm_explorations$test$Test$Html$Selector$id('scale-note-6')
+										])),
+								A2(
+									$author$project$MainTests$mouseDown,
+									$elm_explorations$test$Test$Html$Query$find(
+										_List_fromArray(
+											[
+												$elm_explorations$test$Test$Html$Selector$id('scale-note-6')
+											])),
+									A2(
+										$avh4$elm_program_test$ProgramTest$ensureViewHas,
+										_List_fromArray(
+											[
+												$elm_explorations$test$Test$Html$Selector$id('key-11'),
+												$elm_explorations$test$Test$Html$Selector$text('')
+											]),
+										A2(
+											$author$project$MainTests$mouseUp,
+											$elm_explorations$test$Test$Html$Query$find(
+												_List_fromArray(
+													[
+														$elm_explorations$test$Test$Html$Selector$id('key-11')
+													])),
+											A2(
+												$avh4$elm_program_test$ProgramTest$ensureViewHas,
+												_List_fromArray(
+													[
+														$elm_explorations$test$Test$Html$Selector$id('key-11'),
+														$elm_explorations$test$Test$Html$Selector$text('Ti')
+													]),
+												A2(
+													$author$project$MainTests$mouseDown,
+													$elm_explorations$test$Test$Html$Query$find(
+														_List_fromArray(
+															[
+																$elm_explorations$test$Test$Html$Selector$id('key-11')
+															])),
+													A2($author$project$MainTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0))))))))))));
 	});
 var $author$project$ScaleTests$testKeyClickHandlesHighDo = A2(
 	$elm_explorations$test$Test$test,
@@ -13144,10 +13201,6 @@ var $author$project$MainTests$testPressKeyOnModel = A2(
 					$author$project$MainTests$stubInitModel.a,
 					_Utils_Tuple2($author$project$Note$D, 4)).isKeyPressed));
 	});
-var $elm_explorations$test$Test$Html$Selector$Internal$Class = function (a) {
-	return {$: 'Class', a: a};
-};
-var $elm_explorations$test$Test$Html$Selector$class = $elm_explorations$test$Test$Html$Selector$Internal$Class;
 var $elm_explorations$test$Test$Html$Query$Internal$multipleToExpectation = F2(
 	function (_v0, check) {
 		var query = _v0.b;
@@ -13514,7 +13567,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main3168847376$main = A2(
+var $author$project$Test$Generated$Main3683914491$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13522,7 +13575,7 @@ var $author$project$Test$Generated$Main3168847376$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 247576548929981
+		seed: 402384407449013
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13553,10 +13606,10 @@ var $author$project$Test$Generated$Main3168847376$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main3168847376':{'init':$author$project$Test$Generated$Main3168847376$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main3683914491':{'init':$author$project$Test$Generated$Main3683914491$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-11441.sock";
+var pipeFilename = "/tmp/elm_test-11992.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

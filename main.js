@@ -5098,7 +5098,7 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Main$Model = F3(
 	function (isKeyPressed, octaveAdjustment, selectedScale) {
-		return {Y: isKeyPressed, am: octaveAdjustment, j: selectedScale};
+		return {Y: isKeyPressed, am: octaveAdjustment, i: selectedScale};
 	});
 var $author$project$Note$A = 0;
 var $author$project$Scale$Chromatic = 0;
@@ -5853,7 +5853,7 @@ var $author$project$Main$pressOrReleaseKeyOnModel = F3(
 				Y: A3(
 					$elm$core$Dict$insert,
 					$author$project$Note$toInt(note) - $author$project$Note$pitchClassToInt(
-						$author$project$Scale$pitchClass(model.j)),
+						$author$project$Scale$pitchClass(model.i)),
 					isPress,
 					model.Y)
 			});
@@ -6006,21 +6006,23 @@ var $author$project$Main$update = F2(
 							A2(
 								$author$project$Main$pressKeyOnModel,
 								model,
-								$author$project$Note$fromInt(i)),
+								$author$project$Note$fromInt(
+									i + $author$project$Note$pitchClassToInt(
+										$author$project$Scale$pitchClass(model.i)))),
 							$author$project$Main$playTone(
 								$author$project$Note$toString(
-									A2($author$project$Scale$fromKeyClick, model.j, i))));
+									A2($author$project$Scale$fromKeyClick, model.i, i))));
 					case 1:
 						var i = b.a;
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
 								{
-									j: _Utils_Tuple2(
-										$author$project$Scale$pitchClass(model.j),
+									i: _Utils_Tuple2(
+										$author$project$Scale$pitchClass(model.i),
 										A2(
 											$elm$core$Result$withDefault,
-											$author$project$Scale$scaleType(model.j),
+											$author$project$Scale$scaleType(model.i),
 											$author$project$Scale$scaleTypeFromInt(i)))
 								}),
 							$elm$core$Platform$Cmd$none);
@@ -6030,9 +6032,9 @@ var $author$project$Main$update = F2(
 							_Utils_update(
 								model,
 								{
-									j: _Utils_Tuple2(
+									i: _Utils_Tuple2(
 										$author$project$Note$pitchClassFromInt(i),
-										$author$project$Scale$scaleType(model.j))
+										$author$project$Scale$scaleType(model.i))
 								}),
 							$elm$core$Platform$Cmd$none);
 				}
@@ -6044,7 +6046,9 @@ var $author$project$Main$update = F2(
 						A2(
 							$author$project$Main$releaseKeyOnModel,
 							model,
-							$author$project$Note$fromInt(i)),
+							$author$project$Note$fromInt(
+								i + $author$project$Note$pitchClassToInt(
+									$author$project$Scale$pitchClass(model.i)))),
 						$elm$core$Platform$Cmd$none);
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -6053,7 +6057,7 @@ var $author$project$Main$update = F2(
 				var keyboardKey = msg.a;
 				switch (keyboardKey.$) {
 					case 0:
-						var _v4 = A2($author$project$Scale$fromKeyboardKey, model.j, keyboardKey);
+						var _v4 = A2($author$project$Scale$fromKeyboardKey, model.i, keyboardKey);
 						if (!_v4.$) {
 							var note = _v4.a;
 							return _Utils_Tuple2(
@@ -6079,7 +6083,7 @@ var $author$project$Main$update = F2(
 			default:
 				var keyboardKey = msg.a;
 				if (!keyboardKey.$) {
-					var _v6 = A2($author$project$Scale$fromKeyboardKey, model.j, keyboardKey);
+					var _v6 = A2($author$project$Scale$fromKeyboardKey, model.i, keyboardKey);
 					if (!_v6.$) {
 						var note = _v6.a;
 						return _Utils_Tuple2(
@@ -6375,7 +6379,7 @@ var $author$project$Main$renderKey = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$class('key'),
-					A2($author$project$Main$activeKeyInScale, model.j, n),
+					A2($author$project$Main$activeKeyInScale, model.i, n),
 					$elm$html$Html$Attributes$id(
 					$author$project$Main$getKeyName(n)),
 					$elm$html$Html$Events$onMouseDown(
@@ -6388,7 +6392,7 @@ var $author$project$Main$renderKey = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$text(
-					A3($author$project$Main$getLabelFromKey, model.j, model.Y, n))
+					A3($author$project$Main$getLabelFromKey, model.i, model.Y, n))
 				]));
 	});
 var $author$project$Main$renderKeys = F2(
@@ -6410,12 +6414,6 @@ var $author$project$Main$activeBackgroundFromPitchClass = F2(
 			pc,
 			$author$project$Note$pitchClassFromInt(i)) ? $elm$html$Html$Attributes$class('bg-white') : $elm$html$Html$Attributes$class('bg-medium');
 	});
-var $elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
-};
 var $author$project$Main$renderNoteSelector = F2(
 	function (pc, i) {
 		return A2(
@@ -6426,8 +6424,11 @@ var $author$project$Main$renderNoteSelector = F2(
 					A2($author$project$Main$activeBackgroundFromPitchClass, pc, i),
 					$elm$html$Html$Attributes$id(
 					'scale-note-' + $elm$core$String$fromInt(i)),
-					$elm$html$Html$Events$onClick(
+					$elm$html$Html$Events$onMouseDown(
 					$author$project$Main$MouseDownOn(
+						$author$project$Main$NoteSelector(i))),
+					$elm$html$Html$Events$onMouseUp(
+					$author$project$Main$MouseUpOn(
 						$author$project$Main$NoteSelector(i)))
 				]),
 			_List_fromArray(
@@ -6485,8 +6486,11 @@ var $author$project$Main$renderScaleTypeSelector = F2(
 					A2($author$project$Main$activeBackgroundFromScaleType, t, i),
 					$elm$html$Html$Attributes$id(
 					'scale-type-' + $elm$core$String$fromInt(i)),
-					$elm$html$Html$Events$onClick(
+					$elm$html$Html$Events$onMouseDown(
 					$author$project$Main$MouseDownOn(
+						$author$project$Main$ScaleSelector(i))),
+					$elm$html$Html$Events$onMouseUp(
+					$author$project$Main$MouseUpOn(
 						$author$project$Main$ScaleSelector(i)))
 				]),
 			_List_fromArray(
@@ -6581,7 +6585,7 @@ var $author$project$Main$view = function (model) {
 					[
 						$elm$html$Html$Attributes$class('table')
 					]),
-				$author$project$Main$renderScaleSelector(model.j)),
+				$author$project$Main$renderScaleSelector(model.i)),
 				$author$project$Main$viewFooter
 			]));
 };

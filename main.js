@@ -5778,6 +5778,7 @@ var $author$project$Scale$InvalidScale = function (a) {
 var $author$project$Scale$Locrian = 2;
 var $author$project$Scale$Lydian = 6;
 var $author$project$Scale$Major = 3;
+var $author$project$Scale$Minor = 1;
 var $author$project$Scale$Mixolydian = 7;
 var $author$project$Scale$Phrygian = 5;
 var $author$project$Scale$scaleTypeFromInt = function (i) {
@@ -5785,16 +5786,18 @@ var $author$project$Scale$scaleTypeFromInt = function (i) {
 		case 0:
 			return $elm$core$Result$Ok(0);
 		case 1:
-			return $elm$core$Result$Ok(2);
+			return $elm$core$Result$Ok(1);
 		case 2:
-			return $elm$core$Result$Ok(3);
+			return $elm$core$Result$Ok(2);
 		case 3:
-			return $elm$core$Result$Ok(4);
+			return $elm$core$Result$Ok(3);
 		case 4:
-			return $elm$core$Result$Ok(5);
+			return $elm$core$Result$Ok(4);
 		case 5:
-			return $elm$core$Result$Ok(6);
+			return $elm$core$Result$Ok(5);
 		case 6:
+			return $elm$core$Result$Ok(6);
+		case 7:
 			return $elm$core$Result$Ok(7);
 		default:
 			return $elm$core$Result$Err(
@@ -6300,7 +6303,7 @@ var $author$project$Main$getAllScaleTypeSelectors = function (t) {
 	return A2(
 		$elm$core$List$map,
 		$author$project$Main$renderScaleTypeSelector(t),
-		A2($elm$core$List$range, 0, 6));
+		A2($elm$core$List$range, 0, 7));
 };
 var $author$project$Main$renderScaleSelector = function (scale) {
 	return _List_fromArray(

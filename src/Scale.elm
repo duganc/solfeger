@@ -78,21 +78,24 @@ scaleTypeFromInt i =
             Ok Chromatic
 
         1 ->
-            Ok Locrian
+            Ok Minor
 
         2 ->
-            Ok Major
+            Ok Locrian
 
         3 ->
-            Ok Dorian
+            Ok Major
 
         4 ->
-            Ok Phrygian
+            Ok Dorian
 
         5 ->
-            Ok Lydian
+            Ok Phrygian
 
         6 ->
+            Ok Lydian
+
+        7 ->
             Ok Mixolydian
 
         _ ->

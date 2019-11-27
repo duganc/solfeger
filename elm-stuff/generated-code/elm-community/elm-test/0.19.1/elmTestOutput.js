@@ -12183,16 +12183,18 @@ var $author$project$Scale$scaleTypeFromInt = function (i) {
 		case 0:
 			return $elm$core$Result$Ok($author$project$Scale$Chromatic);
 		case 1:
-			return $elm$core$Result$Ok($author$project$Scale$Locrian);
+			return $elm$core$Result$Ok($author$project$Scale$Minor);
 		case 2:
-			return $elm$core$Result$Ok($author$project$Scale$Major);
+			return $elm$core$Result$Ok($author$project$Scale$Locrian);
 		case 3:
-			return $elm$core$Result$Ok($author$project$Scale$Dorian);
+			return $elm$core$Result$Ok($author$project$Scale$Major);
 		case 4:
-			return $elm$core$Result$Ok($author$project$Scale$Phrygian);
+			return $elm$core$Result$Ok($author$project$Scale$Dorian);
 		case 5:
-			return $elm$core$Result$Ok($author$project$Scale$Lydian);
+			return $elm$core$Result$Ok($author$project$Scale$Phrygian);
 		case 6:
+			return $elm$core$Result$Ok($author$project$Scale$Lydian);
+		case 7:
 			return $elm$core$Result$Ok($author$project$Scale$Mixolydian);
 		default:
 			return $elm$core$Result$Err(
@@ -12577,7 +12579,7 @@ var $author$project$Main$getAllScaleTypeSelectors = function (t) {
 	return A2(
 		$elm$core$List$map,
 		$author$project$Main$renderScaleTypeSelector(t),
-		A2($elm$core$List$range, 0, 6));
+		A2($elm$core$List$range, 0, 7));
 };
 var $author$project$Main$renderScaleSelector = function (scale) {
 	return _List_fromArray(
@@ -13369,7 +13371,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main1461507920$main = A2(
+var $author$project$Test$Generated$Main3248059224$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13377,7 +13379,7 @@ var $author$project$Test$Generated$Main1461507920$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 194816446619327
+		seed: 19562291223735
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13408,10 +13410,10 @@ var $author$project$Test$Generated$Main1461507920$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main1461507920':{'init':$author$project$Test$Generated$Main1461507920$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main3248059224':{'init':$author$project$Test$Generated$Main3248059224$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-10410.sock";
+var pipeFilename = "/tmp/elm_test-10472.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

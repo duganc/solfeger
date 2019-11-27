@@ -298,7 +298,7 @@ activeBackgroundFromScaleType t i =
 
 getAllScaleTypeSelectors : ScaleType -> List (Html Msg)
 getAllScaleTypeSelectors t =
-    range 0 6 |> List.map (renderScaleTypeSelector t)
+    range 0 7 |> List.map (renderScaleTypeSelector t)
 
 
 renderScaleTypeSelector : ScaleType -> Int -> Html Msg

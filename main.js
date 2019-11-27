@@ -5098,7 +5098,7 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Main$Model = F2(
 	function (isKeyPressed, selectedScale) {
-		return {Y: isKeyPressed, o: selectedScale};
+		return {Y: isKeyPressed, j: selectedScale};
 	});
 var $author$project$Note$A = 0;
 var $author$project$Scale$Chromatic = 0;
@@ -5763,7 +5763,7 @@ var $author$project$Main$pressOrReleaseKeyOnModel = F3(
 				Y: A3(
 					$elm$core$Dict$insert,
 					$author$project$Note$toInt(note) - $author$project$Note$pitchClassToInt(
-						$author$project$Scale$pitchClass(model.o)),
+						$author$project$Scale$pitchClass(model.j)),
 					isPress,
 					model.Y)
 			});
@@ -5912,18 +5912,18 @@ var $author$project$Main$update = F2(
 								$author$project$Note$fromInt(i)),
 							$author$project$Main$playTone(
 								$author$project$Note$toString(
-									A2($author$project$Scale$fromKeyClick, model.o, i))));
+									A2($author$project$Scale$fromKeyClick, model.j, i))));
 					case 1:
 						var i = b.a;
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
 								{
-									o: _Utils_Tuple2(
-										$author$project$Scale$pitchClass(model.o),
+									j: _Utils_Tuple2(
+										$author$project$Scale$pitchClass(model.j),
 										A2(
 											$elm$core$Result$withDefault,
-											$author$project$Scale$scaleType(model.o),
+											$author$project$Scale$scaleType(model.j),
 											$author$project$Scale$scaleTypeFromInt(i)))
 								}),
 							$elm$core$Platform$Cmd$none);
@@ -5933,9 +5933,9 @@ var $author$project$Main$update = F2(
 							_Utils_update(
 								model,
 								{
-									o: _Utils_Tuple2(
+									j: _Utils_Tuple2(
 										$author$project$Note$pitchClassFromInt(i),
-										$author$project$Scale$scaleType(model.o))
+										$author$project$Scale$scaleType(model.j))
 								}),
 							$elm$core$Platform$Cmd$none);
 				}
@@ -5954,7 +5954,7 @@ var $author$project$Main$update = F2(
 				}
 			case 3:
 				var keyboardKey = msg.a;
-				var _v3 = A2($author$project$Scale$fromKeyboardKey, model.o, keyboardKey);
+				var _v3 = A2($author$project$Scale$fromKeyboardKey, model.j, keyboardKey);
 				if (!_v3.$) {
 					var note = _v3.a;
 					return _Utils_Tuple2(
@@ -5967,7 +5967,7 @@ var $author$project$Main$update = F2(
 				}
 			default:
 				var keyboardKey = msg.a;
-				var _v4 = A2($author$project$Scale$fromKeyboardKey, model.o, keyboardKey);
+				var _v4 = A2($author$project$Scale$fromKeyboardKey, model.j, keyboardKey);
 				if (!_v4.$) {
 					var note = _v4.a;
 					return _Utils_Tuple2(
@@ -6001,6 +6001,87 @@ var $author$project$Main$MouseDownOn = function (a) {
 var $author$project$Main$MouseUpOn = function (a) {
 	return {$: 2, a: a};
 };
+var $elm$core$List$any = F2(
+	function (isOkay, list) {
+		any:
+		while (true) {
+			if (!list.b) {
+				return false;
+			} else {
+				var x = list.a;
+				var xs = list.b;
+				if (isOkay(x)) {
+					return true;
+				} else {
+					var $temp$isOkay = isOkay,
+						$temp$list = xs;
+					isOkay = $temp$isOkay;
+					list = $temp$list;
+					continue any;
+				}
+			}
+		}
+	});
+var $elm$core$List$member = F2(
+	function (x, xs) {
+		return A2(
+			$elm$core$List$any,
+			function (a) {
+				return _Utils_eq(a, x);
+			},
+			xs);
+	});
+var $author$project$Scale$notes = function (_v0) {
+	var note = _v0.a;
+	var scale = _v0.b;
+	return A2(
+		$elm$core$List$map,
+		$elm$core$Basics$add(
+			$author$project$Note$pitchClassToInt(note)),
+		function () {
+			switch (scale) {
+				case 0:
+					return A2($elm$core$List$range, 0, 12);
+				case 1:
+					return _List_fromArray(
+						[0, 2, 3, 5, 7, 8, 10]);
+				case 2:
+					return _List_fromArray(
+						[0, 1, 3, 5, 6, 8, 10]);
+				case 3:
+					return _List_fromArray(
+						[0, 2, 4, 5, 7, 9, 11]);
+				case 4:
+					return _List_fromArray(
+						[0, 2, 3, 5, 7, 9, 10]);
+				case 5:
+					return _List_fromArray(
+						[0, 1, 3, 5, 7, 8, 10]);
+				case 6:
+					return _List_fromArray(
+						[0, 2, 4, 6, 7, 9, 11]);
+				default:
+					return _List_fromArray(
+						[0, 2, 4, 5, 7, 9, 10]);
+			}
+		}());
+};
+var $author$project$Main$keyIsInScale = F2(
+	function (scale, i) {
+		return A2(
+			$elm$core$List$member,
+			A2($elm$core$Basics$modBy, 12, i),
+			$author$project$Scale$notes(scale));
+	});
+var $author$project$Main$activeKeyInScale = F2(
+	function (scale, i) {
+		var _v0 = A2($author$project$Main$keyIsInScale, scale, i);
+		if (_v0) {
+			return $elm$html$Html$Attributes$class('black-on-white');
+		} else {
+			return $elm$html$Html$Attributes$class('white-on-dark');
+		}
+	});
 var $author$project$Main$getKeyName = function (n) {
 	return 'key-' + $elm$core$String$fromInt(n);
 };
@@ -6174,6 +6255,7 @@ var $author$project$Main$renderKey = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$class('key'),
+					A2($author$project$Main$activeKeyInScale, model.j, n),
 					$elm$html$Html$Attributes$id(
 					$author$project$Main$getKeyName(n)),
 					$elm$html$Html$Events$onMouseDown(
@@ -6186,7 +6268,7 @@ var $author$project$Main$renderKey = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$text(
-					A3($author$project$Main$getLabelFromKey, model.o, model.Y, n))
+					A3($author$project$Main$getLabelFromKey, model.j, model.Y, n))
 				]));
 	});
 var $author$project$Main$renderKeys = F2(
@@ -6379,7 +6461,7 @@ var $author$project$Main$view = function (model) {
 					[
 						$elm$html$Html$Attributes$class('table')
 					]),
-				$author$project$Main$renderScaleSelector(model.o)),
+				$author$project$Main$renderScaleSelector(model.j)),
 				$author$project$Main$viewFooter
 			]));
 };

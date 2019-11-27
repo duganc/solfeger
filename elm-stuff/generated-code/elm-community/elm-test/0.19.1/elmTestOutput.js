@@ -12354,6 +12354,57 @@ var $author$project$Main$MouseDownOn = function (a) {
 var $author$project$Main$MouseUpOn = function (a) {
 	return {$: 'MouseUpOn', a: a};
 };
+var $author$project$Scale$notes = function (_v0) {
+	var note = _v0.a;
+	var scale = _v0.b;
+	return A2(
+		$elm$core$List$map,
+		$elm$core$Basics$add(
+			$author$project$Note$pitchClassToInt(note)),
+		function () {
+			switch (scale.$) {
+				case 'Chromatic':
+					return A2($elm$core$List$range, 0, 12);
+				case 'Minor':
+					return _List_fromArray(
+						[0, 2, 3, 5, 7, 8, 10]);
+				case 'Locrian':
+					return _List_fromArray(
+						[0, 1, 3, 5, 6, 8, 10]);
+				case 'Major':
+					return _List_fromArray(
+						[0, 2, 4, 5, 7, 9, 11]);
+				case 'Dorian':
+					return _List_fromArray(
+						[0, 2, 3, 5, 7, 9, 10]);
+				case 'Phrygian':
+					return _List_fromArray(
+						[0, 1, 3, 5, 7, 8, 10]);
+				case 'Lydian':
+					return _List_fromArray(
+						[0, 2, 4, 6, 7, 9, 11]);
+				default:
+					return _List_fromArray(
+						[0, 2, 4, 5, 7, 9, 10]);
+			}
+		}());
+};
+var $author$project$Main$keyIsInScale = F2(
+	function (scale, i) {
+		return A2(
+			$elm$core$List$member,
+			A2($elm$core$Basics$modBy, 12, i),
+			$author$project$Scale$notes(scale));
+	});
+var $author$project$Main$activeKeyInScale = F2(
+	function (scale, i) {
+		var _v0 = A2($author$project$Main$keyIsInScale, scale, i);
+		if (_v0) {
+			return $elm$html$Html$Attributes$class('black-on-white');
+		} else {
+			return $elm$html$Html$Attributes$class('white-on-dark');
+		}
+	});
 var $author$project$Main$getKeyName = function (n) {
 	return 'key-' + $elm$core$String$fromInt(n);
 };
@@ -12450,6 +12501,7 @@ var $author$project$Main$renderKey = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$class('key'),
+					A2($author$project$Main$activeKeyInScale, model.selectedScale, n),
 					$elm$html$Html$Attributes$id(
 					$author$project$Main$getKeyName(n)),
 					$elm$html$Html$Events$onMouseDown(
@@ -13036,41 +13088,6 @@ var $author$project$MainTests$testRenderKeysRendersTheCorrectNumberOfKeys = A2(
 						A2($author$project$Main$Model, $elm$core$Dict$empty, $author$project$Scale$default),
 						3))));
 	});
-var $author$project$Scale$notes = function (_v0) {
-	var note = _v0.a;
-	var scale = _v0.b;
-	return A2(
-		$elm$core$List$map,
-		$elm$core$Basics$add(
-			$author$project$Note$pitchClassToInt(note)),
-		function () {
-			switch (scale.$) {
-				case 'Chromatic':
-					return A2($elm$core$List$range, 0, 12);
-				case 'Minor':
-					return _List_fromArray(
-						[0, 2, 3, 5, 7, 8, 10]);
-				case 'Locrian':
-					return _List_fromArray(
-						[0, 1, 3, 5, 6, 8, 10]);
-				case 'Major':
-					return _List_fromArray(
-						[0, 2, 4, 5, 7, 9, 11]);
-				case 'Dorian':
-					return _List_fromArray(
-						[0, 2, 3, 5, 7, 9, 10]);
-				case 'Phrygian':
-					return _List_fromArray(
-						[0, 1, 3, 5, 7, 8, 10]);
-				case 'Lydian':
-					return _List_fromArray(
-						[0, 2, 4, 6, 7, 9, 11]);
-				default:
-					return _List_fromArray(
-						[0, 2, 4, 5, 7, 9, 10]);
-			}
-		}());
-};
 var $elm$core$List$takeReverse = F3(
 	function (n, list, kept) {
 		takeReverse:
@@ -13371,7 +13388,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main3248059224$main = A2(
+var $author$project$Test$Generated$Main2475038480$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13379,7 +13396,7 @@ var $author$project$Test$Generated$Main3248059224$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 19562291223735
+		seed: 109196603800525
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13410,10 +13427,10 @@ var $author$project$Test$Generated$Main3248059224$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main3248059224':{'init':$author$project$Test$Generated$Main3248059224$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main2475038480':{'init':$author$project$Test$Generated$Main2475038480$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-10472.sock";
+var pipeFilename = "/tmp/elm_test-10647.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

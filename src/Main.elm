@@ -206,11 +206,27 @@ renderKey : Model -> Int -> Html Msg
 renderKey model n =
     div
         [ class "key"
+        , activeKeyInScale model.selectedScale n
         , id (getKeyName n)
         , onMouseDown (MouseDownOn (Key n))
         , onMouseUp (MouseUpOn (Key n))
         ]
         [ text (getLabelFromKey model.selectedScale model.isKeyPressed n) ]
+
+
+activeKeyInScale : Scale -> Int -> Attribute Msg
+activeKeyInScale scale i =
+    case keyIsInScale scale i of
+        True ->
+            class "black-on-white"
+
+        False ->
+            class "white-on-dark"
+
+
+keyIsInScale : Scale -> Int -> Bool
+keyIsInScale scale i =
+    notes scale |> List.member (modBy 12 i)
 
 
 getKeyName : Int -> String

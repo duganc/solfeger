@@ -10,7 +10,6 @@ p, a, div, button {
 /*Components*/
 
 .key {
-	background-color: white;
 	display: table-cell;
 	height: 200px;
 	width: 30px;
@@ -22,6 +21,16 @@ p, a, div, button {
 	border-radius: 7px;
 	text-align: center;
 	font-weight: bold;
+}
+
+.white-on-dark {
+	background-color: #242424;
+	color: white;
+}
+
+.black-on-white {
+	background-color: white;
+	color: black;
 }
 
 .scale-selector {

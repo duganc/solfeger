@@ -27,15 +27,23 @@ To play notes, either click them or use the number row on your keyboard from the
 			 - [x] Plays note
 		 - [x] Top row of keyboard (tilda through equals sign) map to the 12 keys
 	 - [ ] v1 - Alternate scales
-		 - [ ] Buttons to pick scales
+		 - [x] Buttons to pick scales
 		 - [ ] 0-7 or other subset map to the keys
-		 - [ ] Unused keys are faded out
+		 - [x] Unused keys are faded out
 		 - [ ] Left shift raises note
 		 - [ ] Left function lowers note
-	 - [ ] v2 - Overlay scale on piano keys
+	     - [x] Overlay scale on piano keys
+	 - [ ] v2 - Content
+	 	 - [ ] Melodies in qwerty
+	 	 - [ ] Tooltips
+	 	 - [ ] Blog post
 	 - [ ] Nice-to-haves
 	 	 - [ ] Logo
 		 - [ ] Hold note and key display for some minimum time to keep it from being too fast to see
+		 - [ ] Holding multiple notes has weird behavior
+		 - [ ] Right clicking keeps the text showing
+		 - [ ] Toggle for piano keys
+		 - [ ] Sustain
 
 - [ ] Design
 	- [ ] Page Structure

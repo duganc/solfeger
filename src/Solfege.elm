@@ -1,6 +1,4 @@
-module Solfege exposing (Solfege(..), fromInt, fromKeyboardKey, getSolfegeName, toInt)
-
-import KeyboardKey exposing (KeyboardKey(..))
+module Solfege exposing (Solfege(..), fromInt, toInt, toString)
 
 
 type Solfege
@@ -16,52 +14,6 @@ type Solfege
     | La
     | Te
     | Ti
-
-
-fromKeyboardKey : KeyboardKey -> Result String Solfege
-fromKeyboardKey key =
-    case key of
-        CharacterKey "`" ->
-            Ok (fromInt 0)
-
-        CharacterKey "1" ->
-            Ok (fromInt 1)
-
-        CharacterKey "2" ->
-            Ok (fromInt 2)
-
-        CharacterKey "3" ->
-            Ok (fromInt 3)
-
-        CharacterKey "4" ->
-            Ok (fromInt 4)
-
-        CharacterKey "5" ->
-            Ok (fromInt 5)
-
-        CharacterKey "6" ->
-            Ok (fromInt 6)
-
-        CharacterKey "7" ->
-            Ok (fromInt 7)
-
-        CharacterKey "8" ->
-            Ok (fromInt 8)
-
-        CharacterKey "9" ->
-            Ok (fromInt 9)
-
-        CharacterKey "0" ->
-            Ok (fromInt 10)
-
-        CharacterKey "-" ->
-            Ok (fromInt 11)
-
-        CharacterKey "=" ->
-            Ok (fromInt 12)
-
-        _ ->
-            Err "KeyboardKey Error"
 
 
 toInt : Solfege -> Int
@@ -147,8 +99,8 @@ fromInt i =
             Do
 
 
-getSolfegeName : Solfege -> String
-getSolfegeName s =
+toString : Solfege -> String
+toString s =
     case s of
         Do ->
             "Do"

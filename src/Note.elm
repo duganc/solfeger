@@ -1,7 +1,14 @@
-module Note exposing (Note(..), fromInt, fromString, toAbsoluteString, toString)
+module Note exposing (Error(..), Note, Octave, PitchClass(..), fromInt, fromPitchClass, octave, pitchClass, pitchClassFromInt, pitchClassFromString, pitchClassToInt, pitchClassToString, toInt, toString)
+
+import Solfege exposing (..)
+import Tuple exposing (..)
 
 
-type Note
+type alias Note =
+    ( PitchClass, Octave )
+
+
+type PitchClass
     = A
     | ASharp
     | B
@@ -16,9 +23,37 @@ type Note
     | GSharp
 
 
+type alias Octave =
+    Int
+
+
+type Error
+    = InvalidNote String
+
+
+pitchClass : Note -> PitchClass
+pitchClass =
+    Tuple.first
+
+
+octave : Note -> Octave
+octave =
+    Tuple.second
+
+
 toString : Note -> String
 toString note =
-    case note of
+    (Tuple.first note |> pitchClassToString) ++ (Tuple.second note |> String.fromInt)
+
+
+toInt : Note -> Int
+toInt note =
+    (pitchClass note |> pitchClassToInt) + ((octave note - defaultOctave (pitchClass note)) * 12)
+
+
+pitchClassToString : PitchClass -> String
+pitchClassToString pc =
+    case pc of
         A ->
             "A"
 
@@ -56,48 +91,32 @@ toString note =
             "G#"
 
 
-toAbsoluteString : Note -> String
-toAbsoluteString note =
-    case note of
-        A ->
-            "A3"
-
-        ASharp ->
-            "A#3"
-
-        B ->
-            "B3"
-
-        C ->
-            "C4"
-
-        CSharp ->
-            "C#4"
-
-        D ->
-            "D4"
-
-        DSharp ->
-            "D#4"
-
-        E ->
-            "E4"
-
-        F ->
-            "F4"
-
-        FSharp ->
-            "F#4"
-
-        G ->
-            "G4"
-
-        GSharp ->
-            "G#4"
+fromInt : Int -> Note
+fromInt i =
+    ( pitchClassFromInt i, octaveFromInt i )
 
 
-fromString : String -> Result String Note
-fromString s =
+octaveFromInt : Int -> Octave
+octaveFromInt i =
+    i // 12 |> (+) (modBy 12 i |> pitchClassFromInt |> defaultOctave)
+
+
+fromPitchClass : PitchClass -> Note
+fromPitchClass pc =
+    ( pc, defaultOctave pc )
+
+
+defaultOctave : PitchClass -> Octave
+defaultOctave pc =
+    if pitchClassToInt pc >= pitchClassToInt C then
+        4
+
+    else
+        3
+
+
+pitchClassFromString : String -> Result Error PitchClass
+pitchClassFromString s =
     case s of
         "Ab" ->
             Ok GSharp
@@ -163,47 +182,87 @@ fromString s =
             Ok GSharp
 
         _ ->
-            Err s
+            Err (InvalidNote s)
 
 
-fromInt : Int -> Result String Note
-fromInt i =
-    case i of
+pitchClassToInt : PitchClass -> Int
+pitchClassToInt n =
+    case n of
+        A ->
+            0
+
+        ASharp ->
+            1
+
+        B ->
+            2
+
+        C ->
+            3
+
+        CSharp ->
+            4
+
+        D ->
+            5
+
+        DSharp ->
+            6
+
+        E ->
+            7
+
+        F ->
+            8
+
+        FSharp ->
+            9
+
+        G ->
+            10
+
+        GSharp ->
+            11
+
+
+pitchClassFromInt : Int -> PitchClass
+pitchClassFromInt i =
+    case modBy 12 i of
         0 ->
-            Ok A
+            A
 
         1 ->
-            Ok ASharp
+            ASharp
 
         2 ->
-            Ok B
+            B
 
         3 ->
-            Ok C
+            C
 
         4 ->
-            Ok CSharp
+            CSharp
 
         5 ->
-            Ok D
+            D
 
         6 ->
-            Ok DSharp
+            DSharp
 
         7 ->
-            Ok E
+            E
 
         8 ->
-            Ok F
+            F
 
         9 ->
-            Ok FSharp
+            FSharp
 
         10 ->
-            Ok G
+            G
 
         11 ->
-            Ok GSharp
+            GSharp
 
         _ ->
-            Err (String.fromInt i)
+            A

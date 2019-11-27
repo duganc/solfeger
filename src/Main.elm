@@ -38,12 +38,14 @@ port playTone : String -> Cmd msg
 
 
 type alias Model =
-    { isKeyPressed : Dict Int Bool }
+    { isKeyPressed : Dict Int Bool
+    , selectedScale : Scale
+    }
 
 
 init : Flags -> Url -> key -> ( Model, Cmd Msg )
 init _ _ _ =
-    ( Model (Dict.fromList (range 0 11 |> List.map (\i -> ( i, False )))), Cmd.none )
+    ( Model (Dict.fromList (range 0 12 |> List.map (\i -> ( i, False )))) Scale.default, Cmd.none )
 
 
 type alias Flags =
@@ -60,51 +62,55 @@ update msg model =
         ChangeUrl url ->
             ( model, Url.toString url |> load )
 
-        MouseDownOn i ->
-            case Solfege.fromInt i of
-                key ->
-                    ( pressKeyOnModel model key, playTone (getAbsoluteNoteString key) )
+        MouseDownOn b ->
+            case b of
+                Key i ->
+                    ( pressKeyOnModel model (Note.fromInt i), playTone (fromKeyClick model.selectedScale i |> Note.toString) )
 
-        MouseUpOn i ->
-            case Solfege.fromInt i of
-                key ->
-                    ( releaseKeyOnModel model key, Cmd.none )
+                ScaleSelector i ->
+                    ( { model | selectedScale = ( Scale.pitchClass model.selectedScale, scaleTypeFromInt i |> Result.withDefault (Scale.scaleType model.selectedScale) ) }, Cmd.none )
+
+                NoteSelector i ->
+                    ( { model | selectedScale = ( pitchClassFromInt i, Scale.scaleType model.selectedScale ) }, Cmd.none )
+
+        MouseUpOn b ->
+            case b of
+                Key i ->
+                    ( releaseKeyOnModel model (Note.fromInt i), Cmd.none )
+
+                _ ->
+                    ( model, Cmd.none )
 
         KeyDownOn keyboardKey ->
-            case fromKeyboardKey keyboardKey of
-                Ok key ->
-                    ( pressKeyOnModel model key, playTone (getAbsoluteNoteString key) )
+            case fromKeyboardKey model.selectedScale keyboardKey of
+                Ok note ->
+                    ( pressKeyOnModel model note, playTone (Note.toString note) )
 
                 Err s ->
                     ( model, Cmd.none )
 
         KeyUpOn keyboardKey ->
-            case fromKeyboardKey keyboardKey of
-                Ok key ->
-                    ( releaseKeyOnModel model key, Cmd.none )
+            case fromKeyboardKey model.selectedScale keyboardKey of
+                Ok note ->
+                    ( releaseKeyOnModel model note, Cmd.none )
 
                 Err s ->
                     ( model, Cmd.none )
 
 
-getAbsoluteNoteString : Solfege -> String
-getAbsoluteNoteString solfege =
-    case Solfege.toInt solfege |> Note.fromInt |> Result.map Note.toAbsoluteString of
-        Ok s ->
-            s
-
-        Err s ->
-            s
+pressKeyOnModel : Model -> Note -> Model
+pressKeyOnModel =
+    pressOrReleaseKeyOnModel True
 
 
-pressKeyOnModel : Model -> Solfege -> Model
-pressKeyOnModel model solfege =
-    { model | isKeyPressed = Dict.insert (Solfege.toInt solfege) True model.isKeyPressed }
+releaseKeyOnModel : Model -> Note -> Model
+releaseKeyOnModel =
+    pressOrReleaseKeyOnModel False
 
 
-releaseKeyOnModel : Model -> Solfege -> Model
-releaseKeyOnModel model solfege =
-    { model | isKeyPressed = Dict.insert (Solfege.toInt solfege) False model.isKeyPressed }
+pressOrReleaseKeyOnModel : Bool -> Model -> Note -> Model
+pressOrReleaseKeyOnModel isPress model note =
+    { model | isKeyPressed = Dict.insert (Note.toInt note - (Scale.pitchClass model.selectedScale |> pitchClassToInt)) isPress model.isKeyPressed }
 
 
 urlRequestToUrl : UrlRequest -> Url
@@ -155,18 +161,24 @@ keyUpDecoder =
 
 type Msg
     = ChangeUrl Url
-    | MouseDownOn Int
-    | MouseUpOn Int
+    | MouseDownOn Button
+    | MouseUpOn Button
     | KeyDownOn KeyboardKey
     | KeyUpOn KeyboardKey
+
+
+type Button
+    = Key Int
+    | ScaleSelector Int
+    | NoteSelector Int
 
 
 view : Model -> Document Msg
 view model =
     Document "Solfeger"
         [ viewHeader
-        , div [ class "table" ] [ renderKeys model 12 ]
-        , div [ class "table" ] renderScaleSelector
+        , div [ class "table" ] [ renderKeys model 13 ]
+        , div [ class "table" ] (renderScaleSelector model.selectedScale)
         , viewFooter
         ]
 
@@ -194,11 +206,27 @@ renderKey : Model -> Int -> Html Msg
 renderKey model n =
     div
         [ class "key"
+        , activeKeyInScale model.selectedScale n
         , id (getKeyName n)
-        , onMouseDown (MouseDownOn n)
-        , onMouseUp (MouseUpOn n)
+        , onMouseDown (MouseDownOn (Key n))
+        , onMouseUp (MouseUpOn (Key n))
         ]
-        [ text (getLabelFromKey model.isKeyPressed n) ]
+        [ text (getLabelFromKey model.selectedScale model.isKeyPressed n) ]
+
+
+activeKeyInScale : Scale -> Int -> Attribute Msg
+activeKeyInScale scale i =
+    case keyIsInScale scale i of
+        True ->
+            class "black-on-white"
+
+        False ->
+            class "white-on-dark"
+
+
+keyIsInScale : Scale -> Int -> Bool
+keyIsInScale scale i =
+    notes scale |> List.member (modBy 12 i)
 
 
 getKeyName : Int -> String
@@ -206,14 +234,22 @@ getKeyName n =
     "key-" ++ String.fromInt n
 
 
-getLabelFromKey : Dict Int Bool -> Int -> String
-getLabelFromKey isKeyPressed key =
-    case Dict.get key isKeyPressed of
-        Nothing ->
-            "Error!"
+getLabelFromKey : Scale -> Dict Int Bool -> Int -> String
+getLabelFromKey scale isKeyPressed key =
+    getNoteLabelFromKey scale key
+        ++ "\n"
+        ++ (case Dict.get key isKeyPressed of
+                Nothing ->
+                    "Error!"
 
-        Just switch ->
-            showTextOrNothing (Solfege.fromInt key |> getSolfegeName) switch
+                Just switch ->
+                    showTextOrNothing (Solfege.fromInt key |> Solfege.toString) switch
+           )
+
+
+getNoteLabelFromKey : Scale -> Int -> String
+getNoteLabelFromKey scale i =
+    (i + pitchClassToInt (Scale.pitchClass scale)) |> pitchClassFromInt |> pitchClassToString
 
 
 showTextOrNothing : String -> Bool -> String
@@ -231,28 +267,67 @@ showText ifTrue ifFalse switch =
             ifFalse
 
 
-renderScaleSelector : List (Html Msg)
-renderScaleSelector =
-    [ div [ class "table" ] getAllNoteSelectors
-    , div [ class "table" ] getAllScaleTypeSelectors
+renderScaleSelector : Scale -> List (Html Msg)
+renderScaleSelector scale =
+    [ div [ class "table" ] (getAllNoteSelectors (Scale.pitchClass scale))
+    , div [ class "table" ] (getAllScaleTypeSelectors (Scale.scaleType scale))
     ]
 
 
-getAllNoteSelectors : List (Html Msg)
-getAllNoteSelectors =
-    range 0 11 |> List.map renderNoteSelector
+getAllNoteSelectors : PitchClass -> List (Html Msg)
+getAllNoteSelectors pc =
+    range 0 11 |> List.map (renderNoteSelector pc)
 
 
-renderNoteSelector : Int -> Html Msg
-renderNoteSelector i =
-    div [ class "scale-selector", id ("scale-note-" ++ String.fromInt i) ] [ i |> Note.fromInt |> Result.map Note.toString |> Result.withDefault "ERROR!" |> text ]
+renderNoteSelector : PitchClass -> Int -> Html Msg
+renderNoteSelector pc i =
+    div
+        [ class "scale-selector"
+        , activeBackgroundFromPitchClass pc i
+        , id ("scale-note-" ++ String.fromInt i)
+        , onClick (MouseDownOn (NoteSelector i))
+        ]
+        [ i
+            |> Note.fromInt
+            |> Note.toString
+            |> text
+        ]
 
 
-getAllScaleTypeSelectors : List (Html Msg)
-getAllScaleTypeSelectors =
-    range 0 6 |> List.map renderScaleTypeSelector
+activeBackgroundFromPitchClass : PitchClass -> Int -> Attribute Msg
+activeBackgroundFromPitchClass pc i =
+    if pc == (i |> Note.pitchClassFromInt) then
+        class "bg-white"
+
+    else
+        class "bg-medium"
 
 
-renderScaleTypeSelector : Int -> Html Msg
-renderScaleTypeSelector i =
-    div [ class "scale-selector", id ("scale-type-" ++ String.fromInt i) ] [ i |> Scale.scaleTypeFromInt |> Result.map Scale.scaleTypeToString |> Result.withDefault "ERROR!" |> text ]
+activeBackgroundFromScaleType : ScaleType -> Int -> Attribute Msg
+activeBackgroundFromScaleType t i =
+    if t == (i |> Scale.scaleTypeFromInt |> Result.withDefault Chromatic) then
+        class "bg-white"
+
+    else
+        class "bg-medium"
+
+
+getAllScaleTypeSelectors : ScaleType -> List (Html Msg)
+getAllScaleTypeSelectors t =
+    range 0 7 |> List.map (renderScaleTypeSelector t)
+
+
+renderScaleTypeSelector : ScaleType -> Int -> Html Msg
+renderScaleTypeSelector t i =
+    div
+        [ class "scale-selector"
+        , activeBackgroundFromScaleType t i
+        , id ("scale-type-" ++ String.fromInt i)
+        , onClick (MouseDownOn (ScaleSelector i))
+        ]
+        [ i
+            |> Scale.scaleTypeFromInt
+            |> Result.map Scale.scaleTypeToString
+            |> Result.withDefault "ERROR!"
+            |> text
+        ]

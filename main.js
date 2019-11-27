@@ -1858,8 +1858,8 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 		flagDecoder,
 		args,
 		impl.bu,
-		impl.bV,
-		impl.bR,
+		impl.bW,
+		impl.bS,
 		function() { return function() {} }
 	);
 });
@@ -3884,10 +3884,10 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 		flagDecoder,
 		args,
 		impl.bu,
-		impl.bV,
-		impl.bR,
+		impl.bW,
+		impl.bS,
 		function(sendToApp, initialModel) {
-			var view = impl.bW;
+			var view = impl.bX;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3920,11 +3920,11 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 		flagDecoder,
 		args,
 		impl.bu,
-		impl.bV,
-		impl.bR,
+		impl.bW,
+		impl.bS,
 		function(sendToApp, initialModel) {
 			var divertHrefToApp = impl.ao && impl.ao(sendToApp)
-			var view = impl.bW;
+			var view = impl.bX;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3937,7 +3937,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.bU) && (_VirtualDom_doc.title = title = doc.bU);
+				(title !== doc.bV) && (_VirtualDom_doc.title = title = doc.bV);
 			});
 		}
 	);
@@ -3993,8 +3993,8 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.bG;
-	var onUrlRequest = impl.bH;
+	var onUrlChange = impl.bH;
+	var onUrlRequest = impl.bI;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
@@ -4028,9 +4028,9 @@ function _Browser_application(impl)
 		{
 			return A3(impl.bu, flags, _Browser_getUrl(), key);
 		},
+		bX: impl.bX,
 		bW: impl.bW,
-		bV: impl.bV,
-		bR: impl.bR
+		bS: impl.bS
 	});
 }
 
@@ -5096,9 +5096,9 @@ var $elm$core$Task$perform = F2(
 			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$application = _Browser_application;
-var $author$project$Main$Model = F2(
-	function (isKeyPressed, selectedScale) {
-		return {Y: isKeyPressed, j: selectedScale};
+var $author$project$Main$Model = F3(
+	function (isKeyPressed, octaveAdjustment, selectedScale) {
+		return {Y: isKeyPressed, bF: octaveAdjustment, j: selectedScale};
 	});
 var $author$project$Note$A = 0;
 var $author$project$Scale$Chromatic = 0;
@@ -5231,7 +5231,7 @@ var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$init = F3(
 	function (_v0, _v1, _v2) {
 		return _Utils_Tuple2(
-			A2(
+			A3(
 				$author$project$Main$Model,
 				$elm$core$Dict$fromList(
 					A2(
@@ -5240,6 +5240,7 @@ var $author$project$Main$init = F3(
 							return _Utils_Tuple2(i, false);
 						},
 						A2($elm$core$List$range, 0, 12))),
+				0,
 				$author$project$Scale$default),
 			$elm$core$Platform$Cmd$none);
 	});
@@ -5268,12 +5269,32 @@ var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $author$project$Main$KeyDownOn = function (a) {
 	return {$: 3, a: a};
 };
-var $author$project$KeyboardKey$CharacterKey = $elm$core$Basics$identity;
 var $elm$json$Json$Decode$field = _Json_decodeField;
 var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$KeyboardKey$Alt = {$: 3};
+var $author$project$KeyboardKey$CharacterKey = function (a) {
+	return {$: 0, a: a};
+};
+var $author$project$KeyboardKey$Control = {$: 4};
+var $author$project$KeyboardKey$Meta = {$: 2};
+var $author$project$KeyboardKey$Shift = {$: 1};
+var $author$project$KeyboardKey$toKey = function (s) {
+	switch (s) {
+		case 'Alt':
+			return $author$project$KeyboardKey$Alt;
+		case 'Control':
+			return $author$project$KeyboardKey$Control;
+		case 'Meta':
+			return $author$project$KeyboardKey$Meta;
+		case 'Shift':
+			return $author$project$KeyboardKey$Shift;
+		default:
+			return $author$project$KeyboardKey$CharacterKey(s);
+	}
+};
 var $author$project$KeyboardKey$keyDecoder = A2(
 	$elm$json$Json$Decode$map,
-	$elm$core$Basics$identity,
+	$author$project$KeyboardKey$toKey,
 	A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
 var $author$project$Main$keyDownDecoder = A2($elm$json$Json$Decode$map, $author$project$Main$KeyDownOn, $author$project$KeyboardKey$keyDecoder);
 var $author$project$Main$KeyUpOn = function (a) {
@@ -5664,63 +5685,71 @@ var $author$project$Scale$UnassignedKey = function (a) {
 	return {$: 1, a: a};
 };
 var $author$project$Scale$keyboardKeyToInt = function (key) {
-	switch (key) {
-		case '`':
-			return $elm$core$Result$Ok(0);
-		case '1':
-			return $elm$core$Result$Ok(1);
-		case '2':
-			return $elm$core$Result$Ok(2);
-		case '3':
-			return $elm$core$Result$Ok(3);
-		case '4':
-			return $elm$core$Result$Ok(4);
-		case '5':
-			return $elm$core$Result$Ok(5);
-		case '6':
-			return $elm$core$Result$Ok(6);
-		case '7':
-			return $elm$core$Result$Ok(7);
-		case '8':
-			return $elm$core$Result$Ok(8);
-		case '9':
-			return $elm$core$Result$Ok(9);
-		case '0':
-			return $elm$core$Result$Ok(10);
-		case '-':
-			return $elm$core$Result$Ok(11);
-		case '=':
-			return $elm$core$Result$Ok(12);
-		case 'q':
-			return $elm$core$Result$Ok(0);
-		case 'w':
-			return $elm$core$Result$Ok(1);
-		case 'e':
-			return $elm$core$Result$Ok(2);
-		case 'r':
-			return $elm$core$Result$Ok(3);
-		case 't':
-			return $elm$core$Result$Ok(4);
-		case 'y':
-			return $elm$core$Result$Ok(5);
-		case 'u':
-			return $elm$core$Result$Ok(6);
-		case 'i':
-			return $elm$core$Result$Ok(7);
-		case 'o':
-			return $elm$core$Result$Ok(8);
-		case 'p':
-			return $elm$core$Result$Ok(9);
-		case '[':
-			return $elm$core$Result$Ok(10);
-		case ']':
-			return $elm$core$Result$Ok(11);
-		case '\\':
-			return $elm$core$Result$Ok(12);
-		default:
-			return $elm$core$Result$Err(
-				$author$project$Scale$UnassignedKey(key));
+	_v0$26:
+	while (true) {
+		if (!key.$) {
+			switch (key.a) {
+				case '`':
+					return $elm$core$Result$Ok(0);
+				case '1':
+					return $elm$core$Result$Ok(1);
+				case '2':
+					return $elm$core$Result$Ok(2);
+				case '3':
+					return $elm$core$Result$Ok(3);
+				case '4':
+					return $elm$core$Result$Ok(4);
+				case '5':
+					return $elm$core$Result$Ok(5);
+				case '6':
+					return $elm$core$Result$Ok(6);
+				case '7':
+					return $elm$core$Result$Ok(7);
+				case '8':
+					return $elm$core$Result$Ok(8);
+				case '9':
+					return $elm$core$Result$Ok(9);
+				case '0':
+					return $elm$core$Result$Ok(10);
+				case '-':
+					return $elm$core$Result$Ok(11);
+				case '=':
+					return $elm$core$Result$Ok(12);
+				case 'q':
+					return $elm$core$Result$Ok(0);
+				case 'w':
+					return $elm$core$Result$Ok(1);
+				case 'e':
+					return $elm$core$Result$Ok(2);
+				case 'r':
+					return $elm$core$Result$Ok(3);
+				case 't':
+					return $elm$core$Result$Ok(4);
+				case 'y':
+					return $elm$core$Result$Ok(5);
+				case 'u':
+					return $elm$core$Result$Ok(6);
+				case 'i':
+					return $elm$core$Result$Ok(7);
+				case 'o':
+					return $elm$core$Result$Ok(8);
+				case 'p':
+					return $elm$core$Result$Ok(9);
+				case '[':
+					return $elm$core$Result$Ok(10);
+				case ']':
+					return $elm$core$Result$Ok(11);
+				case '\\':
+					return $elm$core$Result$Ok(12);
+				default:
+					break _v0$26;
+			}
+		} else {
+			break _v0$26;
+		}
 	}
+	return $elm$core$Result$Err(
+		$author$project$Scale$UnassignedKey(key));
 };
 var $elm$core$Result$map = F2(
 	function (func, ra) {
@@ -5981,7 +6010,7 @@ var $author$project$Main$update = F2(
 	});
 var $elm$browser$Browser$Document = F2(
 	function (title, body) {
-		return {ad: body, bU: title};
+		return {ad: body, bV: title};
 	});
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -6469,6 +6498,6 @@ var $author$project$Main$view = function (model) {
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
-	{bu: $author$project$Main$init, bG: $author$project$Main$ChangeUrl, bH: $author$project$Main$loadUrlFromUrlRequest, bR: $author$project$Main$subscriptions, bV: $author$project$Main$update, bW: $author$project$Main$view});
+	{bu: $author$project$Main$init, bH: $author$project$Main$ChangeUrl, bI: $author$project$Main$loadUrlFromUrlRequest, bS: $author$project$Main$subscriptions, bW: $author$project$Main$update, bX: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));

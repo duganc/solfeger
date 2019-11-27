@@ -5,6 +5,10 @@ import Json.Decode as Decode
 
 type KeyboardKey
     = CharacterKey String
+    | Shift
+    | Meta
+    | Alt
+    | Control
 
 
 toString : KeyboardKey -> String
@@ -13,7 +17,38 @@ toString key =
         CharacterKey s ->
             s
 
+        Shift ->
+            "Shift"
+
+        Meta ->
+            "Meta"
+
+        Alt ->
+            "Alt"
+
+        Control ->
+            "Control"
+
 
 keyDecoder : Decode.Decoder KeyboardKey
 keyDecoder =
-    Decode.field "key" Decode.string |> Decode.map CharacterKey
+    Decode.map toKey (Decode.field "key" Decode.string)
+
+
+toKey : String -> KeyboardKey
+toKey s =
+    case s of
+        "Alt" ->
+            Alt
+
+        "Control" ->
+            Control
+
+        "Meta" ->
+            Meta
+
+        "Shift" ->
+            Shift
+
+        _ ->
+            CharacterKey s

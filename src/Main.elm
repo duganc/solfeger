@@ -39,13 +39,14 @@ port playTone : String -> Cmd msg
 
 type alias Model =
     { isKeyPressed : Dict Int Bool
+    , octaveAdjustment : Int
     , selectedScale : Scale
     }
 
 
 init : Flags -> Url -> key -> ( Model, Cmd Msg )
 init _ _ _ =
-    ( Model (Dict.fromList (range 0 12 |> List.map (\i -> ( i, False )))) Scale.default, Cmd.none )
+    ( Model (Dict.fromList (range 0 12 |> List.map (\i -> ( i, False )))) 0 Scale.default, Cmd.none )
 
 
 type alias Flags =

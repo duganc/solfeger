@@ -4,6 +4,7 @@ body {
 
 p, a, div, button {
   font-family: Lato, sans-serif;
+  white-space: pre-line
 }
 
 

@@ -187,6 +187,45 @@ keyboardKeyToInt key =
         CharacterKey "=" ->
             Ok 12
 
+        CharacterKey "~" ->
+            Ok 0
+
+        CharacterKey "!" ->
+            Ok 1
+
+        CharacterKey "@" ->
+            Ok 2
+
+        CharacterKey "#" ->
+            Ok 3
+
+        CharacterKey "$" ->
+            Ok 4
+
+        CharacterKey "%" ->
+            Ok 5
+
+        CharacterKey "^" ->
+            Ok 6
+
+        CharacterKey "&" ->
+            Ok 7
+
+        CharacterKey "*" ->
+            Ok 8
+
+        CharacterKey "(" ->
+            Ok 9
+
+        CharacterKey ")" ->
+            Ok 10
+
+        CharacterKey "_" ->
+            Ok 11
+
+        CharacterKey "+" ->
+            Ok 12
+
         CharacterKey "q" ->
             Ok 0
 
@@ -224,6 +263,45 @@ keyboardKeyToInt key =
             Ok 11
 
         CharacterKey "\\" ->
+            Ok 12
+
+        CharacterKey "Q" ->
+            Ok 0
+
+        CharacterKey "W" ->
+            Ok 1
+
+        CharacterKey "E" ->
+            Ok 2
+
+        CharacterKey "R" ->
+            Ok 3
+
+        CharacterKey "T" ->
+            Ok 4
+
+        CharacterKey "Y" ->
+            Ok 5
+
+        CharacterKey "U" ->
+            Ok 6
+
+        CharacterKey "I" ->
+            Ok 7
+
+        CharacterKey "O" ->
+            Ok 8
+
+        CharacterKey "P" ->
+            Ok 9
+
+        CharacterKey "{" ->
+            Ok 10
+
+        CharacterKey "}" ->
+            Ok 11
+
+        CharacterKey "|" ->
             Ok 12
 
         _ ->

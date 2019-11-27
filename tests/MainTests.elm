@@ -95,7 +95,7 @@ testRenderKeysRendersTheCorrectNumberOfKeys : Test
 testRenderKeysRendersTheCorrectNumberOfKeys =
     test "renderKeysRendersTheCorrectNumberOfKeys" <|
         \() ->
-            renderKeys (Model Dict.empty Scale.default) 3
+            renderKeys (Model Dict.empty 0 Scale.default) 3
                 |> Query.fromHtml
                 |> Query.findAll [ Selector.class "key" ]
                 |> Query.count (Expect.equal 3)
@@ -115,7 +115,7 @@ testKeyRenders : Test
 testKeyRenders =
     test "keyRenders" <|
         \() ->
-            renderKey (Model Dict.empty Scale.default) 57
+            renderKey (Model Dict.empty 0 Scale.default) 57
                 |> Query.fromHtml
                 |> Query.has [ Selector.id "key-57" ]
 

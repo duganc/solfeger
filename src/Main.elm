@@ -39,13 +39,14 @@ port playTone : String -> Cmd msg
 
 type alias Model =
     { isKeyPressed : Dict Int Bool
+    , octaveAdjustment : Int
     , selectedScale : Scale
     }
 
 
 init : Flags -> Url -> key -> ( Model, Cmd Msg )
 init _ _ _ =
-    ( Model (Dict.fromList (range 0 12 |> List.map (\i -> ( i, False )))) Scale.default, Cmd.none )
+    ( Model (Dict.fromList (range 0 12 |> List.map (\i -> ( i, False )))) 0 Scale.default, Cmd.none )
 
 
 type alias Flags =
@@ -82,20 +83,51 @@ update msg model =
                     ( model, Cmd.none )
 
         KeyDownOn keyboardKey ->
-            case fromKeyboardKey model.selectedScale keyboardKey of
-                Ok note ->
-                    ( pressKeyOnModel model note, playTone (Note.toString note) )
+            case keyboardKey of
+                CharacterKey _ ->
+                    case fromKeyboardKey model.selectedScale keyboardKey of
+                        Ok note ->
+                            ( pressKeyOnModel model note, playTone (note |> adjustOctave model.octaveAdjustment |> Note.toString) )
 
-                Err s ->
+                        Err s ->
+                            ( model, Cmd.none )
+
+                Shift ->
+                    ( setOctaveAdjustment 1 model, Cmd.none )
+
+                Control ->
+                    ( setOctaveAdjustment -1 model, Cmd.none )
+
+                _ ->
                     ( model, Cmd.none )
 
         KeyUpOn keyboardKey ->
-            case fromKeyboardKey model.selectedScale keyboardKey of
-                Ok note ->
-                    ( releaseKeyOnModel model note, Cmd.none )
+            case keyboardKey of
+                CharacterKey _ ->
+                    case fromKeyboardKey model.selectedScale keyboardKey of
+                        Ok note ->
+                            ( releaseKeyOnModel model note, Cmd.none )
 
-                Err s ->
-                    ( model, Cmd.none )
+                        Err s ->
+                            ( model, Cmd.none )
+
+                _ ->
+                    ( resetOctaveAdjustment model, Cmd.none )
+
+
+adjustOctave : Int -> Note -> Note
+adjustOctave adjustment note =
+    ( Note.pitchClass note, Note.octave note + adjustment )
+
+
+resetOctaveAdjustment : Model -> Model
+resetOctaveAdjustment =
+    setOctaveAdjustment 0
+
+
+setOctaveAdjustment : Int -> Model -> Model
+setOctaveAdjustment i model =
+    { model | octaveAdjustment = i }
 
 
 pressKeyOnModel : Model -> Note -> Model
@@ -226,7 +258,8 @@ activeKeyInScale scale i =
 
 keyIsInScale : Scale -> Int -> Bool
 keyIsInScale scale i =
-    notes scale |> List.member (modBy 12 i)
+    -- No need to shift for the note since the keys are already shifted
+    notes ( A, Scale.scaleType scale ) |> List.member (modBy 12 i)
 
 
 getKeyName : Int -> String

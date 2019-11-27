@@ -14,7 +14,7 @@ At the moment, this isn't being served anywhere so the best option is to clone t
 
 ## Usage
 
-To play notes, either click them or use the number row on your keyboard from the backtick key to the `=`.  For instance, 4 will be `Mi`, the fifth note of the chromatic scale (because backtick is `Do`, 1 is `Di`, etc.).  
+To play notes, either click them or use the number row on your keyboard from the backtick key to the `=`.  For instance, 4 will be `Mi`, the fifth note of the chromatic scale (because backtick is `Do`, 1 is `Di`, etc.).  The `Q` through `\` keys will also work.  `Shift` can be used to raise the tone by an octave and `Control` can be used to lower it.
 
 ## Todo
 
@@ -30,8 +30,8 @@ To play notes, either click them or use the number row on your keyboard from the
 		 - [x] Buttons to pick scales
 		 - [ ] 0-7 or other subset map to the keys
 		 - [x] Unused keys are faded out
-		 - [ ] Left shift raises note
-		 - [ ] Left function lowers note
+		 - [x] Shift raises note
+		 - [x] Control lowers note
 	     - [x] Overlay scale on piano keys
 	 - [ ] v2 - Content
 	 	 - [ ] Melodies in qwerty

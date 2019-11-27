@@ -12355,6 +12355,13 @@ var $author$project$Main$MouseUpOn = function (a) {
 var $author$project$Main$getKeyName = function (n) {
 	return 'key-' + $elm$core$String$fromInt(n);
 };
+var $author$project$Main$getNoteLabelFromKey = F2(
+	function (scale, i) {
+		return $author$project$Note$pitchClassToString(
+			$author$project$Note$pitchClassFromInt(
+				i + $author$project$Note$pitchClassToInt(
+					$author$project$Scale$pitchClass(scale))));
+	});
 var $author$project$Main$showText = F3(
 	function (ifTrue, ifFalse, _switch) {
 		if (_switch) {
@@ -12395,19 +12402,21 @@ var $author$project$Solfege$toString = function (s) {
 			return 'Ti';
 	}
 };
-var $author$project$Main$getLabelFromKey = F2(
-	function (isKeyPressed, key) {
-		var _v0 = A2($elm$core$Dict$get, key, isKeyPressed);
-		if (_v0.$ === 'Nothing') {
-			return 'Error!';
-		} else {
-			var _switch = _v0.a;
-			return A2(
-				$author$project$Main$showTextOrNothing,
-				$author$project$Solfege$toString(
-					$author$project$Solfege$fromInt(key)),
-				_switch);
-		}
+var $author$project$Main$getLabelFromKey = F3(
+	function (scale, isKeyPressed, key) {
+		return A2($author$project$Main$getNoteLabelFromKey, scale, key) + ('\n' + function () {
+			var _v0 = A2($elm$core$Dict$get, key, isKeyPressed);
+			if (_v0.$ === 'Nothing') {
+				return 'Error!';
+			} else {
+				var _switch = _v0.a;
+				return A2(
+					$author$project$Main$showTextOrNothing,
+					$author$project$Solfege$toString(
+						$author$project$Solfege$fromInt(key)),
+					_switch);
+			}
+		}());
 	});
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
@@ -12451,7 +12460,7 @@ var $author$project$Main$renderKey = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$text(
-					A2($author$project$Main$getLabelFromKey, model.isKeyPressed, n))
+					A3($author$project$Main$getLabelFromKey, model.selectedScale, model.isKeyPressed, n))
 				]));
 	});
 var $author$project$Main$renderKeys = F2(
@@ -13360,7 +13369,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main981773943$main = A2(
+var $author$project$Test$Generated$Main1461507920$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13368,7 +13377,7 @@ var $author$project$Test$Generated$Main981773943$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 357319005056436
+		seed: 194816446619327
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13399,10 +13408,10 @@ var $author$project$Test$Generated$Main981773943$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main981773943':{'init':$author$project$Test$Generated$Main981773943$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main1461507920':{'init':$author$project$Test$Generated$Main1461507920$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-10272.sock";
+var pipeFilename = "/tmp/elm_test-10410.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

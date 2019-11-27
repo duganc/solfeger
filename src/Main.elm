@@ -210,7 +210,7 @@ renderKey model n =
         , onMouseDown (MouseDownOn (Key n))
         , onMouseUp (MouseUpOn (Key n))
         ]
-        [ text (getLabelFromKey model.isKeyPressed n) ]
+        [ text (getLabelFromKey model.selectedScale model.isKeyPressed n) ]
 
 
 getKeyName : Int -> String
@@ -218,14 +218,22 @@ getKeyName n =
     "key-" ++ String.fromInt n
 
 
-getLabelFromKey : Dict Int Bool -> Int -> String
-getLabelFromKey isKeyPressed key =
-    case Dict.get key isKeyPressed of
-        Nothing ->
-            "Error!"
+getLabelFromKey : Scale -> Dict Int Bool -> Int -> String
+getLabelFromKey scale isKeyPressed key =
+    getNoteLabelFromKey scale key
+        ++ "\n"
+        ++ (case Dict.get key isKeyPressed of
+                Nothing ->
+                    "Error!"
 
-        Just switch ->
-            showTextOrNothing (Solfege.fromInt key |> Solfege.toString) switch
+                Just switch ->
+                    showTextOrNothing (Solfege.fromInt key |> Solfege.toString) switch
+           )
+
+
+getNoteLabelFromKey : Scale -> Int -> String
+getNoteLabelFromKey scale i =
+    (i + pitchClassToInt (Scale.pitchClass scale)) |> pitchClassFromInt |> pitchClassToString
 
 
 showTextOrNothing : String -> Bool -> String

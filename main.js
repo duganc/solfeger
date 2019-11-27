@@ -5098,7 +5098,7 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$application = _Browser_application;
 var $author$project$Main$Model = F2(
 	function (isKeyPressed, selectedScale) {
-		return {Y: isKeyPressed, q: selectedScale};
+		return {Y: isKeyPressed, o: selectedScale};
 	});
 var $author$project$Note$A = 0;
 var $author$project$Scale$Chromatic = 0;
@@ -5763,7 +5763,7 @@ var $author$project$Main$pressOrReleaseKeyOnModel = F3(
 				Y: A3(
 					$elm$core$Dict$insert,
 					$author$project$Note$toInt(note) - $author$project$Note$pitchClassToInt(
-						$author$project$Scale$pitchClass(model.q)),
+						$author$project$Scale$pitchClass(model.o)),
 					isPress,
 					model.Y)
 			});
@@ -5909,18 +5909,18 @@ var $author$project$Main$update = F2(
 								$author$project$Note$fromInt(i)),
 							$author$project$Main$playTone(
 								$author$project$Note$toString(
-									A2($author$project$Scale$fromKeyClick, model.q, i))));
+									A2($author$project$Scale$fromKeyClick, model.o, i))));
 					case 1:
 						var i = b.a;
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
 								{
-									q: _Utils_Tuple2(
-										$author$project$Scale$pitchClass(model.q),
+									o: _Utils_Tuple2(
+										$author$project$Scale$pitchClass(model.o),
 										A2(
 											$elm$core$Result$withDefault,
-											$author$project$Scale$scaleType(model.q),
+											$author$project$Scale$scaleType(model.o),
 											$author$project$Scale$scaleTypeFromInt(i)))
 								}),
 							$elm$core$Platform$Cmd$none);
@@ -5930,9 +5930,9 @@ var $author$project$Main$update = F2(
 							_Utils_update(
 								model,
 								{
-									q: _Utils_Tuple2(
+									o: _Utils_Tuple2(
 										$author$project$Note$pitchClassFromInt(i),
-										$author$project$Scale$scaleType(model.q))
+										$author$project$Scale$scaleType(model.o))
 								}),
 							$elm$core$Platform$Cmd$none);
 				}
@@ -5951,7 +5951,7 @@ var $author$project$Main$update = F2(
 				}
 			case 3:
 				var keyboardKey = msg.a;
-				var _v3 = A2($author$project$Scale$fromKeyboardKey, model.q, keyboardKey);
+				var _v3 = A2($author$project$Scale$fromKeyboardKey, model.o, keyboardKey);
 				if (!_v3.$) {
 					var note = _v3.a;
 					return _Utils_Tuple2(
@@ -5964,7 +5964,7 @@ var $author$project$Main$update = F2(
 				}
 			default:
 				var keyboardKey = msg.a;
-				var _v4 = A2($author$project$Scale$fromKeyboardKey, model.q, keyboardKey);
+				var _v4 = A2($author$project$Scale$fromKeyboardKey, model.o, keyboardKey);
 				if (!_v4.$) {
 					var note = _v4.a;
 					return _Utils_Tuple2(
@@ -6075,6 +6075,13 @@ var $elm$core$Dict$get = F2(
 			}
 		}
 	});
+var $author$project$Main$getNoteLabelFromKey = F2(
+	function (scale, i) {
+		return $author$project$Note$pitchClassToString(
+			$author$project$Note$pitchClassFromInt(
+				i + $author$project$Note$pitchClassToInt(
+					$author$project$Scale$pitchClass(scale))));
+	});
 var $author$project$Main$showText = F3(
 	function (ifTrue, ifFalse, _switch) {
 		if (_switch) {
@@ -6115,19 +6122,21 @@ var $author$project$Solfege$toString = function (s) {
 			return 'Ti';
 	}
 };
-var $author$project$Main$getLabelFromKey = F2(
-	function (isKeyPressed, key) {
-		var _v0 = A2($elm$core$Dict$get, key, isKeyPressed);
-		if (_v0.$ === 1) {
-			return 'Error!';
-		} else {
-			var _switch = _v0.a;
-			return A2(
-				$author$project$Main$showTextOrNothing,
-				$author$project$Solfege$toString(
-					$author$project$Solfege$fromInt(key)),
-				_switch);
-		}
+var $author$project$Main$getLabelFromKey = F3(
+	function (scale, isKeyPressed, key) {
+		return A2($author$project$Main$getNoteLabelFromKey, scale, key) + ('\n' + function () {
+			var _v0 = A2($elm$core$Dict$get, key, isKeyPressed);
+			if (_v0.$ === 1) {
+				return 'Error!';
+			} else {
+				var _switch = _v0.a;
+				return A2(
+					$author$project$Main$showTextOrNothing,
+					$author$project$Solfege$toString(
+						$author$project$Solfege$fromInt(key)),
+					_switch);
+			}
+		}());
 	});
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
@@ -6174,7 +6183,7 @@ var $author$project$Main$renderKey = F2(
 			_List_fromArray(
 				[
 					$elm$html$Html$text(
-					A2($author$project$Main$getLabelFromKey, model.Y, n))
+					A3($author$project$Main$getLabelFromKey, model.o, model.Y, n))
 				]));
 	});
 var $author$project$Main$renderKeys = F2(
@@ -6367,7 +6376,7 @@ var $author$project$Main$view = function (model) {
 					[
 						$elm$html$Html$Attributes$class('table')
 					]),
-				$author$project$Main$renderScaleSelector(model.q)),
+				$author$project$Main$renderScaleSelector(model.o)),
 				$author$project$Main$viewFooter
 			]));
 };

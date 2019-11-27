@@ -12394,7 +12394,10 @@ var $author$project$Main$keyIsInScale = F2(
 		return A2(
 			$elm$core$List$member,
 			A2($elm$core$Basics$modBy, 12, i),
-			$author$project$Scale$notes(scale));
+			$author$project$Scale$notes(
+				_Utils_Tuple2(
+					$author$project$Note$A,
+					$author$project$Scale$scaleType(scale))));
 	});
 var $author$project$Main$activeKeyInScale = F2(
 	function (scale, i) {
@@ -13388,7 +13391,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main2475038480$main = A2(
+var $author$project$Test$Generated$Main2602512328$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13396,7 +13399,7 @@ var $author$project$Test$Generated$Main2475038480$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 109196603800525
+		seed: 83445858423124
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13427,10 +13430,10 @@ var $author$project$Test$Generated$Main2475038480$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main2475038480':{'init':$author$project$Test$Generated$Main2475038480$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main2602512328':{'init':$author$project$Test$Generated$Main2602512328$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-10647.sock";
+var pipeFilename = "/tmp/elm_test-10866.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

@@ -6071,7 +6071,10 @@ var $author$project$Main$keyIsInScale = F2(
 		return A2(
 			$elm$core$List$member,
 			A2($elm$core$Basics$modBy, 12, i),
-			$author$project$Scale$notes(scale));
+			$author$project$Scale$notes(
+				_Utils_Tuple2(
+					0,
+					$author$project$Scale$scaleType(scale))));
 	});
 var $author$project$Main$activeKeyInScale = F2(
 	function (scale, i) {

@@ -226,7 +226,8 @@ activeKeyInScale scale i =
 
 keyIsInScale : Scale -> Int -> Bool
 keyIsInScale scale i =
-    notes scale |> List.member (modBy 12 i)
+    -- No need to shift for the note since the keys are already shifted
+    notes ( A, Scale.scaleType scale ) |> List.member (modBy 12 i)
 
 
 getKeyName : Int -> String

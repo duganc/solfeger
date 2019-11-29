@@ -1,4 +1,4 @@
-module PageTests exposing (..)
+module Page.SolfegePageTests exposing (..)
 
 import Dict
 import Expect exposing (Expectation)
@@ -9,7 +9,7 @@ import KeyboardKey exposing (..)
 import List exposing (range)
 import Main exposing (Model(..), Msg(..), init, loadUrlFromUrlRequest, update, view)
 import Note exposing (..)
-import Page exposing (..)
+import Page.SolfegePage as SolfegePage exposing (..)
 import ProgramTest exposing (ProgramTest, SimulatedSub, clickButton, ensureViewHas, expectViewHas, simulateDomEvent, start)
 import Scale exposing (Scale, ScaleType(..), default, scaleTypeFromInt, scaleTypeToString)
 import SimulatedEffect.Ports
@@ -153,9 +153,9 @@ stubInitModel =
     Main.init () (Url Http "mystubbedtestsolfegeapp.com" Nothing "" Nothing Nothing) ()
 
 
-stubPageModel : ( Page.Model, Cmd Page.Msg )
+stubPageModel : ( SolfegePage.Model, Cmd SolfegePage.Msg )
 stubPageModel =
-    Page.init () (Url Http "mystubbedtestsolfegeapp.com" Nothing "" Nothing Nothing) ()
+    SolfegePage.init () (Url Http "mystubbedtestsolfegeapp.com" Nothing "" Nothing Nothing) ()
 
 
 simulateSubscriptions : Main.Model -> SimulatedSub Main.Msg

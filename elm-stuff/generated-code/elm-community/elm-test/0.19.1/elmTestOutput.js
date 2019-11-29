@@ -11606,11 +11606,11 @@ var $avh4$elm_program_test$ProgramTest$simulateDomEvent = F3(
 			_Utils_Tuple2(eventName, eventValue),
 			programTest);
 	});
-var $author$project$PageTests$mouseDown = function (query) {
+var $author$project$Page$SolfegePageTests$mouseDown = function (query) {
 	return A2($avh4$elm_program_test$ProgramTest$simulateDomEvent, query, $elm_explorations$test$Test$Html$Event$mouseDown);
 };
 var $elm_explorations$test$Test$Html$Event$mouseUp = _Utils_Tuple2('mouseup', $elm_explorations$test$Test$Html$Event$emptyObject);
-var $author$project$PageTests$mouseUp = function (query) {
+var $author$project$Page$SolfegePageTests$mouseUp = function (query) {
 	return A2($avh4$elm_program_test$ProgramTest$simulateDomEvent, query, $elm_explorations$test$Test$Html$Event$mouseUp);
 };
 var $author$project$Main$ChangeUrl = function (a) {
@@ -12119,16 +12119,16 @@ var $author$project$Main$Solfege = function (a) {
 var $author$project$Main$SolfegeMsg = function (a) {
 	return {$: 'SolfegeMsg', a: a};
 };
-var $author$project$Page$Model = F3(
+var $author$project$Page$SolfegePage$Model = F3(
 	function (isKeyPressed, octaveAdjustment, selectedScale) {
 		return {isKeyPressed: isKeyPressed, octaveAdjustment: octaveAdjustment, selectedScale: selectedScale};
 	});
 var $author$project$Scale$default = _Utils_Tuple2($author$project$Note$A, $author$project$Scale$Chromatic);
-var $author$project$Page$init = F3(
+var $author$project$Page$SolfegePage$init = F3(
 	function (_v0, _v1, _v2) {
 		return _Utils_Tuple2(
 			A3(
-				$author$project$Page$Model,
+				$author$project$Page$SolfegePage$Model,
 				$elm$core$Dict$fromList(
 					A2(
 						$elm$core$List$map,
@@ -12155,7 +12155,7 @@ var $author$project$Main$init = F3(
 			$author$project$Main$tupleMap,
 			$author$project$Main$Solfege,
 			$elm$core$Platform$Cmd$map($author$project$Main$SolfegeMsg),
-			A3($author$project$Page$init, flags, url, key));
+			A3($author$project$Page$SolfegePage$init, flags, url, key));
 	});
 var $author$project$Main$urlRequestToUrl = function (request) {
 	if (request.$ === 'External') {
@@ -12173,10 +12173,10 @@ var $author$project$Main$urlRequestToUrl = function (request) {
 	}
 };
 var $author$project$Main$loadUrlFromUrlRequest = A2($elm$core$Basics$composeR, $author$project$Main$urlRequestToUrl, $author$project$Main$ChangeUrl);
-var $author$project$Page$KeyDownOn = function (a) {
+var $author$project$Page$SolfegePage$KeyDownOn = function (a) {
 	return {$: 'KeyDownOn', a: a};
 };
-var $author$project$Page$KeyUpOn = function (a) {
+var $author$project$Page$SolfegePage$KeyUpOn = function (a) {
 	return {$: 'KeyUpOn', a: a};
 };
 var $avh4$elm_program_test$SimulatedEffect$BatchSub = function (a) {
@@ -12238,15 +12238,15 @@ var $avh4$elm_program_test$SimulatedEffect$Ports$subscribe = F3(
 			portName,
 			A2($elm$json$Json$Decode$map, toMsg, decoder));
 	});
-var $author$project$PageTests$simulateSubscriptions = function (_v0) {
+var $author$project$Page$SolfegePageTests$simulateSubscriptions = function (_v0) {
 	return $avh4$elm_program_test$SimulatedEffect$Sub$batch(
 		A2(
 			$elm$core$List$map,
 			$avh4$elm_program_test$SimulatedEffect$Sub$map($author$project$Main$SolfegeMsg),
 			_List_fromArray(
 				[
-					A3($avh4$elm_program_test$SimulatedEffect$Ports$subscribe, 'keydown', $author$project$KeyboardKey$keyDecoder, $author$project$Page$KeyDownOn),
-					A3($avh4$elm_program_test$SimulatedEffect$Ports$subscribe, 'keyup', $author$project$KeyboardKey$keyDecoder, $author$project$Page$KeyUpOn)
+					A3($avh4$elm_program_test$SimulatedEffect$Ports$subscribe, 'keydown', $author$project$KeyboardKey$keyDecoder, $author$project$Page$SolfegePage$KeyDownOn),
+					A3($avh4$elm_program_test$SimulatedEffect$Ports$subscribe, 'keyup', $author$project$KeyboardKey$keyDecoder, $author$project$Page$SolfegePage$KeyUpOn)
 				])));
 };
 var $avh4$elm_program_test$ProgramTest$start = F2(
@@ -12282,19 +12282,19 @@ var $elm$core$Tuple$second = function (_v0) {
 	return y;
 };
 var $author$project$Note$octave = $elm$core$Tuple$second;
-var $author$project$Page$adjustOctave = F2(
+var $author$project$Page$SolfegePage$adjustOctave = F2(
 	function (adjustment, note) {
 		return _Utils_Tuple2(
 			$author$project$Note$pitchClass(note),
 			$author$project$Note$octave(note) + adjustment);
 	});
-var $author$project$Page$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
+var $author$project$Page$SolfegePage$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
 var $author$project$Note$toInt = function (note) {
 	return $author$project$Note$pitchClassToInt(
 		$author$project$Note$pitchClass(note)) + (($author$project$Note$octave(note) - $author$project$Note$defaultOctave(
 		$author$project$Note$pitchClass(note))) * 12);
 };
-var $author$project$Page$pressOrReleaseKeyOnModel = F3(
+var $author$project$Page$SolfegePage$pressOrReleaseKeyOnModel = F3(
 	function (isPress, model, note) {
 		return _Utils_update(
 			model,
@@ -12307,15 +12307,15 @@ var $author$project$Page$pressOrReleaseKeyOnModel = F3(
 					model.isKeyPressed)
 			});
 	});
-var $author$project$Page$pressKeyOnModel = $author$project$Page$pressOrReleaseKeyOnModel(true);
-var $author$project$Page$releaseKeyOnModel = $author$project$Page$pressOrReleaseKeyOnModel(false);
-var $author$project$Page$setOctaveAdjustment = F2(
+var $author$project$Page$SolfegePage$pressKeyOnModel = $author$project$Page$SolfegePage$pressOrReleaseKeyOnModel(true);
+var $author$project$Page$SolfegePage$releaseKeyOnModel = $author$project$Page$SolfegePage$pressOrReleaseKeyOnModel(false);
+var $author$project$Page$SolfegePage$setOctaveAdjustment = F2(
 	function (i, model) {
 		return _Utils_update(
 			model,
 			{octaveAdjustment: i});
 	});
-var $author$project$Page$resetOctaveAdjustment = $author$project$Page$setOctaveAdjustment(0);
+var $author$project$Page$SolfegePage$resetOctaveAdjustment = $author$project$Page$SolfegePage$setOctaveAdjustment(0);
 var $author$project$Scale$scaleType = $elm$core$Tuple$second;
 var $author$project$Scale$Dorian = {$: 'Dorian'};
 var $author$project$Scale$InvalidScale = function (a) {
@@ -12391,7 +12391,7 @@ var $elm$core$Result$withDefault = F2(
 			return def;
 		}
 	});
-var $author$project$Page$update = F2(
+var $author$project$Page$SolfegePage$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'MouseDownOn':
@@ -12401,15 +12401,15 @@ var $author$project$Page$update = F2(
 						var i = b.a;
 						return _Utils_Tuple2(
 							A2(
-								$author$project$Page$pressKeyOnModel,
+								$author$project$Page$SolfegePage$pressKeyOnModel,
 								model,
 								$author$project$Note$fromInt(
 									i + $author$project$Note$pitchClassToInt(
 										$author$project$Scale$pitchClass(model.selectedScale)))),
-							$author$project$Page$playTone(
+							$author$project$Page$SolfegePage$playTone(
 								$author$project$Note$toString(
 									A2(
-										$author$project$Page$adjustOctave,
+										$author$project$Page$SolfegePage$adjustOctave,
 										model.octaveAdjustment,
 										A2($author$project$Scale$fromKeyClick, model.selectedScale, i)))));
 					case 'ScaleSelector':
@@ -12444,7 +12444,7 @@ var $author$project$Page$update = F2(
 					var i = b.a;
 					return _Utils_Tuple2(
 						A2(
-							$author$project$Page$releaseKeyOnModel,
+							$author$project$Page$SolfegePage$releaseKeyOnModel,
 							model,
 							$author$project$Note$fromInt(
 								i + $author$project$Note$pitchClassToInt(
@@ -12461,21 +12461,21 @@ var $author$project$Page$update = F2(
 						if (_v4.$ === 'Ok') {
 							var note = _v4.a;
 							return _Utils_Tuple2(
-								A2($author$project$Page$pressKeyOnModel, model, note),
-								$author$project$Page$playTone(
+								A2($author$project$Page$SolfegePage$pressKeyOnModel, model, note),
+								$author$project$Page$SolfegePage$playTone(
 									$author$project$Note$toString(
-										A2($author$project$Page$adjustOctave, model.octaveAdjustment, note))));
+										A2($author$project$Page$SolfegePage$adjustOctave, model.octaveAdjustment, note))));
 						} else {
 							var s = _v4.a;
 							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 						}
 					case 'Shift':
 						return _Utils_Tuple2(
-							A2($author$project$Page$setOctaveAdjustment, 1, model),
+							A2($author$project$Page$SolfegePage$setOctaveAdjustment, 1, model),
 							$elm$core$Platform$Cmd$none);
 					case 'Control':
 						return _Utils_Tuple2(
-							A2($author$project$Page$setOctaveAdjustment, -1, model),
+							A2($author$project$Page$SolfegePage$setOctaveAdjustment, -1, model),
 							$elm$core$Platform$Cmd$none);
 					default:
 						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -12487,7 +12487,7 @@ var $author$project$Page$update = F2(
 					if (_v6.$ === 'Ok') {
 						var note = _v6.a;
 						return _Utils_Tuple2(
-							A2($author$project$Page$releaseKeyOnModel, model, note),
+							A2($author$project$Page$SolfegePage$releaseKeyOnModel, model, note),
 							$elm$core$Platform$Cmd$none);
 					} else {
 						var s = _v6.a;
@@ -12495,7 +12495,7 @@ var $author$project$Page$update = F2(
 					}
 				} else {
 					return _Utils_Tuple2(
-						$author$project$Page$resetOctaveAdjustment(model),
+						$author$project$Page$SolfegePage$resetOctaveAdjustment(model),
 						$elm$core$Platform$Cmd$none);
 				}
 		}
@@ -12516,7 +12516,7 @@ var $author$project$Main$update = F2(
 					$author$project$Main$tupleMap,
 					$author$project$Main$Solfege,
 					$elm$core$Platform$Cmd$map($author$project$Main$SolfegeMsg),
-					A2($author$project$Page$update, message, m));
+					A2($author$project$Page$SolfegePage$update, message, m));
 			} else {
 				return _Utils_Tuple2(
 					$author$project$Main$Error('Update received SolfegeMsg but model wasn\'t Solfege.'),
@@ -12541,13 +12541,13 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
-var $author$project$Page$Key = function (a) {
+var $author$project$Page$SolfegePage$Key = function (a) {
 	return {$: 'Key', a: a};
 };
-var $author$project$Page$MouseDownOn = function (a) {
+var $author$project$Page$SolfegePage$MouseDownOn = function (a) {
 	return {$: 'MouseDownOn', a: a};
 };
-var $author$project$Page$MouseUpOn = function (a) {
+var $author$project$Page$SolfegePage$MouseUpOn = function (a) {
 	return {$: 'MouseUpOn', a: a};
 };
 var $author$project$Scale$notes = function (_v0) {
@@ -12585,7 +12585,7 @@ var $author$project$Scale$notes = function (_v0) {
 			}
 		}());
 };
-var $author$project$Page$keyIsInScale = F2(
+var $author$project$Page$SolfegePage$keyIsInScale = F2(
 	function (scale, i) {
 		return A2(
 			$elm$core$List$member,
@@ -12595,26 +12595,26 @@ var $author$project$Page$keyIsInScale = F2(
 					$author$project$Note$A,
 					$author$project$Scale$scaleType(scale))));
 	});
-var $author$project$Page$activeKeyInScale = F2(
+var $author$project$Page$SolfegePage$activeKeyInScale = F2(
 	function (scale, i) {
-		var _v0 = A2($author$project$Page$keyIsInScale, scale, i);
+		var _v0 = A2($author$project$Page$SolfegePage$keyIsInScale, scale, i);
 		if (_v0) {
 			return $elm$html$Html$Attributes$class('black-on-white');
 		} else {
 			return $elm$html$Html$Attributes$class('white-on-dark');
 		}
 	});
-var $author$project$Page$getKeyName = function (n) {
+var $author$project$Page$SolfegePage$getKeyName = function (n) {
 	return 'key-' + $elm$core$String$fromInt(n);
 };
-var $author$project$Page$getNoteLabelFromKey = F2(
+var $author$project$Page$SolfegePage$getNoteLabelFromKey = F2(
 	function (scale, i) {
 		return $author$project$Note$pitchClassToString(
 			$author$project$Note$pitchClassFromInt(
 				i + $author$project$Note$pitchClassToInt(
 					$author$project$Scale$pitchClass(scale))));
 	});
-var $author$project$Page$showText = F3(
+var $author$project$Page$SolfegePage$showText = F3(
 	function (ifTrue, ifFalse, _switch) {
 		if (_switch) {
 			return ifTrue;
@@ -12622,9 +12622,9 @@ var $author$project$Page$showText = F3(
 			return ifFalse;
 		}
 	});
-var $author$project$Page$showTextOrNothing = F2(
+var $author$project$Page$SolfegePage$showTextOrNothing = F2(
 	function (ifTrue, _switch) {
-		return A3($author$project$Page$showText, ifTrue, '', _switch);
+		return A3($author$project$Page$SolfegePage$showText, ifTrue, '', _switch);
 	});
 var $author$project$Solfege$toString = function (s) {
 	switch (s.$) {
@@ -12654,16 +12654,16 @@ var $author$project$Solfege$toString = function (s) {
 			return 'Ti';
 	}
 };
-var $author$project$Page$getLabelFromKey = F3(
+var $author$project$Page$SolfegePage$getLabelFromKey = F3(
 	function (scale, isKeyPressed, key) {
-		return A2($author$project$Page$getNoteLabelFromKey, scale, key) + ('\n' + function () {
+		return A2($author$project$Page$SolfegePage$getNoteLabelFromKey, scale, key) + ('\n' + function () {
 			var _v0 = A2($elm$core$Dict$get, key, isKeyPressed);
 			if (_v0.$ === 'Nothing') {
 				return 'Error!';
 			} else {
 				var _switch = _v0.a;
 				return A2(
-					$author$project$Page$showTextOrNothing,
+					$author$project$Page$SolfegePage$showTextOrNothing,
 					$author$project$Solfege$toString(
 						$author$project$Solfege$fromInt(key)),
 					_switch);
@@ -12691,64 +12691,64 @@ var $elm$html$Html$Events$onMouseUp = function (msg) {
 		'mouseup',
 		$elm$json$Json$Decode$succeed(msg));
 };
-var $author$project$Page$renderKey = F2(
+var $author$project$Page$SolfegePage$renderKey = F2(
 	function (model, n) {
 		return A2(
 			$elm$html$Html$div,
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$class('key'),
-					A2($author$project$Page$activeKeyInScale, model.selectedScale, n),
+					A2($author$project$Page$SolfegePage$activeKeyInScale, model.selectedScale, n),
 					$elm$html$Html$Attributes$id(
-					$author$project$Page$getKeyName(n)),
+					$author$project$Page$SolfegePage$getKeyName(n)),
 					$elm$html$Html$Events$onMouseDown(
-					$author$project$Page$MouseDownOn(
-						$author$project$Page$Key(n))),
+					$author$project$Page$SolfegePage$MouseDownOn(
+						$author$project$Page$SolfegePage$Key(n))),
 					$elm$html$Html$Events$onMouseUp(
-					$author$project$Page$MouseUpOn(
-						$author$project$Page$Key(n)))
+					$author$project$Page$SolfegePage$MouseUpOn(
+						$author$project$Page$SolfegePage$Key(n)))
 				]),
 			_List_fromArray(
 				[
 					$elm$html$Html$text(
-					A3($author$project$Page$getLabelFromKey, model.selectedScale, model.isKeyPressed, n))
+					A3($author$project$Page$SolfegePage$getLabelFromKey, model.selectedScale, model.isKeyPressed, n))
 				]));
 	});
-var $author$project$Page$renderKeys = F2(
+var $author$project$Page$SolfegePage$renderKeys = F2(
 	function (model, n) {
 		return A2(
 			$elm$html$Html$div,
 			_List_Nil,
 			A2(
 				$elm$core$List$map,
-				$author$project$Page$renderKey(model),
+				$author$project$Page$SolfegePage$renderKey(model),
 				A2($elm$core$List$range, 0, n - 1)));
 	});
-var $author$project$Page$NoteSelector = function (a) {
+var $author$project$Page$SolfegePage$NoteSelector = function (a) {
 	return {$: 'NoteSelector', a: a};
 };
-var $author$project$Page$activeBackgroundFromPitchClass = F2(
+var $author$project$Page$SolfegePage$activeBackgroundFromPitchClass = F2(
 	function (pc, i) {
 		return _Utils_eq(
 			pc,
 			$author$project$Note$pitchClassFromInt(i)) ? $elm$html$Html$Attributes$class('bg-white') : $elm$html$Html$Attributes$class('bg-medium');
 	});
-var $author$project$Page$renderNoteSelector = F2(
+var $author$project$Page$SolfegePage$renderNoteSelector = F2(
 	function (pc, i) {
 		return A2(
 			$elm$html$Html$div,
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$class('scale-selector'),
-					A2($author$project$Page$activeBackgroundFromPitchClass, pc, i),
+					A2($author$project$Page$SolfegePage$activeBackgroundFromPitchClass, pc, i),
 					$elm$html$Html$Attributes$id(
 					'scale-note-' + $elm$core$String$fromInt(i)),
 					$elm$html$Html$Events$onMouseDown(
-					$author$project$Page$MouseDownOn(
-						$author$project$Page$NoteSelector(i))),
+					$author$project$Page$SolfegePage$MouseDownOn(
+						$author$project$Page$SolfegePage$NoteSelector(i))),
 					$elm$html$Html$Events$onMouseUp(
-					$author$project$Page$MouseUpOn(
-						$author$project$Page$NoteSelector(i)))
+					$author$project$Page$SolfegePage$MouseUpOn(
+						$author$project$Page$SolfegePage$NoteSelector(i)))
 				]),
 			_List_fromArray(
 				[
@@ -12757,16 +12757,16 @@ var $author$project$Page$renderNoteSelector = F2(
 						$author$project$Note$fromInt(i)))
 				]));
 	});
-var $author$project$Page$getAllNoteSelectors = function (pc) {
+var $author$project$Page$SolfegePage$getAllNoteSelectors = function (pc) {
 	return A2(
 		$elm$core$List$map,
-		$author$project$Page$renderNoteSelector(pc),
+		$author$project$Page$SolfegePage$renderNoteSelector(pc),
 		A2($elm$core$List$range, 0, 11));
 };
-var $author$project$Page$ScaleSelector = function (a) {
+var $author$project$Page$SolfegePage$ScaleSelector = function (a) {
 	return {$: 'ScaleSelector', a: a};
 };
-var $author$project$Page$activeBackgroundFromScaleType = F2(
+var $author$project$Page$SolfegePage$activeBackgroundFromScaleType = F2(
 	function (t, i) {
 		return _Utils_eq(
 			t,
@@ -12795,22 +12795,22 @@ var $author$project$Scale$scaleTypeToString = function (t) {
 			return 'Mixolydian';
 	}
 };
-var $author$project$Page$renderScaleTypeSelector = F2(
+var $author$project$Page$SolfegePage$renderScaleTypeSelector = F2(
 	function (t, i) {
 		return A2(
 			$elm$html$Html$div,
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$class('scale-selector'),
-					A2($author$project$Page$activeBackgroundFromScaleType, t, i),
+					A2($author$project$Page$SolfegePage$activeBackgroundFromScaleType, t, i),
 					$elm$html$Html$Attributes$id(
 					'scale-type-' + $elm$core$String$fromInt(i)),
 					$elm$html$Html$Events$onMouseDown(
-					$author$project$Page$MouseDownOn(
-						$author$project$Page$ScaleSelector(i))),
+					$author$project$Page$SolfegePage$MouseDownOn(
+						$author$project$Page$SolfegePage$ScaleSelector(i))),
 					$elm$html$Html$Events$onMouseUp(
-					$author$project$Page$MouseUpOn(
-						$author$project$Page$ScaleSelector(i)))
+					$author$project$Page$SolfegePage$MouseUpOn(
+						$author$project$Page$SolfegePage$ScaleSelector(i)))
 				]),
 			_List_fromArray(
 				[
@@ -12824,13 +12824,13 @@ var $author$project$Page$renderScaleTypeSelector = F2(
 							$author$project$Scale$scaleTypeFromInt(i))))
 				]));
 	});
-var $author$project$Page$getAllScaleTypeSelectors = function (t) {
+var $author$project$Page$SolfegePage$getAllScaleTypeSelectors = function (t) {
 	return A2(
 		$elm$core$List$map,
-		$author$project$Page$renderScaleTypeSelector(t),
+		$author$project$Page$SolfegePage$renderScaleTypeSelector(t),
 		A2($elm$core$List$range, 0, 7));
 };
-var $author$project$Page$renderScaleSelector = function (scale) {
+var $author$project$Page$SolfegePage$renderScaleSelector = function (scale) {
 	return _List_fromArray(
 		[
 			A2(
@@ -12839,7 +12839,7 @@ var $author$project$Page$renderScaleSelector = function (scale) {
 				[
 					$elm$html$Html$Attributes$class('table')
 				]),
-			$author$project$Page$getAllNoteSelectors(
+			$author$project$Page$SolfegePage$getAllNoteSelectors(
 				$author$project$Scale$pitchClass(scale))),
 			A2(
 			$elm$html$Html$div,
@@ -12847,9 +12847,52 @@ var $author$project$Page$renderScaleSelector = function (scale) {
 				[
 					$elm$html$Html$Attributes$class('table')
 				]),
-			$author$project$Page$getAllScaleTypeSelectors(
+			$author$project$Page$SolfegePage$getAllScaleTypeSelectors(
 				$author$project$Scale$scaleType(scale)))
 		]);
+};
+var $author$project$Page$SolfegePage$view = function (model) {
+	return _List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('table')
+				]),
+			_List_fromArray(
+				[
+					A2($author$project$Page$SolfegePage$renderKeys, model, 13)
+				])),
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('table')
+				]),
+			$author$project$Page$SolfegePage$renderScaleSelector(model.selectedScale))
+		]);
+};
+var $author$project$Main$viewBody = function (model) {
+	if (model.$ === 'Solfege') {
+		var m = model.a;
+		return A2(
+			$elm$core$List$map,
+			$elm$html$Html$map($author$project$Main$SolfegeMsg),
+			$author$project$Page$SolfegePage$view(m));
+	} else {
+		var errorMessage = model.a;
+		return _List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Error: ' + errorMessage)
+					]))
+			]);
+	}
 };
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$Attributes$href = function (url) {
@@ -12910,55 +12953,17 @@ var $author$project$Page$viewHeader = A2(
 						]))
 				]))
 		]));
-var $author$project$Page$view = function (model) {
-	return _List_fromArray(
-		[
-			$author$project$Page$viewHeader,
-			A2(
-			$elm$html$Html$div,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class('table')
-				]),
-			_List_fromArray(
-				[
-					A2($author$project$Page$renderKeys, model, 13)
-				])),
-			A2(
-			$elm$html$Html$div,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class('table')
-				]),
-			$author$project$Page$renderScaleSelector(model.selectedScale)),
-			$author$project$Page$viewFooter
-		]);
-};
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$browser$Browser$Document,
 		'Solfeger',
-		function () {
-			if (model.$ === 'Solfege') {
-				var m = model.a;
-				return A2(
-					$elm$core$List$map,
-					$elm$html$Html$map($author$project$Main$SolfegeMsg),
-					$author$project$Page$view(m));
-			} else {
-				var errorMessage = model.a;
-				return _List_fromArray(
-					[
-						A2(
-						$elm$html$Html$div,
-						_List_Nil,
-						_List_fromArray(
-							[
-								$elm$html$Html$text('Error: ' + errorMessage)
-							]))
-					]);
-			}
-		}());
+		_Utils_ap(
+			_List_fromArray(
+				[$author$project$Page$viewHeader]),
+			_Utils_ap(
+				$author$project$Main$viewBody(model),
+				_List_fromArray(
+					[$author$project$Page$viewFooter]))));
 };
 var $avh4$elm_program_test$ProgramTest$InvalidLocationUrl = F2(
 	function (a, b) {
@@ -13003,14 +13008,14 @@ var $avh4$elm_program_test$ProgramTest$withSimulatedSubscriptions = F2(
 				}),
 			program);
 	});
-var $author$project$PageTests$startProgramForTesting = F2(
+var $author$project$Page$SolfegePageTests$startProgramForTesting = F2(
 	function (initialUrl, flags) {
 		return A2(
 			$avh4$elm_program_test$ProgramTest$start,
 			flags,
 			A2(
 				$avh4$elm_program_test$ProgramTest$withSimulatedSubscriptions,
-				$author$project$PageTests$simulateSubscriptions,
+				$author$project$Page$SolfegePageTests$simulateSubscriptions,
 				A2(
 					$avh4$elm_program_test$ProgramTest$withBaseUrl,
 					initialUrl,
@@ -13021,7 +13026,7 @@ var $elm_explorations$test$Test$Html$Selector$Internal$Text = function (a) {
 	return {$: 'Text', a: a};
 };
 var $elm_explorations$test$Test$Html$Selector$text = $elm_explorations$test$Test$Html$Selector$Internal$Text;
-var $author$project$PageTests$testKeyClickDisplaysSolfege = A2(
+var $author$project$Page$SolfegePageTests$testKeyClickDisplaysSolfege = A2(
 	$elm_explorations$test$Test$test,
 	'keyClickDisplaysSolfege',
 	function (_v0) {
@@ -13033,7 +13038,7 @@ var $author$project$PageTests$testKeyClickDisplaysSolfege = A2(
 					$elm_explorations$test$Test$Html$Selector$text('')
 				]),
 			A2(
-				$author$project$PageTests$mouseUp,
+				$author$project$Page$SolfegePageTests$mouseUp,
 				$elm_explorations$test$Test$Html$Query$find(
 					_List_fromArray(
 						[
@@ -13047,7 +13052,7 @@ var $author$project$PageTests$testKeyClickDisplaysSolfege = A2(
 							$elm_explorations$test$Test$Html$Selector$text('Te')
 						]),
 					A2(
-						$author$project$PageTests$mouseDown,
+						$author$project$Page$SolfegePageTests$mouseDown,
 						$elm_explorations$test$Test$Html$Query$find(
 							_List_fromArray(
 								[
@@ -13061,14 +13066,14 @@ var $author$project$PageTests$testKeyClickDisplaysSolfege = A2(
 									$elm_explorations$test$Test$Html$Selector$class('bg-white')
 								]),
 							A2(
-								$author$project$PageTests$mouseUp,
+								$author$project$Page$SolfegePageTests$mouseUp,
 								$elm_explorations$test$Test$Html$Query$find(
 									_List_fromArray(
 										[
 											$elm_explorations$test$Test$Html$Selector$id('scale-note-6')
 										])),
 								A2(
-									$author$project$PageTests$mouseDown,
+									$author$project$Page$SolfegePageTests$mouseDown,
 									$elm_explorations$test$Test$Html$Query$find(
 										_List_fromArray(
 											[
@@ -13082,7 +13087,7 @@ var $author$project$PageTests$testKeyClickDisplaysSolfege = A2(
 												$elm_explorations$test$Test$Html$Selector$text('')
 											]),
 										A2(
-											$author$project$PageTests$mouseUp,
+											$author$project$Page$SolfegePageTests$mouseUp,
 											$elm_explorations$test$Test$Html$Query$find(
 												_List_fromArray(
 													[
@@ -13096,13 +13101,13 @@ var $author$project$PageTests$testKeyClickDisplaysSolfege = A2(
 														$elm_explorations$test$Test$Html$Selector$text('Ti')
 													]),
 												A2(
-													$author$project$PageTests$mouseDown,
+													$author$project$Page$SolfegePageTests$mouseDown,
 													$elm_explorations$test$Test$Html$Query$find(
 														_List_fromArray(
 															[
 																$elm_explorations$test$Test$Html$Selector$id('key-11')
 															])),
-													A2($author$project$PageTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0))))))))))));
+													A2($author$project$Page$SolfegePageTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0))))))))))));
 	});
 var $author$project$ScaleTests$testKeyClickHandlesHighDo = A2(
 	$elm_explorations$test$Test$test,
@@ -13116,7 +13121,7 @@ var $author$project$ScaleTests$testKeyClickHandlesHighDo = A2(
 				_Utils_Tuple2($author$project$Note$A, $author$project$Scale$Chromatic),
 				12));
 	});
-var $author$project$PageTests$testKeyRenders = A2(
+var $author$project$Page$SolfegePageTests$testKeyRenders = A2(
 	$elm_explorations$test$Test$test,
 	'keyRenders',
 	function (_v0) {
@@ -13128,8 +13133,8 @@ var $author$project$PageTests$testKeyRenders = A2(
 				]),
 			$elm_explorations$test$Test$Html$Query$fromHtml(
 				A2(
-					$author$project$Page$renderKey,
-					A3($author$project$Page$Model, $elm$core$Dict$empty, 0, $author$project$Scale$default),
+					$author$project$Page$SolfegePage$renderKey,
+					A3($author$project$Page$SolfegePage$Model, $elm$core$Dict$empty, 0, $author$project$Scale$default),
 					57)));
 	});
 var $author$project$KeyboardKey$toString = function (key) {
@@ -13147,7 +13152,7 @@ var $author$project$KeyboardKey$toString = function (key) {
 			return 'Control';
 	}
 };
-var $author$project$PageTests$keyboardKeyObject = function (key) {
+var $author$project$Page$SolfegePageTests$keyboardKeyObject = function (key) {
 	return $elm$json$Json$Encode$object(
 		_List_fromArray(
 			[
@@ -13221,7 +13226,7 @@ var $avh4$elm_program_test$ProgramTest$simulateIncomingPort = F3(
 			}
 		}
 	});
-var $author$project$PageTests$testKeyboardKeyPressDisplaysSolfege = A2(
+var $author$project$Page$SolfegePageTests$testKeyboardKeyPressDisplaysSolfege = A2(
 	$elm_explorations$test$Test$test,
 	'keyboardKeyPressDisplaysSolfege',
 	function (_v0) {
@@ -13235,7 +13240,7 @@ var $author$project$PageTests$testKeyboardKeyPressDisplaysSolfege = A2(
 			A3(
 				$avh4$elm_program_test$ProgramTest$simulateIncomingPort,
 				'keyup',
-				$author$project$PageTests$keyboardKeyObject(
+				$author$project$Page$SolfegePageTests$keyboardKeyObject(
 					$author$project$KeyboardKey$CharacterKey('6')),
 				A2(
 					$avh4$elm_program_test$ProgramTest$ensureViewHas,
@@ -13247,7 +13252,7 @@ var $author$project$PageTests$testKeyboardKeyPressDisplaysSolfege = A2(
 					A3(
 						$avh4$elm_program_test$ProgramTest$simulateIncomingPort,
 						'keyup',
-						$author$project$PageTests$keyboardKeyObject(
+						$author$project$Page$SolfegePageTests$keyboardKeyObject(
 							$author$project$KeyboardKey$CharacterKey('5')),
 						A2(
 							$avh4$elm_program_test$ProgramTest$ensureViewHas,
@@ -13259,17 +13264,17 @@ var $author$project$PageTests$testKeyboardKeyPressDisplaysSolfege = A2(
 							A3(
 								$avh4$elm_program_test$ProgramTest$simulateIncomingPort,
 								'keydown',
-								$author$project$PageTests$keyboardKeyObject(
+								$author$project$Page$SolfegePageTests$keyboardKeyObject(
 									$author$project$KeyboardKey$CharacterKey('5')),
-								A2($author$project$PageTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0)))))));
+								A2($author$project$Page$SolfegePageTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0)))))));
 	});
-var $author$project$PageTests$getIdSelector = F2(
+var $author$project$Page$SolfegePageTests$getIdSelector = F2(
 	function (s, i) {
 		return $elm_explorations$test$Test$Html$Selector$id(
 			s + ('-' + $elm$core$String$fromInt(i)));
 	});
-var $author$project$PageTests$getScaleNoteSelector = $author$project$PageTests$getIdSelector('scale-note');
-var $author$project$PageTests$testPageHasScaleNoteSelector = A2(
+var $author$project$Page$SolfegePageTests$getScaleNoteSelector = $author$project$Page$SolfegePageTests$getIdSelector('scale-note');
+var $author$project$Page$SolfegePageTests$testPageHasScaleNoteSelector = A2(
 	$elm_explorations$test$Test$test,
 	'pageHasScaleNoteSelector',
 	function (_v0) {
@@ -13277,12 +13282,12 @@ var $author$project$PageTests$testPageHasScaleNoteSelector = A2(
 			$avh4$elm_program_test$ProgramTest$expectViewHas,
 			A2(
 				$elm$core$List$map,
-				$author$project$PageTests$getScaleNoteSelector,
+				$author$project$Page$SolfegePageTests$getScaleNoteSelector,
 				A2($elm$core$List$range, 0, 11)),
-			A2($author$project$PageTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0));
+			A2($author$project$Page$SolfegePageTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0));
 	});
-var $author$project$PageTests$getScaleTypeSelector = $author$project$PageTests$getIdSelector('scale-type');
-var $author$project$PageTests$testPageHasScaleTypeSelector = A2(
+var $author$project$Page$SolfegePageTests$getScaleTypeSelector = $author$project$Page$SolfegePageTests$getIdSelector('scale-type');
+var $author$project$Page$SolfegePageTests$testPageHasScaleTypeSelector = A2(
 	$elm_explorations$test$Test$test,
 	'pageHasScaleTypeSelector',
 	function (_v0) {
@@ -13290,12 +13295,12 @@ var $author$project$PageTests$testPageHasScaleTypeSelector = A2(
 			$avh4$elm_program_test$ProgramTest$expectViewHas,
 			A2(
 				$elm$core$List$map,
-				$author$project$PageTests$getScaleTypeSelector,
+				$author$project$Page$SolfegePageTests$getScaleTypeSelector,
 				A2($elm$core$List$range, 0, 6)),
-			A2($author$project$PageTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0));
+			A2($author$project$Page$SolfegePageTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0));
 	});
-var $author$project$PageTests$getKeySelector = $author$project$PageTests$getIdSelector('key');
-var $author$project$PageTests$testPageHasTwelveKeys = A2(
+var $author$project$Page$SolfegePageTests$getKeySelector = $author$project$Page$SolfegePageTests$getIdSelector('key');
+var $author$project$Page$SolfegePageTests$testPageHasTwelveKeys = A2(
 	$elm_explorations$test$Test$test,
 	'pageHasTwelveKeys',
 	function (_v0) {
@@ -13303,16 +13308,16 @@ var $author$project$PageTests$testPageHasTwelveKeys = A2(
 			$avh4$elm_program_test$ProgramTest$expectViewHas,
 			A2(
 				$elm$core$List$map,
-				$author$project$PageTests$getKeySelector,
+				$author$project$Page$SolfegePageTests$getKeySelector,
 				A2($elm$core$List$range, 0, 11)),
-			A2($author$project$PageTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0));
+			A2($author$project$Page$SolfegePageTests$startProgramForTesting, 'http://www.mysolfegeapp.com', _Utils_Tuple0));
 	});
-var $author$project$PageTests$stubPageModel = A3(
-	$author$project$Page$init,
+var $author$project$Page$SolfegePageTests$stubPageModel = A3(
+	$author$project$Page$SolfegePage$init,
 	_Utils_Tuple0,
 	A6($elm$url$Url$Url, $elm$url$Url$Http, 'mystubbedtestsolfegeapp.com', $elm$core$Maybe$Nothing, '', $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing),
 	_Utils_Tuple0);
-var $author$project$PageTests$testPressKeyOnModel = A2(
+var $author$project$Page$SolfegePageTests$testPressKeyOnModel = A2(
 	$elm_explorations$test$Test$test,
 	'pressesKeyOnModel',
 	function (_v0) {
@@ -13323,8 +13328,8 @@ var $author$project$PageTests$testPressKeyOnModel = A2(
 				$elm$core$Dict$get,
 				5,
 				A2(
-					$author$project$Page$pressKeyOnModel,
-					$author$project$PageTests$stubPageModel.a,
+					$author$project$Page$SolfegePage$pressKeyOnModel,
+					$author$project$Page$SolfegePageTests$stubPageModel.a,
 					_Utils_Tuple2($author$project$Note$D, 4)).isKeyPressed));
 	});
 var $elm_explorations$test$Test$Html$Query$Internal$multipleToExpectation = F2(
@@ -13374,7 +13379,7 @@ var $elm_explorations$test$Test$Html$Query$findAll = F2(
 				query,
 				$elm_explorations$test$Test$Html$Query$Internal$FindAll(selectors)));
 	});
-var $author$project$PageTests$testRenderKeysRendersTheCorrectNumberOfKeys = A2(
+var $author$project$Page$SolfegePageTests$testRenderKeysRendersTheCorrectNumberOfKeys = A2(
 	$elm_explorations$test$Test$test,
 	'renderKeysRendersTheCorrectNumberOfKeys',
 	function (_v0) {
@@ -13389,8 +13394,8 @@ var $author$project$PageTests$testRenderKeysRendersTheCorrectNumberOfKeys = A2(
 					]),
 				$elm_explorations$test$Test$Html$Query$fromHtml(
 					A2(
-						$author$project$Page$renderKeys,
-						A3($author$project$Page$Model, $elm$core$Dict$empty, 0, $author$project$Scale$default),
+						$author$project$Page$SolfegePage$renderKeys,
+						A3($author$project$Page$SolfegePage$Model, $elm$core$Dict$empty, 0, $author$project$Scale$default),
 						3))));
 	});
 var $elm$core$List$takeReverse = F3(
@@ -13617,23 +13622,23 @@ var $author$project$ScaleTests$testScaleGetsCorrectNotes = A2(
 									_Utils_Tuple2($author$project$Note$D, $author$project$Scale$Mixolydian))))));
 			})
 		]));
-var $author$project$PageTests$testShowTextShowsAlternateTextWhenFalse = A2(
+var $author$project$Page$SolfegePageTests$testShowTextShowsAlternateTextWhenFalse = A2(
 	$elm_explorations$test$Test$test,
 	'showTextShowsAlternateTextWhenFalse',
 	function (_v0) {
 		return A2(
 			$elm_explorations$test$Expect$equal,
 			'Alternative text',
-			A3($author$project$Page$showText, 'Here\'s some text', 'Alternative text', false));
+			A3($author$project$Page$SolfegePage$showText, 'Here\'s some text', 'Alternative text', false));
 	});
-var $author$project$PageTests$testShowTextShowsTextWhenTrue = A2(
+var $author$project$Page$SolfegePageTests$testShowTextShowsTextWhenTrue = A2(
 	$elm_explorations$test$Test$test,
 	'showTextShowsTextWhenTrue',
 	function (_v0) {
 		return A2(
 			$elm_explorations$test$Expect$equal,
 			'Here\'s some text',
-			A3($author$project$Page$showText, 'Here\'s some text', 'Alternative text', true));
+			A3($author$project$Page$SolfegePage$showText, 'Here\'s some text', 'Alternative text', true));
 	});
 var $author$project$SolfegeTests$testSolfegeGets = A2(
 	$elm_explorations$test$Test$test,
@@ -13693,24 +13698,24 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main2274447614$main = A2(
+var $author$project$Test$Generated$Main1393257345$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
-			['/Users/christopherdugan/elm_projects/solfeger/tests/KeyboardKeyTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/NoteTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/PageTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/ScaleTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/SolfegeTests.elm']),
+			['/Users/christopherdugan/elm_projects/solfeger/tests/KeyboardKeyTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/NoteTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/Page/SolfegePageTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/ScaleTests.elm', '/Users/christopherdugan/elm_projects/solfeger/tests/SolfegeTests.elm']),
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 303117605190807
+		seed: 292931472477547
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
 			[
 				A2(
 				$elm_explorations$test$Test$describe,
-				'PageTests',
+				'Page.SolfegePageTests',
 				_List_fromArray(
-					[$author$project$PageTests$testShowTextShowsAlternateTextWhenFalse, $author$project$PageTests$testKeyClickDisplaysSolfege, $author$project$PageTests$testPageHasScaleNoteSelector, $author$project$PageTests$testPageHasTwelveKeys, $author$project$PageTests$testRenderKeysRendersTheCorrectNumberOfKeys, $author$project$PageTests$testKeyboardKeyPressDisplaysSolfege, $author$project$PageTests$testShowTextShowsTextWhenTrue, $author$project$PageTests$testPageHasScaleTypeSelector, $author$project$PageTests$testKeyRenders, $author$project$PageTests$testPressKeyOnModel])),
+					[$author$project$Page$SolfegePageTests$testShowTextShowsAlternateTextWhenFalse, $author$project$Page$SolfegePageTests$testKeyClickDisplaysSolfege, $author$project$Page$SolfegePageTests$testPageHasScaleNoteSelector, $author$project$Page$SolfegePageTests$testPageHasTwelveKeys, $author$project$Page$SolfegePageTests$testRenderKeysRendersTheCorrectNumberOfKeys, $author$project$Page$SolfegePageTests$testKeyboardKeyPressDisplaysSolfege, $author$project$Page$SolfegePageTests$testShowTextShowsTextWhenTrue, $author$project$Page$SolfegePageTests$testPageHasScaleTypeSelector, $author$project$Page$SolfegePageTests$testKeyRenders, $author$project$Page$SolfegePageTests$testPressKeyOnModel])),
 				A2(
 				$elm_explorations$test$Test$describe,
 				'SolfegeTests',
@@ -13732,10 +13737,10 @@ var $author$project$Test$Generated$Main2274447614$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main2274447614':{'init':$author$project$Test$Generated$Main2274447614$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main1393257345':{'init':$author$project$Test$Generated$Main1393257345$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-15857.sock";
+var pipeFilename = "/tmp/elm_test-16128.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

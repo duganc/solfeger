@@ -11,7 +11,8 @@ import Json.Decode as Decode exposing (Decoder)
 import Json.Encode as Encode exposing (Value)
 import KeyboardKey exposing (..)
 import List exposing (range)
-import Page as SolfegePage
+import Page exposing (..)
+import Page.SolfegePage as SolfegePage exposing (..)
 import Platform.Sub exposing (batch)
 import String exposing (fromInt)
 import Url exposing (Protocol(..), Url, fromString, toString)
@@ -116,9 +117,16 @@ type Msg
 view : Model -> Document Msg
 view model =
     Document "Solfeger" <|
-        case model of
-            Solfege m ->
-                SolfegePage.view m |> List.map (Html.map SolfegeMsg)
+        [ viewHeader ]
+            ++ viewBody model
+            ++ [ viewFooter ]
 
-            Error errorMessage ->
-                [ div [] [ text ("Error: " ++ errorMessage) ] ]
+
+viewBody : Model -> List (Html Msg)
+viewBody model =
+    case model of
+        Solfege m ->
+            SolfegePage.view m |> List.map (Html.map SolfegeMsg)
+
+        Error errorMessage ->
+            [ div [] [ text ("Error: " ++ errorMessage) ] ]

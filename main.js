@@ -6544,7 +6544,8 @@ var $author$project$Main$viewFooter = A2(
 	$elm$html$Html$p,
 	_List_fromArray(
 		[
-			$elm$html$Html$Attributes$class('text-color-white')
+			$elm$html$Html$Attributes$class('color-white'),
+			$elm$html$Html$Attributes$class('font-very-small')
 		]),
 	_List_fromArray(
 		[
@@ -6561,7 +6562,35 @@ var $author$project$Main$viewFooter = A2(
 				])),
 			$elm$html$Html$text('.')
 		]));
-var $author$project$Main$viewHeader = A2($elm$html$Html$div, _List_Nil, _List_Nil);
+var $elm$html$Html$span = _VirtualDom_node('span');
+var $author$project$Main$viewHeader = A2(
+	$elm$html$Html$div,
+	_List_Nil,
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('tooltip'),
+					$elm$html$Html$Attributes$class('float-right'),
+					$elm$html$Html$Attributes$class('information-icon')
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text('?'),
+					A2(
+					$elm$html$Html$span,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('tooltip-text')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('To play notes, either click them or use the number row on your keyboard from the backtick key to the =.  \n\nFor instance, 4 will be Mi, the fifth note of the chromatic scale (because backtick is Do, 1 is Di, etc.).  The Q through \\ keys will also work.  \n\nShift can be used to raise the tone by an octave and Control can be used to lower it.')
+						]))
+				]))
+		]));
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$browser$Browser$Document,

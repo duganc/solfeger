@@ -12408,7 +12408,10 @@ var $author$project$Page$update = F2(
 										$author$project$Scale$pitchClass(model.selectedScale)))),
 							$author$project$Page$playTone(
 								$author$project$Note$toString(
-									A2($author$project$Scale$fromKeyClick, model.selectedScale, i))));
+									A2(
+										$author$project$Page$adjustOctave,
+										model.octaveAdjustment,
+										A2($author$project$Scale$fromKeyClick, model.selectedScale, i)))));
 					case 'ScaleSelector':
 						var i = b.a;
 						return _Utils_Tuple2(
@@ -13690,7 +13693,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main582126265$main = A2(
+var $author$project$Test$Generated$Main2274447614$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13698,7 +13701,7 @@ var $author$project$Test$Generated$Main582126265$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 58441826303563
+		seed: 303117605190807
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13729,10 +13732,10 @@ var $author$project$Test$Generated$Main582126265$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main582126265':{'init':$author$project$Test$Generated$Main582126265$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main2274447614':{'init':$author$project$Test$Generated$Main2274447614$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-15797.sock";
+var pipeFilename = "/tmp/elm_test-15857.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

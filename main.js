@@ -3932,7 +3932,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ad);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ae);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
@@ -5104,7 +5104,7 @@ var $author$project$Main$SolfegeMsg = function (a) {
 };
 var $author$project$Page$Model = F3(
 	function (isKeyPressed, octaveAdjustment, selectedScale) {
-		return {Y: isKeyPressed, am: octaveAdjustment, i: selectedScale};
+		return {Y: isKeyPressed, ab: octaveAdjustment, i: selectedScale};
 	});
 var $author$project$Note$A = 0;
 var $author$project$Scale$Chromatic = 0;
@@ -5949,7 +5949,7 @@ var $author$project$Page$setOctaveAdjustment = F2(
 	function (i, model) {
 		return _Utils_update(
 			model,
-			{am: i});
+			{ab: i});
 	});
 var $author$project$Page$resetOctaveAdjustment = $author$project$Page$setOctaveAdjustment(0);
 var $author$project$Scale$scaleType = $elm$core$Tuple$second;
@@ -6046,7 +6046,10 @@ var $author$project$Page$update = F2(
 										$author$project$Scale$pitchClass(model.i)))),
 							$author$project$Page$playTone(
 								$author$project$Note$toString(
-									A2($author$project$Scale$fromKeyClick, model.i, i))));
+									A2(
+										$author$project$Page$adjustOctave,
+										model.ab,
+										A2($author$project$Scale$fromKeyClick, model.i, i)))));
 					case 1:
 						var i = b.a;
 						return _Utils_Tuple2(
@@ -6099,7 +6102,7 @@ var $author$project$Page$update = F2(
 								A2($author$project$Page$pressKeyOnModel, model, note),
 								$author$project$Page$playTone(
 									$author$project$Note$toString(
-										A2($author$project$Page$adjustOctave, model.am, note))));
+										A2($author$project$Page$adjustOctave, model.ab, note))));
 						} else {
 							var s = _v4.a;
 							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -6161,7 +6164,7 @@ var $author$project$Main$update = F2(
 	});
 var $elm$browser$Browser$Document = F2(
 	function (title, body) {
-		return {ad: body, bV: title};
+		return {ae: body, bV: title};
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;

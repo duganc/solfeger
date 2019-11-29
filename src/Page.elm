@@ -53,7 +53,7 @@ update msg model =
             case b of
                 Key i ->
                     ( pressKeyOnModel model (Note.fromInt (i + (Scale.pitchClass model.selectedScale |> pitchClassToInt)))
-                    , playTone (fromKeyClick model.selectedScale i |> Note.toString)
+                    , playTone (fromKeyClick model.selectedScale i |> adjustOctave model.octaveAdjustment |> Note.toString)
                     )
 
                 ScaleSelector i ->

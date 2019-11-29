@@ -1,4 +1,4 @@
-module MainTests exposing (..)
+module PageTests exposing (..)
 
 import Dict
 import Expect exposing (Expectation)
@@ -7,8 +7,9 @@ import Json.Decode as Decode exposing (map)
 import Json.Encode as Encode exposing (Value)
 import KeyboardKey exposing (..)
 import List exposing (range)
-import Main exposing (Flags, Model, Msg(..), init, loadUrlFromUrlRequest, pressKeyOnModel, releaseKeyOnModel, renderKey, renderKeys, showText, subscriptions, update, view)
+import Main exposing (Model(..), Msg(..), init, loadUrlFromUrlRequest, update, view)
 import Note exposing (..)
+import Page exposing (..)
 import ProgramTest exposing (ProgramTest, SimulatedSub, clickButton, ensureViewHas, expectViewHas, simulateDomEvent, start)
 import Scale exposing (Scale, ScaleType(..), default, scaleTypeFromInt, scaleTypeToString)
 import SimulatedEffect.Ports
@@ -23,12 +24,12 @@ import Tuple exposing (first)
 import Url exposing (Protocol(..), Url)
 
 
-startProgramForTesting : String -> Flags -> ProgramTest Model Msg (Cmd Msg)
+startProgramForTesting : String -> Flags -> ProgramTest Main.Model Main.Msg (Cmd Main.Msg)
 startProgramForTesting initialUrl flags =
     ProgramTest.createApplication
-        { init = init
-        , view = view
-        , update = update
+        { init = Main.init
+        , view = Main.view
+        , update = Main.update
         , onUrlRequest = loadUrlFromUrlRequest
         , onUrlChange = ChangeUrl
         }
@@ -112,7 +113,7 @@ testPressKeyOnModel : Test
 testPressKeyOnModel =
     test "pressesKeyOnModel" <|
         \() ->
-            pressKeyOnModel (stubInitModel |> first) ( D, 4 )
+            pressKeyOnModel (stubPageModel |> first) ( D, 4 )
                 |> .isKeyPressed
                 |> Dict.get 5
                 |> Expect.equal (Just True)
@@ -147,23 +148,30 @@ testShowTextShowsAlternateTextWhenFalse =
 -- Helper functions
 
 
-stubInitModel : ( Model, Cmd Msg )
+stubInitModel : ( Main.Model, Cmd Main.Msg )
 stubInitModel =
-    init () (Url Http "mystubbedtestsolfegeapp.com" Nothing "" Nothing Nothing) ()
+    Main.init () (Url Http "mystubbedtestsolfegeapp.com" Nothing "" Nothing Nothing) ()
 
 
-simulateSubscriptions : Model -> SimulatedSub Msg
+stubPageModel : ( Page.Model, Cmd Page.Msg )
+stubPageModel =
+    Page.init () (Url Http "mystubbedtestsolfegeapp.com" Nothing "" Nothing Nothing) ()
+
+
+simulateSubscriptions : Main.Model -> SimulatedSub Main.Msg
 simulateSubscriptions _ =
     SimulatedEffect.Sub.batch
-        [ SimulatedEffect.Ports.subscribe
+        ([ SimulatedEffect.Ports.subscribe
             "keydown"
             keyDecoder
             KeyDownOn
-        , SimulatedEffect.Ports.subscribe
+         , SimulatedEffect.Ports.subscribe
             "keyup"
             keyDecoder
             KeyUpOn
-        ]
+         ]
+            |> List.map (SimulatedEffect.Sub.map SolfegeMsg)
+        )
 
 
 mouseDown : (Query.Single msg -> Query.Single msg) -> ProgramTest model msg effect -> ProgramTest model msg effect

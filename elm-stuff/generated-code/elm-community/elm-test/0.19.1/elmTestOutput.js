@@ -12789,7 +12789,8 @@ var $author$project$Main$viewFooter = A2(
 	$elm$html$Html$p,
 	_List_fromArray(
 		[
-			$elm$html$Html$Attributes$class('text-color-white')
+			$elm$html$Html$Attributes$class('color-white'),
+			$elm$html$Html$Attributes$class('font-very-small')
 		]),
 	_List_fromArray(
 		[
@@ -12806,7 +12807,35 @@ var $author$project$Main$viewFooter = A2(
 				])),
 			$elm$html$Html$text('.')
 		]));
-var $author$project$Main$viewHeader = A2($elm$html$Html$div, _List_Nil, _List_Nil);
+var $elm$html$Html$span = _VirtualDom_node('span');
+var $author$project$Main$viewHeader = A2(
+	$elm$html$Html$div,
+	_List_Nil,
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('tooltip'),
+					$elm$html$Html$Attributes$class('float-right'),
+					$elm$html$Html$Attributes$class('information-icon')
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text('?'),
+					A2(
+					$elm$html$Html$span,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('tooltip-text')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('To play notes, either click them or use the number row on your keyboard from the backtick key to the =.  \n\nFor instance, 4 will be Mi, the fifth note of the chromatic scale (because backtick is Do, 1 is Di, etc.).  The Q through \\ keys will also work.  \n\nShift can be used to raise the tone by an octave and Control can be used to lower it.')
+						]))
+				]))
+		]));
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$browser$Browser$Document,
@@ -13567,7 +13596,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main3683914491$main = A2(
+var $author$project$Test$Generated$Main3852604013$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13575,7 +13604,7 @@ var $author$project$Test$Generated$Main3683914491$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 402384407449013
+		seed: 340705809042295
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13606,10 +13635,10 @@ var $author$project$Test$Generated$Main3683914491$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main3683914491':{'init':$author$project$Test$Generated$Main3683914491$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main3852604013':{'init':$author$project$Test$Generated$Main3852604013$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-11992.sock";
+var pipeFilename = "/tmp/elm_test-14435.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

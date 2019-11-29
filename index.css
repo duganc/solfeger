@@ -1,5 +1,23 @@
+/*Variables*/
+:root {
+	--very-dark: #242424;
+	--dark: #383838;
+	--medium: #9E9E9E;
+	--light: #DBDBDB;
+	--font-large: 22pt;
+	--font-medium: 16pt;
+	--font-small: 12pt;
+	--font-very-small: 8pt;
+}
+
 body {
-	background-color: #242424;
+	background-color: var(--very-dark);
+	width: 625px;
+	margin: auto;
+	padding: 20px;
+	border: solid;
+	border-radius: 12px;
+	border-color: var(--medium);
 }
 
 p, a, div, button {
@@ -16,7 +34,7 @@ p, a, div, button {
 	width: 30px;
 	border: solid;
 	border-width: 2px;
-	border-color: #242424;
+	border-color: var(--very-dark);
 	padding: 2px;
 	margin: 2px;
 	border-radius: 7px;
@@ -25,7 +43,7 @@ p, a, div, button {
 }
 
 .white-on-dark {
-	background-color: #242424;
+	background-color: var(--very-dark);
 	color: white;
 }
 
@@ -40,7 +58,7 @@ p, a, div, button {
 	width: 20px;
 	border: solid;
 	border-width: 2px;
-	border-color: #242424;
+	border-color: var(--very-dark);
 	padding: 2px;
 	margin-top: 2px;
 	border-radius: 7px;
@@ -48,10 +66,57 @@ p, a, div, button {
 	font-weight: bold;
 }
 
+.information-icon {
+	color: var(--light);
+	border-radius: 7px;
+	border: solid;
+	border-color: var(--light);
+	border-width: 3px;
+	padding: 3px 4px 2px 4px;
+	font-weight: bold;
+	font-size: 22px
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 300px;
+  background-color: var(--very-dark);
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 6px;
+  border-color: var(--light);
+  border-width: 1px;
+  border: solid;
+  font-size: var(--font-small);
+ 
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+}
+
 /*Utility*/
 
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
 .bg-very-dark {
-	background-color: #242424;
+	background-color: var(--very-dark);
 }
 
 .bg-dark {
@@ -70,35 +135,75 @@ p, a, div, button {
 	background-color: white;
 }
 
+.padding-small {
+	padding: 2px;
+}
+
+.padding-medium {
+	padding: 4px;
+}
+
+.border-radius-small {
+	border-radius: 3px;
+}
+
 .border-radius-medium {
 	border-radius: 7px;
 }
 
+.border-light {
+	border: solid;
+	border-color: var(--light);
+	border-width: 1px;
+}
+
+.border-medium {
+	border: solid;
+	border-color: var(--light);
+	border-width: 3px;
+}
+
 .color-very-dark {
-	color: #242424;
+	color: var(--very-dark);
 }
 
 .color-dark {
-	color: #383838;
+	color: var(--dark);
 }
 
 .color-medium {
-	color: #9E9E9E;
+	color: var(--medium);
 }
 
 .color-light {
-    color: #DBDBDB;
+    color: var(--light);
 }
 
 .color-light::placeholder {
-	color: #DBDBDB;
+	color: var(--light);
 }
 
-.text-color-white {
+.color-white {
 	color: white;
 }
 
-.text-bold {
+.font-very-small {
+	font-size: var(--font-very-small)
+}
+
+.font-small {
+	font-size: var(--font-small)
+}
+
+.font-medium {
+	font-size: var(--font-medium)
+}
+
+.font-large {
+	font-size: var(--font-large)
+}
+
+.font-bold {
 	font-weight: bold;
 }
 

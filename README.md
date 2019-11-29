@@ -35,7 +35,7 @@ To play notes, either click them or use the number row on your keyboard from the
 	     - [x] Overlay scale on piano keys
 	 - [ ] v2 - Content
 	 	 - [ ] Melodies in qwerty
-	 	 - [ ] Tooltips
+	 	 - [x] Tooltips
 	 	 - [ ] Blog post
 	 - [ ] Nice-to-haves
 	 	 - [ ] Logo

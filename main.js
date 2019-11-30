@@ -3932,7 +3932,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ad);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ae);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
@@ -5096,9 +5096,15 @@ var $elm$core$Task$perform = F2(
 			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$application = _Browser_application;
-var $author$project$Main$Model = F3(
+var $author$project$Main$Solfege = function (a) {
+	return {$: 0, a: a};
+};
+var $author$project$Main$SolfegeMsg = function (a) {
+	return {$: 1, a: a};
+};
+var $author$project$Page$SolfegePage$Model = F3(
 	function (isKeyPressed, octaveAdjustment, selectedScale) {
-		return {Y: isKeyPressed, am: octaveAdjustment, i: selectedScale};
+		return {Y: isKeyPressed, ab: octaveAdjustment, i: selectedScale};
 	});
 var $author$project$Note$A = 0;
 var $author$project$Scale$Chromatic = 0;
@@ -5228,11 +5234,11 @@ var $elm$core$Dict$fromList = function (assocs) {
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Main$init = F3(
+var $author$project$Page$SolfegePage$init = F3(
 	function (_v0, _v1, _v2) {
 		return _Utils_Tuple2(
 			A3(
-				$author$project$Main$Model,
+				$author$project$Page$SolfegePage$Model,
 				$elm$core$Dict$fromList(
 					A2(
 						$elm$core$List$map,
@@ -5243,6 +5249,23 @@ var $author$project$Main$init = F3(
 				0,
 				$author$project$Scale$default),
 			$elm$core$Platform$Cmd$none);
+	});
+var $elm$core$Platform$Cmd$map = _Platform_map;
+var $author$project$Main$tupleMap = F3(
+	function (f, g, _v0) {
+		var a = _v0.a;
+		var b = _v0.b;
+		return _Utils_Tuple2(
+			f(a),
+			g(b));
+	});
+var $author$project$Main$init = F3(
+	function (flags, url, key) {
+		return A3(
+			$author$project$Main$tupleMap,
+			$author$project$Main$Solfege,
+			$elm$core$Platform$Cmd$map($author$project$Main$SolfegeMsg),
+			A3($author$project$Page$SolfegePage$init, flags, url, key));
 	});
 var $elm$core$Basics$composeR = F3(
 	function (f, g, x) {
@@ -5265,9 +5288,11 @@ var $author$project$Main$urlRequestToUrl = function (request) {
 	}
 };
 var $author$project$Main$loadUrlFromUrlRequest = A2($elm$core$Basics$composeR, $author$project$Main$urlRequestToUrl, $author$project$Main$ChangeUrl);
+var $elm$core$Platform$Sub$map = _Platform_map;
 var $elm$core$Platform$Sub$batch = _Platform_batch;
-var $author$project$Main$KeyDownOn = function (a) {
-	return {$: 3, a: a};
+var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $author$project$Page$SolfegePage$KeyDownOn = function (a) {
+	return {$: 2, a: a};
 };
 var $elm$json$Json$Decode$field = _Json_decodeField;
 var $elm$json$Json$Decode$string = _Json_decodeString;
@@ -5296,11 +5321,11 @@ var $author$project$KeyboardKey$keyDecoder = A2(
 	$elm$json$Json$Decode$map,
 	$author$project$KeyboardKey$toKey,
 	A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
-var $author$project$Main$keyDownDecoder = A2($elm$json$Json$Decode$map, $author$project$Main$KeyDownOn, $author$project$KeyboardKey$keyDecoder);
-var $author$project$Main$KeyUpOn = function (a) {
-	return {$: 4, a: a};
+var $author$project$Page$SolfegePage$keyDownDecoder = A2($elm$json$Json$Decode$map, $author$project$Page$SolfegePage$KeyDownOn, $author$project$KeyboardKey$keyDecoder);
+var $author$project$Page$SolfegePage$KeyUpOn = function (a) {
+	return {$: 3, a: a};
 };
-var $author$project$Main$keyUpDecoder = A2($elm$json$Json$Decode$map, $author$project$Main$KeyUpOn, $author$project$KeyboardKey$keyDecoder);
+var $author$project$Page$SolfegePage$keyUpDecoder = A2($elm$json$Json$Decode$map, $author$project$Page$SolfegePage$KeyUpOn, $author$project$KeyboardKey$keyDecoder);
 var $elm$browser$Browser$Events$Document = 0;
 var $elm$browser$Browser$Events$MySub = F3(
 	function (a, b, c) {
@@ -5580,13 +5605,74 @@ var $elm$browser$Browser$Events$on = F3(
 	});
 var $elm$browser$Browser$Events$onKeyDown = A2($elm$browser$Browser$Events$on, 0, 'keydown');
 var $elm$browser$Browser$Events$onKeyUp = A2($elm$browser$Browser$Events$on, 0, 'keyup');
-var $author$project$Main$subscriptions = function (model) {
+var $author$project$Page$SolfegePage$subscriptions = function (model) {
 	return $elm$core$Platform$Sub$batch(
 		_List_fromArray(
 			[
-				$elm$browser$Browser$Events$onKeyDown($author$project$Main$keyDownDecoder),
-				$elm$browser$Browser$Events$onKeyUp($author$project$Main$keyUpDecoder)
+				$elm$browser$Browser$Events$onKeyDown($author$project$Page$SolfegePage$keyDownDecoder),
+				$elm$browser$Browser$Events$onKeyUp($author$project$Page$SolfegePage$keyUpDecoder)
 			]));
+};
+var $author$project$Main$subscriptions = function (model) {
+	if (!model.$) {
+		var m = model.a;
+		return A2(
+			$elm$core$Platform$Sub$map,
+			function (a) {
+				return $author$project$Main$SolfegeMsg(a);
+			},
+			$author$project$Page$SolfegePage$subscriptions(m));
+	} else {
+		return $elm$core$Platform$Sub$none;
+	}
+};
+var $author$project$Main$Error = function (a) {
+	return {$: 1, a: a};
+};
+var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $elm$url$Url$addPort = F2(
+	function (maybePort, starter) {
+		if (maybePort.$ === 1) {
+			return starter;
+		} else {
+			var port_ = maybePort.a;
+			return starter + (':' + $elm$core$String$fromInt(port_));
+		}
+	});
+var $elm$url$Url$addPrefixed = F3(
+	function (prefix, maybeSegment, starter) {
+		if (maybeSegment.$ === 1) {
+			return starter;
+		} else {
+			var segment = maybeSegment.a;
+			return _Utils_ap(
+				starter,
+				_Utils_ap(prefix, segment));
+		}
+	});
+var $elm$url$Url$toString = function (url) {
+	var http = function () {
+		var _v0 = url.aV;
+		if (!_v0) {
+			return 'http://';
+		} else {
+			return 'https://';
+		}
+	}();
+	return A3(
+		$elm$url$Url$addPrefixed,
+		'#',
+		url.aD,
+		A3(
+			$elm$url$Url$addPrefixed,
+			'?',
+			url.aW,
+			_Utils_ap(
+				A2(
+					$elm$url$Url$addPort,
+					url.aS,
+					_Utils_ap(http, url.aH)),
+				url.aQ)));
 };
 var $elm$core$Tuple$second = function (_v0) {
 	var y = _v0.b;
@@ -5594,7 +5680,7 @@ var $elm$core$Tuple$second = function (_v0) {
 };
 var $author$project$Note$octave = $elm$core$Tuple$second;
 var $author$project$Note$pitchClass = $elm$core$Tuple$first;
-var $author$project$Main$adjustOctave = F2(
+var $author$project$Page$SolfegePage$adjustOctave = F2(
 	function (adjustment, note) {
 		return _Utils_Tuple2(
 			$author$project$Note$pitchClass(note),
@@ -5833,19 +5919,18 @@ var $author$project$Scale$fromKeyboardKey = F2(
 			$author$project$Scale$fromKeyClick(scale),
 			$author$project$Scale$keyboardKeyToInt(key));
 	});
-var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $elm$core$Basics$negate = function (n) {
 	return -n;
 };
 var $author$project$Scale$pitchClass = $elm$core$Tuple$first;
 var $elm$json$Json$Encode$string = _Json_wrap;
-var $author$project$Main$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
+var $author$project$Page$SolfegePage$playTone = _Platform_outgoingPort('playTone', $elm$json$Json$Encode$string);
 var $author$project$Note$toInt = function (note) {
 	return $author$project$Note$pitchClassToInt(
 		$author$project$Note$pitchClass(note)) + (($author$project$Note$octave(note) - $author$project$Note$defaultOctave(
 		$author$project$Note$pitchClass(note))) * 12);
 };
-var $author$project$Main$pressOrReleaseKeyOnModel = F3(
+var $author$project$Page$SolfegePage$pressOrReleaseKeyOnModel = F3(
 	function (isPress, model, note) {
 		return _Utils_update(
 			model,
@@ -5858,15 +5943,15 @@ var $author$project$Main$pressOrReleaseKeyOnModel = F3(
 					model.Y)
 			});
 	});
-var $author$project$Main$pressKeyOnModel = $author$project$Main$pressOrReleaseKeyOnModel(true);
-var $author$project$Main$releaseKeyOnModel = $author$project$Main$pressOrReleaseKeyOnModel(false);
-var $author$project$Main$setOctaveAdjustment = F2(
+var $author$project$Page$SolfegePage$pressKeyOnModel = $author$project$Page$SolfegePage$pressOrReleaseKeyOnModel(true);
+var $author$project$Page$SolfegePage$releaseKeyOnModel = $author$project$Page$SolfegePage$pressOrReleaseKeyOnModel(false);
+var $author$project$Page$SolfegePage$setOctaveAdjustment = F2(
 	function (i, model) {
 		return _Utils_update(
 			model,
-			{am: i});
+			{ab: i});
 	});
-var $author$project$Main$resetOctaveAdjustment = $author$project$Main$setOctaveAdjustment(0);
+var $author$project$Page$SolfegePage$resetOctaveAdjustment = $author$project$Page$SolfegePage$setOctaveAdjustment(0);
 var $author$project$Scale$scaleType = $elm$core$Tuple$second;
 var $author$project$Scale$Dorian = 4;
 var $author$project$Scale$InvalidScale = function (a) {
@@ -5935,50 +6020,6 @@ var $author$project$Note$toString = function (note) {
 		$author$project$Note$pitchClassToString(note.a),
 		$elm$core$String$fromInt(note.b));
 };
-var $elm$url$Url$addPort = F2(
-	function (maybePort, starter) {
-		if (maybePort.$ === 1) {
-			return starter;
-		} else {
-			var port_ = maybePort.a;
-			return starter + (':' + $elm$core$String$fromInt(port_));
-		}
-	});
-var $elm$url$Url$addPrefixed = F3(
-	function (prefix, maybeSegment, starter) {
-		if (maybeSegment.$ === 1) {
-			return starter;
-		} else {
-			var segment = maybeSegment.a;
-			return _Utils_ap(
-				starter,
-				_Utils_ap(prefix, segment));
-		}
-	});
-var $elm$url$Url$toString = function (url) {
-	var http = function () {
-		var _v0 = url.aV;
-		if (!_v0) {
-			return 'http://';
-		} else {
-			return 'https://';
-		}
-	}();
-	return A3(
-		$elm$url$Url$addPrefixed,
-		'#',
-		url.aD,
-		A3(
-			$elm$url$Url$addPrefixed,
-			'?',
-			url.aW,
-			_Utils_ap(
-				A2(
-					$elm$url$Url$addPort,
-					url.aS,
-					_Utils_ap(http, url.aH)),
-				url.aQ)));
-};
 var $elm$core$Result$withDefault = F2(
 	function (def, result) {
 		if (!result.$) {
@@ -5988,30 +6029,27 @@ var $elm$core$Result$withDefault = F2(
 			return def;
 		}
 	});
-var $author$project$Main$update = F2(
+var $author$project$Page$SolfegePage$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 0:
-				var url = msg.a;
-				return _Utils_Tuple2(
-					model,
-					$elm$browser$Browser$Navigation$load(
-						$elm$url$Url$toString(url)));
-			case 1:
 				var b = msg.a;
 				switch (b.$) {
 					case 0:
 						var i = b.a;
 						return _Utils_Tuple2(
 							A2(
-								$author$project$Main$pressKeyOnModel,
+								$author$project$Page$SolfegePage$pressKeyOnModel,
 								model,
 								$author$project$Note$fromInt(
 									i + $author$project$Note$pitchClassToInt(
 										$author$project$Scale$pitchClass(model.i)))),
-							$author$project$Main$playTone(
+							$author$project$Page$SolfegePage$playTone(
 								$author$project$Note$toString(
-									A2($author$project$Scale$fromKeyClick, model.i, i))));
+									A2(
+										$author$project$Page$SolfegePage$adjustOctave,
+										model.ab,
+										A2($author$project$Scale$fromKeyClick, model.i, i)))));
 					case 1:
 						var i = b.a;
 						return _Utils_Tuple2(
@@ -6038,13 +6076,13 @@ var $author$project$Main$update = F2(
 								}),
 							$elm$core$Platform$Cmd$none);
 				}
-			case 2:
+			case 1:
 				var b = msg.a;
 				if (!b.$) {
 					var i = b.a;
 					return _Utils_Tuple2(
 						A2(
-							$author$project$Main$releaseKeyOnModel,
+							$author$project$Page$SolfegePage$releaseKeyOnModel,
 							model,
 							$author$project$Note$fromInt(
 								i + $author$project$Note$pitchClassToInt(
@@ -6053,7 +6091,7 @@ var $author$project$Main$update = F2(
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
-			case 3:
+			case 2:
 				var keyboardKey = msg.a;
 				switch (keyboardKey.$) {
 					case 0:
@@ -6061,21 +6099,21 @@ var $author$project$Main$update = F2(
 						if (!_v4.$) {
 							var note = _v4.a;
 							return _Utils_Tuple2(
-								A2($author$project$Main$pressKeyOnModel, model, note),
-								$author$project$Main$playTone(
+								A2($author$project$Page$SolfegePage$pressKeyOnModel, model, note),
+								$author$project$Page$SolfegePage$playTone(
 									$author$project$Note$toString(
-										A2($author$project$Main$adjustOctave, model.am, note))));
+										A2($author$project$Page$SolfegePage$adjustOctave, model.ab, note))));
 						} else {
 							var s = _v4.a;
 							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 						}
 					case 1:
 						return _Utils_Tuple2(
-							A2($author$project$Main$setOctaveAdjustment, 1, model),
+							A2($author$project$Page$SolfegePage$setOctaveAdjustment, 1, model),
 							$elm$core$Platform$Cmd$none);
 					case 4:
 						return _Utils_Tuple2(
-							A2($author$project$Main$setOctaveAdjustment, -1, model),
+							A2($author$project$Page$SolfegePage$setOctaveAdjustment, -1, model),
 							$elm$core$Platform$Cmd$none);
 					default:
 						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -6087,7 +6125,7 @@ var $author$project$Main$update = F2(
 					if (!_v6.$) {
 						var note = _v6.a;
 						return _Utils_Tuple2(
-							A2($author$project$Main$releaseKeyOnModel, model, note),
+							A2($author$project$Page$SolfegePage$releaseKeyOnModel, model, note),
 							$elm$core$Platform$Cmd$none);
 					} else {
 						var s = _v6.a;
@@ -6095,15 +6133,44 @@ var $author$project$Main$update = F2(
 					}
 				} else {
 					return _Utils_Tuple2(
-						$author$project$Main$resetOctaveAdjustment(model),
+						$author$project$Page$SolfegePage$resetOctaveAdjustment(model),
 						$elm$core$Platform$Cmd$none);
 				}
 		}
 	});
+var $author$project$Main$update = F2(
+	function (msg, mainModel) {
+		if (!msg.$) {
+			var url = msg.a;
+			return _Utils_Tuple2(
+				mainModel,
+				$elm$browser$Browser$Navigation$load(
+					$elm$url$Url$toString(url)));
+		} else {
+			var message = msg.a;
+			if (!mainModel.$) {
+				var m = mainModel.a;
+				return A3(
+					$author$project$Main$tupleMap,
+					$author$project$Main$Solfege,
+					$elm$core$Platform$Cmd$map($author$project$Main$SolfegeMsg),
+					A2($author$project$Page$SolfegePage$update, message, m));
+			} else {
+				return _Utils_Tuple2(
+					$author$project$Main$Error('Update received SolfegeMsg but model wasn\'t Solfege.'),
+					$elm$core$Platform$Cmd$none);
+			}
+		}
+	});
 var $elm$browser$Browser$Document = F2(
 	function (title, body) {
-		return {ad: body, bV: title};
+		return {ae: body, bV: title};
 	});
+var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
+var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
 		return A2(
@@ -6112,15 +6179,14 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
-var $elm$html$Html$div = _VirtualDom_node('div');
-var $author$project$Main$Key = function (a) {
+var $author$project$Page$SolfegePage$Key = function (a) {
 	return {$: 0, a: a};
 };
-var $author$project$Main$MouseDownOn = function (a) {
-	return {$: 1, a: a};
+var $author$project$Page$SolfegePage$MouseDownOn = function (a) {
+	return {$: 0, a: a};
 };
-var $author$project$Main$MouseUpOn = function (a) {
-	return {$: 2, a: a};
+var $author$project$Page$SolfegePage$MouseUpOn = function (a) {
+	return {$: 1, a: a};
 };
 var $elm$core$List$any = F2(
 	function (isOkay, list) {
@@ -6187,7 +6253,7 @@ var $author$project$Scale$notes = function (_v0) {
 			}
 		}());
 };
-var $author$project$Main$keyIsInScale = F2(
+var $author$project$Page$SolfegePage$keyIsInScale = F2(
 	function (scale, i) {
 		return A2(
 			$elm$core$List$member,
@@ -6197,16 +6263,16 @@ var $author$project$Main$keyIsInScale = F2(
 					0,
 					$author$project$Scale$scaleType(scale))));
 	});
-var $author$project$Main$activeKeyInScale = F2(
+var $author$project$Page$SolfegePage$activeKeyInScale = F2(
 	function (scale, i) {
-		var _v0 = A2($author$project$Main$keyIsInScale, scale, i);
+		var _v0 = A2($author$project$Page$SolfegePage$keyIsInScale, scale, i);
 		if (_v0) {
 			return $elm$html$Html$Attributes$class('black-on-white');
 		} else {
 			return $elm$html$Html$Attributes$class('white-on-dark');
 		}
 	});
-var $author$project$Main$getKeyName = function (n) {
+var $author$project$Page$SolfegePage$getKeyName = function (n) {
 	return 'key-' + $elm$core$String$fromInt(n);
 };
 var $author$project$Solfege$Di = 1;
@@ -6283,14 +6349,14 @@ var $elm$core$Dict$get = F2(
 			}
 		}
 	});
-var $author$project$Main$getNoteLabelFromKey = F2(
+var $author$project$Page$SolfegePage$getNoteLabelFromKey = F2(
 	function (scale, i) {
 		return $author$project$Note$pitchClassToString(
 			$author$project$Note$pitchClassFromInt(
 				i + $author$project$Note$pitchClassToInt(
 					$author$project$Scale$pitchClass(scale))));
 	});
-var $author$project$Main$showText = F3(
+var $author$project$Page$SolfegePage$showText = F3(
 	function (ifTrue, ifFalse, _switch) {
 		if (_switch) {
 			return ifTrue;
@@ -6298,9 +6364,9 @@ var $author$project$Main$showText = F3(
 			return ifFalse;
 		}
 	});
-var $author$project$Main$showTextOrNothing = F2(
+var $author$project$Page$SolfegePage$showTextOrNothing = F2(
 	function (ifTrue, _switch) {
-		return A3($author$project$Main$showText, ifTrue, '', _switch);
+		return A3($author$project$Page$SolfegePage$showText, ifTrue, '', _switch);
 	});
 var $author$project$Solfege$toString = function (s) {
 	switch (s) {
@@ -6330,16 +6396,16 @@ var $author$project$Solfege$toString = function (s) {
 			return 'Ti';
 	}
 };
-var $author$project$Main$getLabelFromKey = F3(
+var $author$project$Page$SolfegePage$getLabelFromKey = F3(
 	function (scale, isKeyPressed, key) {
-		return A2($author$project$Main$getNoteLabelFromKey, scale, key) + ('\n' + function () {
+		return A2($author$project$Page$SolfegePage$getNoteLabelFromKey, scale, key) + ('\n' + function () {
 			var _v0 = A2($elm$core$Dict$get, key, isKeyPressed);
 			if (_v0.$ === 1) {
 				return 'Error!';
 			} else {
 				var _switch = _v0.a;
 				return A2(
-					$author$project$Main$showTextOrNothing,
+					$author$project$Page$SolfegePage$showTextOrNothing,
 					$author$project$Solfege$toString(
 						$author$project$Solfege$fromInt(key)),
 					_switch);
@@ -6370,66 +6436,64 @@ var $elm$html$Html$Events$onMouseUp = function (msg) {
 		'mouseup',
 		$elm$json$Json$Decode$succeed(msg));
 };
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$Main$renderKey = F2(
+var $author$project$Page$SolfegePage$renderKey = F2(
 	function (model, n) {
 		return A2(
 			$elm$html$Html$div,
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$class('key'),
-					A2($author$project$Main$activeKeyInScale, model.i, n),
+					A2($author$project$Page$SolfegePage$activeKeyInScale, model.i, n),
 					$elm$html$Html$Attributes$id(
-					$author$project$Main$getKeyName(n)),
+					$author$project$Page$SolfegePage$getKeyName(n)),
 					$elm$html$Html$Events$onMouseDown(
-					$author$project$Main$MouseDownOn(
-						$author$project$Main$Key(n))),
+					$author$project$Page$SolfegePage$MouseDownOn(
+						$author$project$Page$SolfegePage$Key(n))),
 					$elm$html$Html$Events$onMouseUp(
-					$author$project$Main$MouseUpOn(
-						$author$project$Main$Key(n)))
+					$author$project$Page$SolfegePage$MouseUpOn(
+						$author$project$Page$SolfegePage$Key(n)))
 				]),
 			_List_fromArray(
 				[
 					$elm$html$Html$text(
-					A3($author$project$Main$getLabelFromKey, model.i, model.Y, n))
+					A3($author$project$Page$SolfegePage$getLabelFromKey, model.i, model.Y, n))
 				]));
 	});
-var $author$project$Main$renderKeys = F2(
+var $author$project$Page$SolfegePage$renderKeys = F2(
 	function (model, n) {
 		return A2(
 			$elm$html$Html$div,
 			_List_Nil,
 			A2(
 				$elm$core$List$map,
-				$author$project$Main$renderKey(model),
+				$author$project$Page$SolfegePage$renderKey(model),
 				A2($elm$core$List$range, 0, n - 1)));
 	});
-var $author$project$Main$NoteSelector = function (a) {
+var $author$project$Page$SolfegePage$NoteSelector = function (a) {
 	return {$: 2, a: a};
 };
-var $author$project$Main$activeBackgroundFromPitchClass = F2(
+var $author$project$Page$SolfegePage$activeBackgroundFromPitchClass = F2(
 	function (pc, i) {
 		return _Utils_eq(
 			pc,
 			$author$project$Note$pitchClassFromInt(i)) ? $elm$html$Html$Attributes$class('bg-white') : $elm$html$Html$Attributes$class('bg-medium');
 	});
-var $author$project$Main$renderNoteSelector = F2(
+var $author$project$Page$SolfegePage$renderNoteSelector = F2(
 	function (pc, i) {
 		return A2(
 			$elm$html$Html$div,
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$class('scale-selector'),
-					A2($author$project$Main$activeBackgroundFromPitchClass, pc, i),
+					A2($author$project$Page$SolfegePage$activeBackgroundFromPitchClass, pc, i),
 					$elm$html$Html$Attributes$id(
 					'scale-note-' + $elm$core$String$fromInt(i)),
 					$elm$html$Html$Events$onMouseDown(
-					$author$project$Main$MouseDownOn(
-						$author$project$Main$NoteSelector(i))),
+					$author$project$Page$SolfegePage$MouseDownOn(
+						$author$project$Page$SolfegePage$NoteSelector(i))),
 					$elm$html$Html$Events$onMouseUp(
-					$author$project$Main$MouseUpOn(
-						$author$project$Main$NoteSelector(i)))
+					$author$project$Page$SolfegePage$MouseUpOn(
+						$author$project$Page$SolfegePage$NoteSelector(i)))
 				]),
 			_List_fromArray(
 				[
@@ -6438,16 +6502,16 @@ var $author$project$Main$renderNoteSelector = F2(
 						$author$project$Note$fromInt(i)))
 				]));
 	});
-var $author$project$Main$getAllNoteSelectors = function (pc) {
+var $author$project$Page$SolfegePage$getAllNoteSelectors = function (pc) {
 	return A2(
 		$elm$core$List$map,
-		$author$project$Main$renderNoteSelector(pc),
+		$author$project$Page$SolfegePage$renderNoteSelector(pc),
 		A2($elm$core$List$range, 0, 11));
 };
-var $author$project$Main$ScaleSelector = function (a) {
+var $author$project$Page$SolfegePage$ScaleSelector = function (a) {
 	return {$: 1, a: a};
 };
-var $author$project$Main$activeBackgroundFromScaleType = F2(
+var $author$project$Page$SolfegePage$activeBackgroundFromScaleType = F2(
 	function (t, i) {
 		return _Utils_eq(
 			t,
@@ -6476,22 +6540,22 @@ var $author$project$Scale$scaleTypeToString = function (t) {
 			return 'Mixolydian';
 	}
 };
-var $author$project$Main$renderScaleTypeSelector = F2(
+var $author$project$Page$SolfegePage$renderScaleTypeSelector = F2(
 	function (t, i) {
 		return A2(
 			$elm$html$Html$div,
 			_List_fromArray(
 				[
 					$elm$html$Html$Attributes$class('scale-selector'),
-					A2($author$project$Main$activeBackgroundFromScaleType, t, i),
+					A2($author$project$Page$SolfegePage$activeBackgroundFromScaleType, t, i),
 					$elm$html$Html$Attributes$id(
 					'scale-type-' + $elm$core$String$fromInt(i)),
 					$elm$html$Html$Events$onMouseDown(
-					$author$project$Main$MouseDownOn(
-						$author$project$Main$ScaleSelector(i))),
+					$author$project$Page$SolfegePage$MouseDownOn(
+						$author$project$Page$SolfegePage$ScaleSelector(i))),
 					$elm$html$Html$Events$onMouseUp(
-					$author$project$Main$MouseUpOn(
-						$author$project$Main$ScaleSelector(i)))
+					$author$project$Page$SolfegePage$MouseUpOn(
+						$author$project$Page$SolfegePage$ScaleSelector(i)))
 				]),
 			_List_fromArray(
 				[
@@ -6505,13 +6569,13 @@ var $author$project$Main$renderScaleTypeSelector = F2(
 							$author$project$Scale$scaleTypeFromInt(i))))
 				]));
 	});
-var $author$project$Main$getAllScaleTypeSelectors = function (t) {
+var $author$project$Page$SolfegePage$getAllScaleTypeSelectors = function (t) {
 	return A2(
 		$elm$core$List$map,
-		$author$project$Main$renderScaleTypeSelector(t),
+		$author$project$Page$SolfegePage$renderScaleTypeSelector(t),
 		A2($elm$core$List$range, 0, 7));
 };
-var $author$project$Main$renderScaleSelector = function (scale) {
+var $author$project$Page$SolfegePage$renderScaleSelector = function (scale) {
 	return _List_fromArray(
 		[
 			A2(
@@ -6520,7 +6584,7 @@ var $author$project$Main$renderScaleSelector = function (scale) {
 				[
 					$elm$html$Html$Attributes$class('table')
 				]),
-			$author$project$Main$getAllNoteSelectors(
+			$author$project$Page$SolfegePage$getAllNoteSelectors(
 				$author$project$Scale$pitchClass(scale))),
 			A2(
 			$elm$html$Html$div,
@@ -6528,9 +6592,52 @@ var $author$project$Main$renderScaleSelector = function (scale) {
 				[
 					$elm$html$Html$Attributes$class('table')
 				]),
-			$author$project$Main$getAllScaleTypeSelectors(
+			$author$project$Page$SolfegePage$getAllScaleTypeSelectors(
 				$author$project$Scale$scaleType(scale)))
 		]);
+};
+var $author$project$Page$SolfegePage$view = function (model) {
+	return _List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('table')
+				]),
+			_List_fromArray(
+				[
+					A2($author$project$Page$SolfegePage$renderKeys, model, 13)
+				])),
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('table')
+				]),
+			$author$project$Page$SolfegePage$renderScaleSelector(model.i))
+		]);
+};
+var $author$project$Main$viewBody = function (model) {
+	if (!model.$) {
+		var m = model.a;
+		return A2(
+			$elm$core$List$map,
+			$elm$html$Html$map($author$project$Main$SolfegeMsg),
+			$author$project$Page$SolfegePage$view(m));
+	} else {
+		var errorMessage = model.a;
+		return _List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Error: ' + errorMessage)
+					]))
+			]);
+	}
 };
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$Attributes$href = function (url) {
@@ -6540,7 +6647,7 @@ var $elm$html$Html$Attributes$href = function (url) {
 		_VirtualDom_noJavaScriptUri(url));
 };
 var $elm$html$Html$p = _VirtualDom_node('p');
-var $author$project$Main$viewFooter = A2(
+var $author$project$Page$viewFooter = A2(
 	$elm$html$Html$p,
 	_List_fromArray(
 		[
@@ -6563,7 +6670,7 @@ var $author$project$Main$viewFooter = A2(
 			$elm$html$Html$text('.')
 		]));
 var $elm$html$Html$span = _VirtualDom_node('span');
-var $author$project$Main$viewHeader = A2(
+var $author$project$Page$viewHeader = A2(
 	$elm$html$Html$div,
 	_List_Nil,
 	_List_fromArray(
@@ -6595,28 +6702,13 @@ var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$browser$Browser$Document,
 		'Solfeger',
-		_List_fromArray(
-			[
-				$author$project$Main$viewHeader,
-				A2(
-				$elm$html$Html$div,
+		_Utils_ap(
+			_List_fromArray(
+				[$author$project$Page$viewHeader]),
+			_Utils_ap(
+				$author$project$Main$viewBody(model),
 				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('table')
-					]),
-				_List_fromArray(
-					[
-						A2($author$project$Main$renderKeys, model, 13)
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('table')
-					]),
-				$author$project$Main$renderScaleSelector(model.i)),
-				$author$project$Main$viewFooter
-			]));
+					[$author$project$Page$viewFooter]))));
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{bv: $author$project$Main$init, bH: $author$project$Main$ChangeUrl, bI: $author$project$Main$loadUrlFromUrlRequest, bS: $author$project$Main$subscriptions, bW: $author$project$Main$update, bX: $author$project$Main$view});

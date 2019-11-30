@@ -33,6 +33,7 @@ To play notes, either click them or use the number row on your keyboard from the
 		 - [x] Shift raises note
 		 - [x] Control lowers note
 	     - [x] Overlay scale on piano keys
+	     - [ ] Figure out how to capture control during control click
 	 - [ ] v2 - Content
 	 	 - [ ] Melodies in qwerty
 	 	 - [x] Tooltips
@@ -48,7 +49,7 @@ To play notes, either click them or use the number row on your keyboard from the
 - [ ] Design
 	- [ ] Page Structure
 		- [x] Header & Footer
-		- [ ] Integrate into SPA
+		- [x] Integrate into SPA
 	- [ ] Grayscale Design
 	- [ ] Full design
 

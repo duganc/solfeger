@@ -39,6 +39,15 @@ update msg model =
 
 
 
+-- SUBSCRIPTIONS
+
+
+subscriptions : model -> Sub Msg
+subscriptions model =
+    Sub.none
+
+
+
 -- VIEW
 
 

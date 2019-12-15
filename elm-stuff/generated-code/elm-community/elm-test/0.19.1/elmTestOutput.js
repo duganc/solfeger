@@ -8755,6 +8755,12 @@ var $avh4$elm_program_test$ProgramTest$start = F2(
 		var program = _v0.b;
 		return A3(program, options.baseUrl, flags, options);
 	});
+var $author$project$Main$AssymetricCryptography = function (a) {
+	return {$: 'AssymetricCryptography', a: a};
+};
+var $author$project$Main$AssymetricCryptographyMsg = function (a) {
+	return {$: 'AssymetricCryptographyMsg', a: a};
+};
 var $author$project$Main$Error = function (a) {
 	return {$: 'Error', a: a};
 };
@@ -8856,6 +8862,15 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $author$project$Page$AssymetricCryptographyPage$Model = function (stub) {
+	return {stub: stub};
+};
+var $author$project$Page$AssymetricCryptographyPage$update = F2(
+	function (msg, model) {
+		return _Utils_Tuple2(
+			$author$project$Page$AssymetricCryptographyPage$Model(_Utils_Tuple0),
+			$elm$core$Platform$Cmd$none);
+	});
 var $elm$core$Tuple$second = function (_v0) {
 	var y = _v0.b;
 	return y;
@@ -9306,37 +9321,74 @@ var $author$project$Page$SolfegePage$update = F2(
 	});
 var $author$project$Main$update = F2(
 	function (msg, mainModel) {
-		if (msg.$ === 'ChangeUrl') {
-			var url = msg.a;
-			return _Utils_Tuple2(
-				mainModel,
-				$elm$browser$Browser$Navigation$load(
-					$elm$url$Url$toString(url)));
-		} else {
-			var message = msg.a;
-			if (mainModel.$ === 'Solfege') {
-				var m = mainModel.a;
-				return A3(
-					$author$project$Main$tupleMap,
-					$author$project$Main$Solfege,
-					$elm$core$Platform$Cmd$map($author$project$Main$SolfegeMsg),
-					A2($author$project$Page$SolfegePage$update, message, m));
-			} else {
+		switch (msg.$) {
+			case 'ChangeUrl':
+				var url = msg.a;
 				return _Utils_Tuple2(
-					$author$project$Main$Error('Update received SolfegeMsg but model wasn\'t Solfege.'),
-					$elm$core$Platform$Cmd$none);
-			}
+					mainModel,
+					$elm$browser$Browser$Navigation$load(
+						$elm$url$Url$toString(url)));
+			case 'SolfegeMsg':
+				var message = msg.a;
+				if (mainModel.$ === 'Solfege') {
+					var m = mainModel.a;
+					return A3(
+						$author$project$Main$tupleMap,
+						$author$project$Main$Solfege,
+						$elm$core$Platform$Cmd$map($author$project$Main$SolfegeMsg),
+						A2($author$project$Page$SolfegePage$update, message, m));
+				} else {
+					return _Utils_Tuple2(
+						$author$project$Main$Error('Update received SolfegeMsg but model wasn\'t Solfege.'),
+						$elm$core$Platform$Cmd$none);
+				}
+			default:
+				var message = msg.a;
+				if (mainModel.$ === 'AssymetricCryptography') {
+					var c = mainModel.a;
+					return A3(
+						$author$project$Main$tupleMap,
+						$author$project$Main$AssymetricCryptography,
+						$elm$core$Platform$Cmd$map($author$project$Main$AssymetricCryptographyMsg),
+						A2($author$project$Page$AssymetricCryptographyPage$update, message, c));
+				} else {
+					return _Utils_Tuple2(
+						$author$project$Main$Error('Update received AssymetricCryptographyMsg but model wasn\'t AssymetricCryptography.'),
+						$elm$core$Platform$Cmd$none);
+				}
 		}
 	});
 var $elm$browser$Browser$Document = F2(
 	function (title, body) {
 		return {body: body, title: title};
 	});
+var $author$project$Main$documentTitle = function (model) {
+	switch (model.$) {
+		case 'Solfege':
+			return 'Solfeger';
+		case 'AssymetricCryptography':
+			return 'Assymetric Cryptography';
+		default:
+			return 'Error!';
+	}
+};
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
 var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $author$project$Page$AssymetricCryptographyPage$view = function (model) {
+	return _List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Stub')
+				]))
+		]);
+};
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
 		return A2(
@@ -9721,24 +9773,31 @@ var $author$project$Page$SolfegePage$view = function (model) {
 		]);
 };
 var $author$project$Main$viewBody = function (model) {
-	if (model.$ === 'Solfege') {
-		var m = model.a;
-		return A2(
-			$elm$core$List$map,
-			$elm$html$Html$map($author$project$Main$SolfegeMsg),
-			$author$project$Page$SolfegePage$view(m));
-	} else {
-		var errorMessage = model.a;
-		return _List_fromArray(
-			[
-				A2(
-				$elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Error: ' + errorMessage)
-					]))
-			]);
+	switch (model.$) {
+		case 'Solfege':
+			var m = model.a;
+			return A2(
+				$elm$core$List$map,
+				$elm$html$Html$map($author$project$Main$SolfegeMsg),
+				$author$project$Page$SolfegePage$view(m));
+		case 'AssymetricCryptography':
+			var c = model.a;
+			return A2(
+				$elm$core$List$map,
+				$elm$html$Html$map($author$project$Main$AssymetricCryptographyMsg),
+				$author$project$Page$AssymetricCryptographyPage$view(c));
+		default:
+			var errorMessage = model.a;
+			return _List_fromArray(
+				[
+					A2(
+					$elm$html$Html$div,
+					_List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$text('Error: ' + errorMessage)
+						]))
+				]);
 	}
 };
 var $elm$html$Html$a = _VirtualDom_node('a');
@@ -9803,7 +9862,7 @@ var $author$project$Page$viewHeader = A2(
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$browser$Browser$Document,
-		'Solfeger',
+		$author$project$Main$documentTitle(model),
 		_Utils_ap(
 			_List_fromArray(
 				[$author$project$Page$viewHeader]),
@@ -13722,7 +13781,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main5557630$main = A2(
+var $author$project$Test$Generated$Main3217500667$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13730,7 +13789,7 @@ var $author$project$Test$Generated$Main5557630$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 289628530172209
+		seed: 399594752858233
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13766,10 +13825,10 @@ var $author$project$Test$Generated$Main5557630$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main5557630':{'init':$author$project$Test$Generated$Main5557630$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main3217500667':{'init':$author$project$Test$Generated$Main3217500667$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-33464.sock";
+var pipeFilename = "/tmp/elm_test-33727.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

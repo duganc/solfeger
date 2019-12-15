@@ -33,9 +33,29 @@ startProgramForTesting initialUrl flags =
         |> ProgramTest.start flags
 
 
-helloWorldTest : Test
-helloWorldTest =
-    test "helloWorld" <|
+
+-- Example from https://en.wikibooks.org/wiki/Cryptography/A_Basic_Public_Key_Example
+
+
+testGenerateKeyPair : Test
+testGenerateKeyPair =
+    test "generateKeyPair" <|
         \() ->
-            startProgramForTesting "http://www.mysolfegeapp.com" ()
-                |> expectViewHas [ Selector.id "key-10", Selector.text "" ]
+            generateKeyPair 5 11 7
+                |> Expect.equal (Just ( ( 7, 55 ), ( 23, 55 ) ))
+
+
+testEncrypt : Test
+testEncrypt =
+    test "encrypt" <|
+        \() ->
+            encrypt ( 7, 55 ) 2
+                |> Expect.equal 18
+
+
+testDecrypt : Test
+testDecrypt =
+    test "decrypt" <|
+        \() ->
+            decrypt ( 23, 55 ) 18
+                |> Expect.equal 2

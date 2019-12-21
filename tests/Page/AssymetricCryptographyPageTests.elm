@@ -59,3 +59,26 @@ testDecrypt =
         \() ->
             decrypt ( 23, 55 ) 18
                 |> Expect.equal 2
+
+
+testPrimesBelow : Test
+testPrimesBelow =
+    test "primesBelow" <|
+        \() ->
+            primesBelow 63
+                |> Expect.equal [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61 ]
+
+
+testIsCoprime : Test
+testIsCoprime =
+    test "isCoprime" <|
+        \() ->
+            Expect.false "2 and 40 are both divisible by 2" <| isCoprime 2 40
+
+
+testGetCoprimeOptions : Test
+testGetCoprimeOptions =
+    test "getCoprimeOptions" <|
+        \() ->
+            getCoprimeOptions 40
+                |> Expect.equal [ 1, 3, 7, 9, 11, 13, 17, 19, 21, 23, 27, 29, 31, 33, 37, 39 ]

@@ -8516,6 +8516,44 @@ var $author$project$Page$AssymetricCryptographyPageTests$testGenerateKeyPair = A
 					_Utils_Tuple2(23, 55))),
 			A3($author$project$Page$AssymetricCryptographyPage$generateKeyPair, 5, 11, 7));
 	});
+var $author$project$Page$AssymetricCryptographyPage$divides = F2(
+	function (divisor, n) {
+		return !A2($elm$core$Basics$modBy, divisor, n);
+	});
+var $elm$core$Basics$min = F2(
+	function (x, y) {
+		return (_Utils_cmp(x, y) < 0) ? x : y;
+	});
+var $author$project$Page$AssymetricCryptographyPage$isCoprime = F2(
+	function (a, b) {
+		return !A2(
+			$elm$core$List$any,
+			function (d) {
+				return A2($author$project$Page$AssymetricCryptographyPage$divides, d, a) && A2($author$project$Page$AssymetricCryptographyPage$divides, d, b);
+			},
+			A2(
+				$elm$core$List$range,
+				2,
+				A2($elm$core$Basics$min, a, b)));
+	});
+var $author$project$Page$AssymetricCryptographyPage$getCoprimeOptions = function (n) {
+	return A2(
+		$elm$core$List$filter,
+		function (a) {
+			return A2($author$project$Page$AssymetricCryptographyPage$isCoprime, a, n);
+		},
+		A2($elm$core$List$range, 1, n));
+};
+var $author$project$Page$AssymetricCryptographyPageTests$testGetCoprimeOptions = A2(
+	$elm_explorations$test$Test$test,
+	'getCoprimeOptions',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			_List_fromArray(
+				[1, 3, 7, 9, 11, 13, 17, 19, 21, 23, 27, 29, 31, 33, 37, 39]),
+			$author$project$Page$AssymetricCryptographyPage$getCoprimeOptions(40));
+	});
 var $author$project$Note$CSharp = {$: 'CSharp'};
 var $author$project$KeyboardKey$CharacterKey = function (a) {
 	return {$: 'CharacterKey', a: a};
@@ -8896,6 +8934,19 @@ var $author$project$NoteTests$testIntToString = A2(
 				$elm$core$List$map,
 				$author$project$Note$fromInt,
 				A2($elm$core$List$range, 0, 11)));
+	});
+var $elm_explorations$test$Expect$false = F2(
+	function (message, bool) {
+		return bool ? $elm_explorations$test$Expect$fail(message) : $elm_explorations$test$Expect$pass;
+	});
+var $author$project$Page$AssymetricCryptographyPageTests$testIsCoprime = A2(
+	$elm_explorations$test$Test$test,
+	'isCoprime',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$false,
+			'2 and 40 are both divisible by 2',
+			A2($author$project$Page$AssymetricCryptographyPage$isCoprime, 2, 40));
 	});
 var $elm_explorations$test$Test$Html$Selector$Internal$Class = function (a) {
 	return {$: 'Class', a: a};
@@ -13500,6 +13551,37 @@ var $author$project$Page$SolfegePageTests$testPressKeyOnModel = A2(
 					$author$project$Page$SolfegePageTests$stubPageModel.a,
 					_Utils_Tuple2($author$project$Note$D, 4)).isKeyPressed));
 	});
+var $elm$core$Basics$sqrt = _Basics_sqrt;
+var $author$project$Page$AssymetricCryptographyPage$potentialLesserDivisors = function (n) {
+	return A2(
+		$elm$core$List$range,
+		2,
+		$elm$core$Basics$floor(
+			$elm$core$Basics$sqrt(n)));
+};
+var $author$project$Page$AssymetricCryptographyPage$primesBelow = function (n) {
+	return A2(
+		$elm$core$List$filter,
+		function (candidate) {
+			return A2(
+				$elm$core$List$all,
+				function (divisor) {
+					return _Utils_eq(divisor, candidate) || (!A2($author$project$Page$AssymetricCryptographyPage$divides, divisor, candidate));
+				},
+				$author$project$Page$AssymetricCryptographyPage$potentialLesserDivisors(n));
+		},
+		A2($elm$core$List$range, 2, n + 1));
+};
+var $author$project$Page$AssymetricCryptographyPageTests$testPrimesBelow = A2(
+	$elm_explorations$test$Test$test,
+	'primesBelow',
+	function (_v0) {
+		return A2(
+			$elm_explorations$test$Expect$equal,
+			_List_fromArray(
+				[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61]),
+			$author$project$Page$AssymetricCryptographyPage$primesBelow(63));
+	});
 var $elm_explorations$test$Test$Html$Query$Internal$multipleToExpectation = F2(
 	function (_v0, check) {
 		var query = _v0.b;
@@ -13866,7 +13948,7 @@ var $author$project$NoteTests$testToIntHandlesOctaves = A2(
 						_Utils_Tuple2($author$project$Note$C, 4)
 					])));
 	});
-var $author$project$Test$Generated$Main290134130$main = A2(
+var $author$project$Test$Generated$Main754276740$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		paths: _List_fromArray(
@@ -13874,7 +13956,7 @@ var $author$project$Test$Generated$Main290134130$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 153887711184561
+		seed: 110155395434970
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -13883,7 +13965,7 @@ var $author$project$Test$Generated$Main290134130$main = A2(
 				$elm_explorations$test$Test$describe,
 				'Page.AssymetricCryptographyPageTests',
 				_List_fromArray(
-					[$author$project$Page$AssymetricCryptographyPageTests$testDecrypt, $author$project$Page$AssymetricCryptographyPageTests$testGenerateKeyPair, $author$project$Page$AssymetricCryptographyPageTests$testEncrypt])),
+					[$author$project$Page$AssymetricCryptographyPageTests$testPrimesBelow, $author$project$Page$AssymetricCryptographyPageTests$testDecrypt, $author$project$Page$AssymetricCryptographyPageTests$testGetCoprimeOptions, $author$project$Page$AssymetricCryptographyPageTests$testGenerateKeyPair, $author$project$Page$AssymetricCryptographyPageTests$testIsCoprime, $author$project$Page$AssymetricCryptographyPageTests$testEncrypt])),
 				A2(
 				$elm_explorations$test$Test$describe,
 				'Page.SolfegePageTests',
@@ -13910,10 +13992,10 @@ var $author$project$Test$Generated$Main290134130$main = A2(
 				_List_fromArray(
 					[$author$project$NoteTests$testIntToString, $author$project$NoteTests$testToIntHandlesOctaves, $author$project$NoteTests$testToIntAndFromIntAreInverses]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main290134130':{'init':$author$project$Test$Generated$Main290134130$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main754276740':{'init':$author$project$Test$Generated$Main754276740$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-34361.sock";
+var pipeFilename = "/tmp/elm_test-40113.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";

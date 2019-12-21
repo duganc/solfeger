@@ -1,4 +1,4 @@
-module Page.AssymetricCryptographyPage exposing (Flags, Model, Msg(..), decrypt, encrypt, generateKeyPair, init, subscriptions, update, view)
+module Page.AssymetricCryptographyPage exposing (Flags, Model, Msg(..), decrypt, encrypt, generateKeyPair, getCoprimeOptions, init, isCoprime, primesBelow, subscriptions, update, view)
 
 import Browser exposing (Document, UrlRequest(..), application)
 import Browser.Events exposing (onKeyDown, onKeyUp)
@@ -132,6 +132,33 @@ exponentiateModBy modulus base exponent =
 
         _ ->
             modBy modulus (base * exponentiateModBy modulus base (exponent - 1))
+
+
+getCoprimeOptions : Int -> List Int
+getCoprimeOptions n =
+    List.range 1 n |> List.filter (\a -> isCoprime a n)
+
+
+isCoprime : Int -> Int -> Bool
+isCoprime a b =
+    not (List.any (\d -> divides d a && divides d b) (List.range 2 (Basics.min a b)))
+
+
+primesBelow : Int -> List Int
+primesBelow n =
+    List.range 2 (n + 1)
+        |> List.filter
+            (\candidate -> List.all (\divisor -> (divisor == candidate) || not (divides divisor candidate)) (potentialLesserDivisors n))
+
+
+potentialLesserDivisors : Int -> List Int
+potentialLesserDivisors n =
+    List.range 2 (sqrt (toFloat n) |> floor)
+
+
+divides : Int -> Int -> Bool
+divides divisor n =
+    modBy divisor n == 0
 
 
 

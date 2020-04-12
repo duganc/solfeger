@@ -23,7 +23,7 @@ viewHeader =
             [ class "tooltip", class "float-right", class "information-icon" ]
             [ text "?"
             , span [ class "tooltip-text" ]
-                [ text "To play notes, either click them or use the number row on your keyboard from the backtick key to the =.  \n\nFor instance, 4 will be Mi, the fifth note of the chromatic scale (because backtick is Do, 1 is Di, etc.).  The Q through \\ keys will also work.  \n\nShift can be used to raise the tone by an octave and Control can be used to lower it."
+                [ text "Stub Tooltip!"
                 ]
             ]
         ]

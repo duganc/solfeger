@@ -12,7 +12,7 @@ import Json.Encode as Encode exposing (Value)
 import KeyboardKey exposing (..)
 import List exposing (range)
 import Page exposing (..)
-import Page.SolfegePage as SolfegePage exposing (..)
+import Page.PokerPage as PokerPage exposing (..)
 import Platform.Sub exposing (batch)
 import String exposing (fromInt)
 import Url exposing (Protocol(..), Url, fromString, toString)
@@ -34,7 +34,7 @@ main =
 
 
 type Model
-    = Solfege SolfegePage.Model
+    = Poker PokerPage.Model
     | Error String
 
 
@@ -44,7 +44,7 @@ type alias Flags =
 
 init : Flags -> Url -> key -> ( Model, Cmd Msg )
 init flags url key =
-    SolfegePage.init flags url key |> tupleMap Solfege (Cmd.map SolfegeMsg)
+    PokerPage.init flags url key |> tupleMap Poker (Cmd.map PokerMsg)
 
 
 
@@ -57,13 +57,13 @@ update msg mainModel =
         ChangeUrl url ->
             ( mainModel, Url.toString url |> load )
 
-        SolfegeMsg message ->
+        PokerMsg message ->
             case mainModel of
-                Solfege m ->
-                    tupleMap Solfege (Cmd.map SolfegeMsg) (SolfegePage.update message m)
+                Poker m ->
+                    tupleMap Poker (Cmd.map PokerMsg) (PokerPage.update message m)
 
                 _ ->
-                    ( Error "Update received SolfegeMsg but model wasn't Solfege.", Cmd.none )
+                    ( Error "Update received PokerMsg but model wasn't Poker.", Cmd.none )
 
 
 urlRequestToUrl : UrlRequest -> Url
@@ -98,8 +98,8 @@ loadUrlFromUrlRequest =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     case model of
-        Solfege m ->
-            Sub.map (\a -> SolfegeMsg a) (SolfegePage.subscriptions m)
+        Poker m ->
+            Sub.map (\a -> PokerMsg a) (PokerPage.subscriptions m)
 
         _ ->
             Sub.none
@@ -111,12 +111,12 @@ subscriptions model =
 
 type Msg
     = ChangeUrl Url
-    | SolfegeMsg SolfegePage.Msg
+    | PokerMsg PokerPage.Msg
 
 
 view : Model -> Document Msg
 view model =
-    Document "Solfeger" <|
+    Document "Poker" <|
         [ viewHeader ]
             ++ viewBody model
             ++ [ viewFooter ]
@@ -125,8 +125,8 @@ view model =
 viewBody : Model -> List (Html Msg)
 viewBody model =
     case model of
-        Solfege m ->
-            SolfegePage.view m |> List.map (Html.map SolfegeMsg)
+        Poker m ->
+            PokerPage.view m |> List.map (Html.map PokerMsg)
 
         Error errorMessage ->
             [ div [] [ text ("Error: " ++ errorMessage) ] ]
